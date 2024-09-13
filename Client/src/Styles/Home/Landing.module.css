@@ -1,0 +1,85 @@
+.main_container{
+    position: relative;
+    height: 88vh;
+    max-width: 100%;
+    margin-top: 12vh;
+}
+.sliding_img_container{
+
+    max-width: 100%;
+    height: 100%;
+    background-size:contain;
+   
+}
+.slide_img{
+    width: 100%;
+    height: 100%;
+}
+.left_white_btn{
+    color: white;
+    position: absolute;
+    font-size: 10vh;
+    bottom: 50%;;
+    left: 0;
+    cursor: pointer;
+
+}
+.left_btn{
+    position: absolute;
+    font-size: 10vh;
+    bottom: 50%;;
+    left: 0;
+    cursor: pointer;
+
+}
+.right_white_btn{
+    position: absolute;
+    font-size: 10vh;
+    color: white;
+    bottom: 50%;
+    right: 0;
+    cursor: pointer;
+}
+.right_btn{
+    position: absolute;
+    font-size: 10vh;
+    bottom: 50%;
+    right: 0;
+    cursor: pointer;
+
+}
+
+/* search Bar  */
+.search_bar{
+    position: absolute;
+    top: 45%;
+    left: 30%;
+    padding: 2vh 3vw;
+    animation: searchBox 0.5s ease-in 0s ;
+
+    & input{
+        width: 30vw;
+        padding: 2vh 2vw;
+        font-size: 3vh;
+        color: #fff;
+        border: none;
+        outline: none;
+        border-radius: 5vh;
+        background: transparent;
+        background-color: rgba(3, 3, 3, 0.3); 
+    backdrop-filter: blur(100px);
+
+    &::placeholder{
+        color: #fff;
+    }
+    }
+    
+}
+@keyframes searchBox {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}

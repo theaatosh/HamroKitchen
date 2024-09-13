@@ -1,0 +1,182 @@
+.main_container{
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.signUp_container{
+    height: 80vh;
+    width: 80vw;
+    display: flex;
+   
+}
+.left_container{
+    position: relative;
+    height: 100%;
+    width: 50%;
+    background-image: url('/Images/Log_signup/burger.png');
+    background-repeat: no-repeat;
+    background-size: 40vw 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom-left-radius: 10vh;
+}
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); 
+    border-bottom-left-radius: 10vh;
+
+  }
+  
+  .text_overlay {
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    color: #fff;
+    text-align: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-style: italic;
+    & h1{
+        font-size: 8vh;
+       
+    }
+
+    & h3{
+        font-size: 4vh;
+       
+    }
+  }
+
+.right_container{
+    height: 100%;
+    width: 50%;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top-right-radius: 10vh;
+    /* background-color: red; */
+
+}
+
+.inner_right{
+    height: 95%;
+    width: 80%; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.heading_welcome{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 4vh;
+    margin-top: 6vh;
+    border-bottom: 2px solid black;
+    border-radius: 2vh;
+}
+.sub_head{
+    color: grey;
+    font-size: 3vh;
+}
+.input_details{
+    width: 70%;
+    height: 80%;
+    margin-top: 8vh;
+    background-color: white;
+}
+.input_icon_wrapper
+  {
+    position: relative;
+  }
+  .form_group {
+      margin-bottom: 3vh;
+    }
+.forgot_password{
+    color: blue;
+    text-align: end;
+}
+  .input_field {
+    width: 100%;
+    padding: 2vh 3vw;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: #D9D9D9;
+    outline: none;
+  }
+  .input_icon {
+    position: absolute;
+    font-size: 3vh;
+    top: 35%;
+    left: 10px;
+  }
+  .input_field::placeholder {
+    font-size: 2vh;
+    color: #888; 
+  }
+  .password_eye{
+    font-size: 3vh;
+    position: absolute;
+    top: 25%;
+    right: 5%;
+  }
+  .input_error{
+    color: red;
+  }
+  .floating_label {
+    position: absolute;
+    border-radius: 5vh;
+    top: -10px;
+    left: 10px;
+    background-color: white;
+    padding: 0 5px;
+    font-size: 2vh;
+    font-weight: 600;
+    color: #555;
+    z-index: 1;
+    
+  }
+
+  .signup_btn{
+    width: 100%;
+    height: 6vh;
+    text-align: center;
+    margin-top: 5vh;
+    /* background-color: black; */
+  
+  }
+  .submit_button {
+    display: inline-block;
+    width: 50%;
+    height: 100%;
+    padding: 1vh 2vw;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 3vh;
+    cursor: pointer;
+    font-size: 3vh;
+
+    &:hover{
+        background-color: grey;
+        color: black;
+        border: 2px solid black;
+    }
+  }
+
+  .haveAccount{
+    text-align: center;
+    padding: 3vh 2vw;
+
+    & span{
+      color: blue;
+    }
+  }
+

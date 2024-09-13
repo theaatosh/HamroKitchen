@@ -1,0 +1,27 @@
+.food_display_container{
+    width: 90%;
+    margin: auto;
+    margin-top: 7vh;
+}
+
+.food_display_container h2{
+    font-size: 2vw;
+    font-weight: 600;
+}
+
+/* .food_display_list{
+    border: 2px solid red;
+    margin-top: 3vh;
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(240px,1fr));
+    gap: 3vw;
+    row-gap: 5vh;
+} */
+
+.food_display_list{
+    margin-top: 3vh;
+    display: flex;
+    flex-wrap: wrap;
+   gap: 8vh 4vw ;
+   
+}
