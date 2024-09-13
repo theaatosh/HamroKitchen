@@ -7,6 +7,7 @@ import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import styles from '../Styles/Login_Signup/Signup.module.css';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 export const SignUpPage=()=>{
 
@@ -16,9 +17,9 @@ export const SignUpPage=()=>{
     phoneNumber:"",
     password:""
   });
-  console.log(formData);
+  // console.log(formData);
   
-     const [error,setError]=useState({});
+    const [error,setError]=useState({});
     const[ showPassword,setShowPassword]=useState(false);
     
     //validating form
@@ -57,7 +58,7 @@ export const SignUpPage=()=>{
 
     return formErrors;
     }
-    const handleSubmit=(e)=>{
+    const handleSubmit= async(e)=>{
         e.preventDefault();
         const validationError=validate();
         if(Object.keys(validationError).length>0)
@@ -66,6 +67,15 @@ export const SignUpPage=()=>{
         }
         else 
         {
+          try{
+            const result =await axios.post('http://localhost:5010/signup',formData);
+            console.log("Posted!");
+            console.log(result.data);
+          }
+          catch
+          {
+            console.log("Error");
+          }
           setFormData({
             userName:"",
             email:"",
@@ -87,8 +97,8 @@ export const SignUpPage=()=>{
         }));
 
         setError((prevError)=>({...prevError,[name]:''}));
-        console.log(formData);
-        console.log(error);
+        // console.log(formData);
+        // console.log(error);
         
     }
 
@@ -122,7 +132,7 @@ export const SignUpPage=()=>{
             <FaUserCircle className={styles.input_icon}/>
             <input 
              type="text"
-             id="signup_username"
+             id="signup_asyncusername"
              className={styles.input_field}
              placeholder='Enter your name'
              name="userName"
