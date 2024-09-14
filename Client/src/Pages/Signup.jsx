@@ -76,12 +76,6 @@ export const SignUpPage=()=>{
           {
             console.log("Error");
           }
-          setFormData({
-            userName:"",
-            email:"",
-            phoneNumber:"",
-            password:""
-          });
           console.log(formData);
           console.log('Successfully submitted');
           

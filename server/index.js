@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors'); // Import the cors middleware
 const user = require("./models/index");
 const { connectToMongoDB } = require("./connections/index");
-const { serverSideValidation , checkPromise, checkEmail, registerUser } = require("./controllers/index");
+const { serverSideValidation , checkPromise, checkEmail, registerUser, checkUserName } = require("./controllers/index");
 
 const app = express();
 app.use(express.json());
@@ -42,5 +42,28 @@ app.post('/signup', async (req, res) => {
 }
 }
 });
+ //login authentication
+app.post('/login', async (req, res) =>{
+  console.log("request");
+  let {userName, password}=req.body;
+  console.log("Data received from loginpage:");
+
+  var userFound= await checkUserName(userName);
+  console.log(userFound);
+  if(userFound){
+    if(userFound.password==password){
+      console.log("login sucessfully");
+      res.send("login sucessfully");
+    }else{
+      console.log("incorrect password");
+      res.send("incorrect password");
+    }
+ 
+  }else{
+    res.send("user doesnt exist please register first");
+  }
+
+});
+
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

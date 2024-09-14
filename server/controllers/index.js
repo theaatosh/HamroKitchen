@@ -94,7 +94,23 @@ function registerUser(userName, email, phoneNumber, password){
     }
 }
 
+async function checkUserName(userName){
+    try{
+        const result=await user.findOne({userName:userName})
+        .select("password");
+        console.log(result);
+        if (result) {
+            console.log("user found");
+            return result;
+          }else{
+            console.log("user doesnot exist moving to registring the user");
+            return false;
+          }
+     }catch(err){
+        console.error("Error finding document:", err);
+     }
+}
 
 module.exports={
-    serverSideValidation , checkPromise, checkEmail, registerUser
+    serverSideValidation , checkPromise, checkEmail, registerUser, checkUserName
 }

@@ -3,6 +3,7 @@ import { FaEye, FaEyeSlash, FaUserCircle } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
 import styles from '../Styles/Login_Signup/Login.module.css';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 export const LoginPage=()=>{
 
 
@@ -14,7 +15,7 @@ export const LoginPage=()=>{
     });
 
       //form validation
-    const validate=()=>{
+    const validate= ()=>{
       let formErrors={};
       if(!formData.userName.trim()){
         formErrors.userName="UserName Required *";
@@ -39,7 +40,7 @@ export const LoginPage=()=>{
 
     return formErrors;
     }
-    const handleSubmit=(e)=>{
+    const handleSubmit= async (e)=>{
       e.preventDefault();
       const validationError=validate();
       if(Object.keys(validationError).length>0)
@@ -48,10 +49,16 @@ export const LoginPage=()=>{
       }
       else 
       {
-        setFormData({
-            userName:"",
-        password:""
-        })
+
+        try{
+          const result =await axios.post('http://localhost:5010/login',formData);
+          console.log("Posted!");
+          console.log(result.data);
+        }
+        catch
+        {
+          console.log("Error");
+        }
         console.log('Successfully submitted');
         }
   }
