@@ -4,14 +4,15 @@ const cors = require('cors'); // Import the cors middleware
 const user = require("./models/index");
 const { connectToMongoDB } = require("./connections/index");
 const { serverSideValidation , checkPromise, checkEmail, registerUser, checkUserName } = require("./controllers/index");
-
+require('dotenv').config();
 const app = express();
 app.use(express.json());
 app.use(cors()); // Use the cors middleware
 
-const PORT = 5010;
+const PORT = process.env.PORT;
+const mongo = process.env.URI;
 
-connectToMongoDB('mongodb://localhost:27017/userDetailsDB')
+connectToMongoDB(mongo)
 .then(() => console.log("MongoDB Connected"))
 .catch(err => console.error(err));
 
@@ -38,6 +39,8 @@ app.post('/signup', async (req, res) => {
      if(user){
       console.log("user registered");
       res.send("user registered sucessfully");
+     }else{
+      res.send("error while registering");
      }
 }
 }

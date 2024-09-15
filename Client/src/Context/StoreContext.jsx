@@ -28,7 +28,8 @@ export const StoreContextProvider = (props) => {
 
   //for cart items
   const[cartItems,setCartItems]=useState({}); 
-
+  console.log(cartItems);
+  
   const addToCart=(itemId)=>{
     if(!cartItems[itemId]){
       setCartItems((prev)=>({...prev,[itemId]:1}))
