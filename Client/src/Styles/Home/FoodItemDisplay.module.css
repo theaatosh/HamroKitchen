@@ -19,11 +19,10 @@
 }
 .foodItem_img_container .add_icon{
     position:absolute;
-    font-size: 10vh;
+    font-size: 2.2vw;
     background-color: white;
     border-radius: 50%;
     color: green;
-    font-size: 2.5vw;
     bottom: 0;
     right: 0;
     cursor: pointer;
@@ -37,9 +36,9 @@
     background-color: white;
     border-radius: 10vh;
 }
-.item_counter_container .sub_icon
+.item_counter_container .sub1_icon
 {
-    font-size: 1.5vw;
+    font-size: 2vw;
     color: red;
     cursor: pointer;
 }

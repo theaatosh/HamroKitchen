@@ -5,6 +5,7 @@ import {Cart} from './Pages/Cart';
 import { LoginPage } from "./Pages/Login";
 import { SignUpPage } from "./Pages/Signup";
 import { PlaceOrder } from "./Pages/PlaceOrder";
+import { ProtectedRoute } from "./Components/ProtectedRoute";
 
 
 export const App=()=>{
@@ -19,7 +20,18 @@ export const App=()=>{
           },
           {
             path:'cart',
-            element:<Cart/>
+            element:
+            <ProtectedRoute>
+              <Cart/>
+            </ProtectedRoute>
+            
+          },
+          {
+            path:'placeOrder',
+            element:
+            <ProtectedRoute>
+            <PlaceOrder/>
+          </ProtectedRoute>
           },
           {
             path:'signup',
@@ -29,10 +41,7 @@ export const App=()=>{
             path:'login',
             element:<LoginPage/>
           },
-          {
-            path:'placeOrder',
-            element:<PlaceOrder/>
-          },
+          
         ]
       }
 

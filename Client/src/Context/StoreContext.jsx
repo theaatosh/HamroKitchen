@@ -39,10 +39,27 @@ export const StoreContextProvider = (props) => {
      }
   }
 
-  const removeFromCart=(itemId)=>{
-    console.log(itemId);
+  const removeFromCart=(itemId)=>{   
     
-setCartItems((prev)=>({...prev,[itemId]:prev[itemId]-1}))
+    setCartItems((prev)=>{
+      const updatedCart={...prev};
+      console.log(updatedCart);
+      
+      console.log(updatedCart[itemId]);
+     if(updatedCart[itemId]>1)
+     {
+      updatedCart[itemId]=updatedCart[itemId]-1
+     }
+     else{
+      delete updatedCart[itemId];
+     }
+
+     return updatedCart;
+   })
+
+
+// setCartItems((prev)=>({...prev,[itemId]:prev[itemId]-1}))
+    
 }
 
   const getTotalCartAmount=()=>{
