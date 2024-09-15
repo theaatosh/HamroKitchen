@@ -76,13 +76,8 @@ export const SignUpPage=()=>{
           {
             console.log("Error");
           }
-<<<<<<< Updated upstream
           console.log(formData);
           console.log('Successfully submitted');
-=======
-         
-         
->>>>>>> Stashed changes
           
           
         }
