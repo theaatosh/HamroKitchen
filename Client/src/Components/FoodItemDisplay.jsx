@@ -16,7 +16,7 @@ return(
             <img className={styles.foodItem_img}src={image} alt={name} />
             {!cartItems[id]? (<IoIosAddCircleOutline className={styles.add_icon}onClick={()=>addToCart(id)}/> ): (
                 <div className={styles.item_counter_container}>
-                <CiCircleMinus className={styles.sub_icon} onClick={()=>removeFromCart(id)}/> 
+                <CiCircleMinus className={styles.sub1_icon} onClick={()=>removeFromCart(id)}/> 
                     <p>{cartItems[id]}</p>
                     <IoIosAddCircleOutline className={styles.add1_icon}onClick={()=>addToCart(id)}/>
 

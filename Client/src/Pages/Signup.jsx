@@ -76,8 +76,13 @@ export const SignUpPage=()=>{
           {
             console.log("Error");
           }
+<<<<<<< Updated upstream
           console.log(formData);
           console.log('Successfully submitted');
+=======
+         
+         
+>>>>>>> Stashed changes
           
           
         }
@@ -195,7 +200,7 @@ export const SignUpPage=()=>{
           onChange={handleChange}
 
         />
-        {showPassword? (<FaEye className={styles.password_eye} onClick={handleShowPassword}/>):(<FaEyeSlash className={styles.password_eye} onClick={handleShowPassword}/>)}
+        {showPassword? (<FaEyeSlash className={styles.password_eye} onClick={handleShowPassword}/>):(<FaEye className={styles.password_eye} onClick={handleShowPassword}/>)}
         </div>
         {error.password && <p className={styles.input_error}>{error.password}</p>}
        </div>
