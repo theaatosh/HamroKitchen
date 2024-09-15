@@ -58,7 +58,7 @@ export const LoginPage=()=>{
         catch
         {
           console.log("Error");
-        }
+        }2
         console.log('Successfully submitted');
         }
   }
