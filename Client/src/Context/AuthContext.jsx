@@ -7,7 +7,7 @@ import { createContext, useContext, useState } from "react";
 
 export const AuthContextProvider=({children})=>{
 
-    const [isAuthenticated,setIsAuthenticated]=useState(true);
+    const [isAuthenticated,setIsAuthenticated]=useState(false);
 
   const login=()=>setIsAuthenticated(true);
   const logout=()=>setIsAuthenticated(false);
