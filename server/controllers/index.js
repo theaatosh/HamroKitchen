@@ -62,7 +62,6 @@ function checkPromise(validationErrors){
 async function checkEmail(email){
      try{
         const result = await user.findOne({email:email});
-        console.log(result);
         if (result) {
             console.log("user exist", result);
             return true;
