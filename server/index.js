@@ -31,18 +31,25 @@ app.post('/signup', async (req, res) => {
   //chechking promise
   const check=checkPromise(validationErrors);
   if(check){
-    console.log("Checked whether user exists or not");
-    const existingUser= await checkEmail(email);
+    console.log("Checking whether user exists or not");
+    try{
+      const existingUser= await checkEmail(email, userName);
+
+      if(!existingUser){
+        let user= registerUser(userName, email, phoneNumber, password);
+        if(user){
+         console.log("user registered");
+         res.send("user registered sucessfully");
+        }else{
+         res.send("error while registering");
+        }
+   }
+    }
+      catch(err){
+        console.log(err);
+      }
     
-    if(!existingUser){
-     let user= registerUser(userName, email, phoneNumber, password);
-     if(user){
-      console.log("user registered");
-      res.send("user registered sucessfully");
-     }else{
-      res.send("error while registering");
-     }
-}
+    
 }
 });
  //login authentication
