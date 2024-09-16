@@ -3,9 +3,13 @@ import { FaCartShopping } from "react-icons/fa6";
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { StoreContext } from "../Context/StoreContext";
+import { useAuth } from "../Context/AuthContext";
+import { FaUser } from "react-icons/fa";
+import { IoMdNotifications } from "react-icons/io";
 
 export const Navbar = () => {
   const { scrollToAbout, scrollToFooter, cartItems } = useContext(StoreContext);
+  const{isLoggedIn}=useAuth();
   const [activeMenu, setActiveMenu] = useState("Home");
 
   const cartItemsCount=Object.keys(cartItems).length;
@@ -48,13 +52,27 @@ export const Navbar = () => {
         </li>
       </ul>
       <div className={styles.navbar_right}>
+        <div className={styles.cart_icon_div}>
        <Link to="/cart">
           <FaCartShopping className={styles.cart_icon} />
         </Link>
         <div className={styles.cartItemsCount}>{cartItemsCount>0?`(${cartItemsCount})`:""}</div>
-        <Link to="/login">
-          <button className={styles.navbar_login_btn}>Login</button>
-        </Link>
+        </div>
+          {isLoggedIn?(
+            <>
+            <IoMdNotifications className={styles.notification_icon}/>
+            <FaUser  className={styles.user_icon}/>
+            <button className={styles.navbar_login_btn}>Logout</button>
+            
+            </>
+            
+            
+          ):
+          (
+            <Link to="/login">
+            <button className={styles.navbar_login_btn}>Login</button>
+          </Link>
+          )}
       </div>
     </div>
   );

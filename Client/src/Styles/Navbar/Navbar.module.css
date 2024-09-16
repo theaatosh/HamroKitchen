@@ -39,10 +39,15 @@
     align-items: center;
     gap: 4vw;
 }
-.cart_icon{
+
+.cart_icon_div{
     position: relative;
-    font-size: 4.5vh;
+    width: 4vw;
+
+    & .cart_icon{
+        font-size: 4.5vh;
     cursor: pointer;
+    }
 }
 .cartItemsCount{
     position: absolute;
@@ -50,7 +55,19 @@
     min-height: 1.3vh;
     top: 0vh;
     color: red;
-    right: 9.5vw;
+    right: 0;
+
+}
+
+.user_icon{
+    position: relative;
+    font-size: 4vh;
+    cursor: pointer;
+}
+.notification_icon{
+    position: relative;
+    font-size: 5vh;
+    cursor: pointer;
 
 }
 .navbar_login_btn{

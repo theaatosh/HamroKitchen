@@ -2,11 +2,14 @@ import { useState } from 'react';
 import { FaEye, FaEyeSlash, FaUserCircle } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
 import styles from '../Styles/Login_Signup/Login.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { LogSignupNotification } from '../Components/LogSignupNotification';
+import { useAuth } from '../Context/AuthContext';
 export const LoginPage=()=>{
 
-
+  const navigate=useNavigate();
+  const{showNotification,setShowNotification,message,setMessage,messageType,setMessageType}=useAuth();
     const [error,setError]=useState({});
     const [showPassword,setShowPassword]=useState(false);
     const [formData,setFormData]=useState({
@@ -53,13 +56,20 @@ export const LoginPage=()=>{
         try{
           const result =await axios.post('http://localhost:5010/login',formData);
           console.log("Posted!");
-          console.log(result.data);
+          setMessage(result.data);
+          setShowNotification(true);
+          setMessageType('success');
+
+        setTimeout(() => {
+          navigate('/');
+        }, 2000);
         }
-        catch
+        catch(error)
         {
-          console.log("Error");
-        }2
-        console.log('Successfully submitted');
+          setMessage(error);
+          setShowNotification(true);
+          setMessageType('error');
+        }
         }
   }
 
@@ -70,8 +80,6 @@ export const LoginPage=()=>{
           }))
 
           setError((prevError)=>({...prevError,[name]:''}));
-          console.log(formData);
-          console.log(error);
           
     }
     //handle show password
@@ -94,8 +102,7 @@ export const LoginPage=()=>{
                 <div className={styles.right_container}>
                     <div className={styles.inner_right}>
                         <div className={styles.heading_welcome}> <h1>Welcome</h1></div>
-                        <p className={styles.sub_head}>Login with username</p>
-                        
+                        <p className={styles.sub_head}>Login with username</p>                    
                         
             {/* right Container */}
         <div className={styles.input_details}>
@@ -154,6 +161,9 @@ export const LoginPage=()=>{
             </div>
 
         </div>
+
+        {/* showing notification bar */}
+        {showNotification&& <LogSignupNotification message={message} messageType={messageType} onClose={()=>setShowNotification(false)}/>}
         </>
     )
 }

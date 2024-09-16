@@ -6,11 +6,17 @@ import { RiLockPasswordFill } from "react-icons/ri";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import styles from '../Styles/Login_Signup/Signup.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { LogSignupNotification } from '../Components/LogSignupNotification';
+import { useAuth } from '../Context/AuthContext';
 
 export const SignUpPage=()=>{
 
+  const{showNotification,setShowNotification,message,setMessage,messageType,setMessageType}=useAuth();
+  const navigate=useNavigate();
+  
+  //user details
   const [formData,setFormData]=useState({
     userName:"",
     email:"",
@@ -21,7 +27,7 @@ export const SignUpPage=()=>{
   
     const [error,setError]=useState({});
     const[ showPassword,setShowPassword]=useState(false);
-    
+
     //validating form
     const validate=()=>{
       let formErrors={};
@@ -69,15 +75,22 @@ export const SignUpPage=()=>{
         {
           try{
             const result =await axios.post('http://localhost:5010/signup',formData);
-            console.log("Posted!");
-            console.log(result.data);
+            setMessage(result.data);
+            setMessageType('success');
+            setShowNotification(true);
+
+            setTimeout(() => {
+              navigate('/login');
+            }, 2000);
+            
           }
           catch
           {
-            console.log("Error");
+            setMessage("Error Occured");
+            setMessageType("error");
+            setShowNotification(true);
+
           }
-          console.log(formData);
-          console.log('Successfully submitted');
           
           
         }
@@ -210,6 +223,7 @@ export const SignUpPage=()=>{
     <div className={styles.haveAccount}>
        <p>Already have account? <Link to='/login'><span>Login Now</span></Link></p>
     </div>
+    {showNotification&&<LogSignupNotification message={message} onClose={()=>setShowNotification(false)} messageType={messageType}/>}
                         </div>
                     </div>
                 </div>

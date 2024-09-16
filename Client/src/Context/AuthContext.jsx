@@ -7,15 +7,21 @@ import { createContext, useContext, useState } from "react";
 
 export const AuthContextProvider=({children})=>{
 
-    const [isAuthenticated,setIsAuthenticated]=useState(false);
+  //for user signup and login and message  
+  const [showNotification,setShowNotification]=useState(false);
+  const[message,setMessage]=useState('');//successfull and error message
+  const[messageType,setMessageType]=useState('');//for setting the message type of success and error
+  const [isLoggedIn,setIsLoggedIn]=useState(false);
+    
+  
 
-  const login=()=>setIsAuthenticated(true);
-  const logout=()=>setIsAuthenticated(false);
+  const login=()=>setIsLoggedIn(true);
+  const logout=()=>setIsLoggedIn(false);
 
     const authValue={
-        isAuthenticated,
+        isLoggedIn,
         login,
-        logout
+        logout,showNotification,setShowNotification,message,setMessage,messageType,setMessageType
     }
 
   return(
