@@ -8,7 +8,7 @@ async function serverSideValidation(userName, email, phoneNumber, password) {
     if(!userName){
         console.log("user name is requires");
         return false;
-    }else if(!/[A-Za-z]+\s[A-Za-z]*/.test(userName))
+    }else if(!(/[A-Za-z]+\s[A-Za-z]*/.test(userName)))
     {
         console.log("userName must start with aplhabet");
         return false;
@@ -49,7 +49,7 @@ async function serverSideValidation(userName, email, phoneNumber, password) {
 
 
 function checkPromise(validationErrors){
-    let value= Promise.resolve(true);
+    let value= Promise.resolve(validationErrors);
     if(value){
         console.log("promise is true");
         return true;
@@ -59,11 +59,16 @@ function checkPromise(validationErrors){
     }
 }
 
-async function checkEmail(email){
+async function checkEmail(email , userName){
      try{
         const result = await user.findOne({email:email});
         if (result) {
             console.log("user exist", result);
+            let checkUserName = await user.findOne({userName:userName});
+            if(checkUserName){
+                console.log("userName already exist");
+                return true;
+            }
             return true;
           }else{
             console.log("user doesnot exist moving to registring the user");
