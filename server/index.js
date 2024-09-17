@@ -25,12 +25,10 @@ app.post('/signup', async (req, res) => {
  
   
   // Perform server-side validation
-  const validationErrors  = serverSideValidation(userName, email, phoneNumber, password);
+  const validationErrors  = await serverSideValidation(userName, email, phoneNumber, password);
   console.log(validationErrors);
 
-  //chechking promise
-  const check=checkPromise(validationErrors);
-  if(check){
+  if(validationErrors){
     console.log("Checking whether user exists or not");
     try{
       const existingUser= await checkEmail(email, userName);
@@ -39,7 +37,7 @@ app.post('/signup', async (req, res) => {
         let user= registerUser(userName, email, phoneNumber, password);
         if(user){
          console.log("user registered");
-         res.send("user registered sucessfully");
+         res.status(200).send("user registered sucessfully");
         }else{
          res.send("error while registering");
         }
@@ -50,6 +48,9 @@ app.post('/signup', async (req, res) => {
       }
     
     
+    
+}else{
+  console.log("validation Error");
 }
 });
  //login authentication
