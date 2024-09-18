@@ -5,7 +5,7 @@ export const LogSignupNotification=({message,onClose,messageType})=>{
         useEffect(()=>{
             const timer=setTimeout(()=>{
             onClose();
-            },3000)
+            },1000)
             
          return()=>clearTimeout(timer);
         },[onClose])

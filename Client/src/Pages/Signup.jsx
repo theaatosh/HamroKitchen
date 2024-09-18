@@ -74,19 +74,34 @@ export const SignUpPage=()=>{
         else 
         {
           try{
-            const result =await axios.post('http://localhost:5010/signup',formData);
+            console.log("ok");
+            const result = await axios.post('http://localhost:5010/signup',formData);
             setMessage(result.data);
-            setMessageType('success');
             setShowNotification(true);
-
-            setTimeout(() => {
-              navigate('/login');
-            }, 2000);
             
-          }
-          catch
+            if(result.status===200)
+            {
+                setMessageType('success');
+                setTimeout(() => {
+                navigate('/login');
+              }, 2000);
+            }
+            else if(result.status===400)
+              {
+                setMessage("error while registering");
+  
+              }
+        }
+          catch(err)
           {
-            setMessage("Error Occured");
+          if(err.status===401)
+            {
+              setMessage("User Already Exists");
+            }
+            else
+            {
+              setMessage(err.data);
+            }
             setMessageType("error");
             setShowNotification(true);
 

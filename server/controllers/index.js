@@ -59,7 +59,7 @@ function checkPromise(validationErrors){
 }
 
 async function checkEmail(email , userName){
-     try{
+     try{   
         const result = await user.findOne({email:email});
         let checkUserName = await user.findOne({userName:userName});
         if (result || checkUserName) {

@@ -9,7 +9,7 @@ import { useAuth } from '../Context/AuthContext';
 export const LoginPage=()=>{
 
   const navigate=useNavigate();
-  const{showNotification,setShowNotification,message,setMessage,messageType,setMessageType}=useAuth();
+  const{showNotification,setShowNotification,message,setMessage,messageType,setMessageType,login}=useAuth();
     const [error,setError]=useState({});
     const [showPassword,setShowPassword]=useState(false);
     const [formData,setFormData]=useState({
@@ -23,22 +23,11 @@ export const LoginPage=()=>{
       if(!formData.userName.trim()){
         formErrors.userName="UserName Required *";
       }
-      else if(!/[A-Za-z]+[A-Za-z]*/.test(formData.userName))
-      {
-        formErrors.userName="Invalid UserName";
-      }
 
       
       
       if(!formData.password.trim()){
         formErrors.password="Password Is required *";
-      }
-      else if(formData.password.length<8)
-      {
-        formErrors.password="At least 8 character";
-      }
-      else if(!/^(?=.*[A-Z])(?=.*[a-z])(?=.*[\d])(?=.*[\W_]).{8,}$/.test(formData.password)){
-        formErrors.password="Use atleast a uppercase lowercase a digit and a symbol ";
       }
 
     return formErrors;
@@ -55,14 +44,26 @@ export const LoginPage=()=>{
 
         try{
           const result =await axios.post('http://localhost:5010/login',formData);
-          console.log("Posted!");
           setMessage(result.data);
+          console.log(result.data);
+          
           setShowNotification(true);
-          setMessageType('success');
+          if(result.status===200)
+          {
+            if(result.data==="login sucessfully"){
+              setMessageType('success');
+              login();
+              setTimeout(() => {
+              navigate('/');
+            }, 2000);
 
-        setTimeout(() => {
-          navigate('/');
-        }, 2000);
+            }else if(result.data==="incorrect password"){
+              setMessageType('error');
+            }
+          }else{
+            console.log("hi");
+          }
+          
         }
         catch(error)
         {
@@ -91,7 +92,7 @@ export const LoginPage=()=>{
         <div className={styles.main_container}>
             <div className={styles.signUp_container}>
               {/* left container */}
-                <div className={styles.left_container}>
+              <div className={styles.left_container}>
                     <div className={styles.overlay}></div>
                     <div className={styles.text_overlay}>
                     <h1>Hamro Kitchen</h1>
@@ -102,7 +103,7 @@ export const LoginPage=()=>{
                 <div className={styles.right_container}>
                     <div className={styles.inner_right}>
                         <div className={styles.heading_welcome}> <h1>Welcome</h1></div>
-                        <p className={styles.sub_head}>Login with username</p>                    
+                        <p className={styles.sub_head}>Login with username</p>                      
                         
             {/* right Container */}
         <div className={styles.input_details}>

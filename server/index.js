@@ -36,19 +36,19 @@ app.post('/signup', async (req, res) => {
       if(!existingUser){
         let user= registerUser(userName, email, phoneNumber, password);
         if(user){
-         console.log("user registered");
          res.status(200).send("user registered sucessfully");
         }else{
-         res.send("error while registering");
+         res.status(400).send("error while registering");
         }
    }
+   else
+   {
+    res.status(401).send("User already exist");
+   }
     }
-      catch(err){
+  catch(err){
         console.log(err);
-      }
-    
-    
-    
+      }  
 }else{
   console.log("validation Error");
 }

@@ -8,5 +8,6 @@ export const ProtectedRoute=({children})=>{
 
     return(
         isLoggedIn? children: <Navigate to='/login'/>
+
     )
 };
