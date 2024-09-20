@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors'); // Import the cors middleware
 const user = require("./models/index");
 const { connectToMongoDB } = require("./connections/index");
-const { serverSideValidation , checkPromise, checkEmail, registerUser, checkUserName } = require("./controllers/index");
+const { serverSideValidation , checkEmail, registerUser, checkUserName, hashPassword,comparePasswords } = require("./controllers/index");
 require('dotenv').config();
 const app = express();
 app.use(express.json());
@@ -34,7 +34,8 @@ app.post('/signup', async (req, res) => {
       const existingUser= await checkEmail(email, userName);
 
       if(!existingUser){
-        let user= registerUser(userName, email, phoneNumber, password);
+        let hashedPassword= await hashPassword(password);
+        let user= registerUser(userName, email, phoneNumber, hashedPassword);
         if(user){
          res.status(200).send("user registered sucessfully");
         }else{
@@ -55,18 +56,13 @@ app.post('/signup', async (req, res) => {
 });
  //login authentication
 app.post('/login', async (req, res) =>{
-  console.log("request");
   let {userName, password}=req.body;
-  console.log("Data received from loginpage:");
-
   var userFound= await checkUserName(userName);
-  console.log(userFound);
   if(userFound){
-    if(userFound.password==password){
-      console.log("login sucessfully");
+    const matched= await comparePasswords(password, userFound.password);
+    if(matched){
       res.send("login sucessfully");
     }else{
-      console.log("incorrect password");
       res.send("incorrect password");
     }
  
