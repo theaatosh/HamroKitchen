@@ -5,7 +5,7 @@ import { FoodItemDisplay } from "./FoodItemDisplay";
 
 export const FoodDisplay = () => {
   //from store context
-  const { foodItems, category, searchItem,isLoading } = useContext(StoreContext);
+  const { foodItems, category, searchItem,isLoading,aboutUsRef } = useContext(StoreContext);
 
   const [filteredItem, setFilteredItem] = useState([]);
   useEffect(() => {
@@ -35,9 +35,9 @@ export const FoodDisplay = () => {
   , [category, searchItem,foodItems,isLoading]);
   return (
     <>
-      <div className={styles.food_display_container}>
+      <div  className={styles.food_display_container}>
         <h2>Top Dishes Near You</h2>
-        <div className={styles.food_display_list}>
+        <div  className={styles.food_display_list}>
           
         {isLoading ? (
             <p>Loading food items...</p> // Show loading indicator
@@ -53,8 +53,11 @@ export const FoodDisplay = () => {
               />
             ))
           )}
+          
         </div>
       </div>
+
+      <div ref={aboutUsRef} className={styles.about_us_ref_div}></div>
     </>
   );
 };

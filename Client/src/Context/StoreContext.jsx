@@ -9,6 +9,7 @@ export const StoreContextProvider = (props) => {
   const [isLoading, setIsLoading] = useState(true); 
   const aboutUsRef = useRef(null); //for about us reference
   const contactUsRef = useRef(null); //for contact  us reference
+  const foodDisplayRef=useRef(null);
   
   const scrollToAbout = () => {
     aboutUsRef.current.scrollIntoView({ behavior: "smooth" });
@@ -18,9 +19,17 @@ export const StoreContextProvider = (props) => {
     contactUsRef.current.scrollIntoView({ behavior: "smooth" });
     console.log(contactUsRef);
   }
+  const scrollToDisplayFood=()=>{
+    foodDisplayRef.current.scrollIntoView({behavior:"smooth"});
+  }
   const [searchItem,setSearchItem]=useState('');//for landing page search bar
   const handleSearchItem=(e)=>{
     setSearchItem(e.target.value.toLowerCase());
+
+    if(e.key==='Enter')
+    {
+      scrollToDisplayFood();
+    }
     
   }
 
@@ -108,6 +117,7 @@ export const StoreContextProvider = (props) => {
     setCategory,
     aboutUsRef,
     contactUsRef,
+    foodDisplayRef,
     scrollToAbout,
     scrollToFooter,
     searchItem,

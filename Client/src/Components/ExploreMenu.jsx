@@ -4,7 +4,7 @@ import {MenuList}  from "../assets/Explore Menu/Menu"
 import { StoreContext } from "../Context/StoreContext";
 export const ExploreMenu = () => {
 
-  const{ category, setCategory }=useContext(StoreContext);
+  const{ category, setCategory,foodDisplayRef }=useContext(StoreContext);
   return (
     <>
       <div className={styles.explore_menu}>
@@ -12,7 +12,7 @@ export const ExploreMenu = () => {
         <div className={styles.menu_container}>
           {MenuList.map((curImg) => {
             return (
-              <div
+              <div ref={foodDisplayRef}
                 key={curImg.id}
                 className={styles.menu_item}
                 onClick={() =>
