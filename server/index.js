@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const router=express.Router();
 const cors = require('cors'); // Import the cors middleware
 const user = require("./models/index");
 const { connectToMongoDB } = require("./connections/index");
@@ -7,17 +8,19 @@ const { serverSideValidation , checkEmail, registerUser, checkUserName, hashPass
 require('dotenv').config();
 const app = express();
 app.use(express.json());
-app.use(cors()); // Use the cors middleware
+app.use(cors()); 
 
 const PORT = process.env.PORT;
 const mongo = process.env.URI;
+
+
 
 connectToMongoDB(mongo)
 .then(() => console.log("MongoDB Connected"))
 .catch(err => console.error(err));
 
-//test 
-// registerUser("test", "test", "test", "test");
+//routes 
+
 
 app.post('/signup', async (req, res) => {
   const { userName, email, phoneNumber, password } = req.body;
@@ -71,6 +74,10 @@ app.post('/login', async (req, res) =>{
   }
 
 });
+
+const addItemsRoute = require('./routes/addItemsRoute.js');
+app.use('/addItems', addItemsRoute);
+app.use("/uploads", express.static("uploads"));// access image publicly
 
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

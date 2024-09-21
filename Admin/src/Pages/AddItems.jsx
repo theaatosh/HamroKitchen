@@ -1,6 +1,7 @@
 import {  useState } from 'react';
 import styles from '../Styles/AddItem.module.css';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 export const AddItems=()=>{
 
     const[image,setImage]=useState(false);
@@ -27,10 +28,27 @@ export const AddItems=()=>{
         formData.append("price",data.price)
         formData.append("category",data.category)
         formData.append("image",image)
+        console.log(formData);
+        try{
+             const result = await axios.post('http://localhost:5010/addItems',formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data' // Axios will handle this, but this is just for reference
+                }
+                }
 
-        toast.success("Food Added ",{
-            autoClose:2000
-        });
+             );
+             toast.success("Food Added ",{
+                autoClose:2000
+            });
+        }catch(err){
+             toast.error("error", {
+                autoClose:2000
+             });
+            console.log(err);
+        }
+        
+
+
     }
 
 
