@@ -10,7 +10,7 @@
     font-size: 16px;
     font-weight: 500;
     z-index: 1000; /* Ensure it appears above other elements */
-    animation: slideIn 0.4s ease-in-out;
+    animation: slideIn 0.6s ease-in-out;
   }
   
   .success{

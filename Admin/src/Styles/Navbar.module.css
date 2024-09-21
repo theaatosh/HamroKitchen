@@ -1,0 +1,18 @@
+.navbar{
+    width: 100%;
+    padding: 0vw 4vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+    background-color: #040D2F;
+
+    }
+
+.nav_logo img{
+    width: 5vw;
+  
+}
+.user_logo{
+    font-size: 5vw;
+}

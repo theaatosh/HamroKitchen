@@ -1,5 +1,5 @@
 {
-  "name": "hamro-kitchen",
+  "name": "admin",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -7,19 +7,14 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "start": "node ./server/index.cjs"
+    "preview": "vite preview"
   },
   "dependencies": {
     "axios": "^1.7.7",
-    "cors": "^2.8.5",
-    "express": "^4.19.2",
-    "mongoose": "^8.6.1",
-    "nodemon": "^3.1.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.3.0",
-    "react-router-dom": "^6.26.1",
+    "react-router-dom": "^6.26.2",
     "react-toastify": "^10.0.5"
   },
   "devDependencies": {
