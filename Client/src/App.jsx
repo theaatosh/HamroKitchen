@@ -6,6 +6,7 @@ import { LoginPage } from "./Pages/Login";
 import { SignUpPage } from "./Pages/Signup";
 import { PlaceOrder } from "./Pages/PlaceOrder";
 import { ProtectedRoute } from "./Components/ProtectedRoute";
+import { KitchenSignup } from "./Pages/KitchenSignup";
 
 
 export const App=()=>{
@@ -41,6 +42,10 @@ export const App=()=>{
             path:'login',
             element:<LoginPage/>
           },
+          {
+            path:'kitchen/Signup',
+            element:<KitchenSignup/>
+          }
           
         ]
       }
