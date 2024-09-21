@@ -1,7 +1,9 @@
 // const express=require(express);
 const mongoose=require('mongoose');
 const { connectToMongoDB } = require("../connections/index");
-const user=require("../models/index")
+const user=require("../models/index");
+const bcrypt=require('bcrypt');
+
 
 async function serverSideValidation(userName, email, phoneNumber, password) {
 
@@ -47,16 +49,16 @@ async function serverSideValidation(userName, email, phoneNumber, password) {
 }
 
 
-function checkPromise(validationErrors){
-    let value= Promise.resolve(validationErrors);
-    if(value){
-        console.log("promise is true");
-        return true;
-    }else{
-        console.log("The promise is false");
-        return false;
-    }
-}
+// function checkPromise(validationErrors){
+//     let value= Promise.resolve(validationErrors);
+//     if(value){
+//         console.log("promise is true");
+//         return true;
+//     }else{
+//         console.log("The promise is false");
+//         return false;
+//     }
+// }
 
 async function checkEmail(email , userName){
      try{   
@@ -65,7 +67,6 @@ async function checkEmail(email , userName){
         if (result || checkUserName) {
             console.log("user exist", result);
             if(checkUserName){
-                console.log("userName already exist");
                 return true;
             }
             return true;
@@ -81,19 +82,18 @@ async function checkEmail(email , userName){
 
 //registering user
 
-function registerUser(userName, email, phoneNumber, password){
+function registerUser(userName, email, phoneNumber, hashedPassword){
     try{
         const register=new user({
             userName:userName,
             email:email,
             phoneNumber:phoneNumber,
-            password:password,
+            password:hashedPassword,
         });
         register.save();
         return true;
     }
     catch(err){
-        console.log(err);
         return false;
     }
 }
@@ -102,12 +102,9 @@ async function checkUserName(userName){
     try{
         const result=await user.findOne({userName:userName})
         .select("password");
-        console.log(result);
         if (result) {
-            console.log("user found");
             return result;
           }else{
-            console.log("user doesnot exist moving to registring the user");
             return false;
           }
      }catch(err){
@@ -115,6 +112,28 @@ async function checkUserName(userName){
      }
 }
 
+//hash password
+const hashPassword = async (password) => {
+    const saltRounds=Number(process.env.SALT);
+        try {
+            const hashedPassword = await bcrypt.hash(password, saltRounds);
+            return hashedPassword;
+          } catch (err) {
+            console.error('Error hashing password:', err);
+          }
+        }
+//compare password
+const comparePasswords = async (password, result) => {
+    try {
+        const match = await bcrypt.compare(password, result);
+        return match; 
+    } catch (err) {
+      console.error('Error comparing passwords:', err);
+    }
+
+};
+
+
 module.exports={
-    serverSideValidation , checkPromise, checkEmail, registerUser, checkUserName
+    serverSideValidation , checkEmail, registerUser, checkUserName, hashPassword, comparePasswords
 }
