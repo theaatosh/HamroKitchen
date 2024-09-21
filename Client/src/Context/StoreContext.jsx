@@ -1,13 +1,12 @@
-import { createContext, useRef, useState } from "react";
-import {foodItems}  from "../assets/Explore Menu/Menu"
+import { createContext, useEffect, useRef, useState } from "react";
+import axios from 'axios';
+// import {foodItems}  from "../assets/Explore Menu/Menu"
 
 export const StoreContext = createContext(null);
-
 export const StoreContextProvider = (props) => {
 
-  // const[isLogin,setIsLogin]=useState(false);
   const [category,setCategory]=useState("All");//for menu category
-
+  const [isLoading, setIsLoading] = useState(true); 
   const aboutUsRef = useRef(null); //for about us reference
   const contactUsRef = useRef(null); //for contact  us reference
   
@@ -25,13 +24,39 @@ export const StoreContextProvider = (props) => {
     
   }
 
+  //fetching fooditems from the database
+  const[foodItems,setFoodItems]=useState([]);
+  const url="http://localhost:5010";
+  useEffect(() => {
+    // Fetch food items from the backend
+    const fetchFoodItems = async () => {
+      try {
+        const response = await axios.get('http://localhost:5010/');
+          setIsLoading(true);
+            setFoodItems(response.data); // Set the data to the state
+        } catch (error) {
+            console.error('Error fetching food items:', error);
+        }
+        finally{
+          setIsLoading(false);
+        }
+    };
+
+    fetchFoodItems();
+}, []);
+
+
+
 
   //for cart items
   const[cartItems,setCartItems]=useState({}); 
   
   const addToCart=(itemId)=>{
+    console.log(cartItems);
+    
     if(!cartItems[itemId]){
       setCartItems((prev)=>({...prev,[itemId]:1}))
+
     }
      else{
       setCartItems((prev)=>({...prev,[itemId]:prev[itemId]+1}));
@@ -68,15 +93,16 @@ export const StoreContextProvider = (props) => {
     {
       if(cartItems[item]>0)
       {  
-        let itemInfo=foodItems.find((product)=>product.id===parseInt(item));
-        totalAmount += itemInfo.price* cartItems[item];
+        let itemInfo=foodItems.find((product)=>product._id===item);
+        totalAmount += itemInfo.productPrice * cartItems[item];
      }
     }
      return totalAmount;  
   }
  
   const contextValue = {
-    // isLogin,
+    isLoading,
+    url,
     foodItems,
     category,
     setCategory,

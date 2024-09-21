@@ -6,6 +6,7 @@ const user = require("./models/index");
 const { connectToMongoDB } = require("./connections/index");
 const { serverSideValidation , checkEmail, registerUser, checkUserName, hashPassword,comparePasswords } = require("./controllers/index");
 require('dotenv').config();
+const foodItemDetails=require('./models/adminAddItem.js');
 const app = express();
 app.use(express.json());
 app.use(cors()); 
@@ -79,5 +80,12 @@ const addItemsRoute = require('./routes/addItemsRoute.js');
 app.use('/addItems', addItemsRoute);
 app.use("/uploads", express.static("uploads"));// access image publicly
 
-
+app.get('/',async (req, res)=>{
+  try {
+    const foodItems = await foodItemDetails.find(); // Assuming FoodItem is your model
+    res.status(200).send(foodItems);
+  } catch (error) {
+    res.status(500).send({ error: 'Failed to fetch food items' });
+  }
+});
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

@@ -7,6 +7,7 @@ import { CiCircleMinus } from "react-icons/ci";
 
 export const Cart = () => {
   const {
+    url,
     cartItems,
     setCartItems,
     foodItems,
@@ -20,7 +21,6 @@ export const Cart = () => {
 
   const handleTimeChange = (e) => {
     setSelectedTime(e.target.value);
-    console.log(e.target.value);
   };
 
   const handleProceedOrder = () => {
@@ -57,29 +57,29 @@ export const Cart = () => {
 
           <ul>
             {foodItems.map((curItem) => {
-              if (cartItems[curItem.id] > 0)
+              if (cartItems[curItem._id] > 0)
                 return (
-                  <div key={curItem.id}>
+                  <div key={curItem._id}>
                     <div className={`${styles.cart_items_item}`}>
-                      <img src={curItem.image} alt="" />
-                      <p>{curItem.name}</p>
-                      <p>Rs.{curItem.price}</p>
+                      <img src={url+'/'+curItem.image} alt="" />
+                      <p>{curItem.productName}</p>
+                      <p>Rs.{curItem.productPrice}</p>
                       <div className={styles.item_counter_container}>
                         <CiCircleMinus
                           className={styles.sub_icon}
-                          onClick={() => removeFromCart(curItem.id)}
+                          onClick={() => removeFromCart(curItem._id)}
                         />
-                        <p>{cartItems[curItem.id]}</p>
+                        <p>{cartItems[curItem._id]}</p>
                         <IoIosAddCircleOutline
                           className={styles.add1_icon}
-                          onClick={() => addToCart(curItem.id)}
+                          onClick={() => addToCart(curItem._id)}
                         />
                       </div>
-                      <p>Rs.{curItem.price * cartItems[curItem.id]}</p>
+                      <p>Rs.{curItem.productPrice * cartItems[curItem._id]}</p>
 
                       <p
                         className={styles.cross}
-                        onClick={() => handleremoveFromCart(curItem.id)}
+                        onClick={() => handleremoveFromCart(curItem._id)}
                       >
                         X
                       </p>
