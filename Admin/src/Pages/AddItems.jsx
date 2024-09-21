@@ -39,7 +39,14 @@ export const AddItems=()=>{
              );
              toast.success("Food Added ",{
                 autoClose:2000
-            });
+            })
+            setData({
+                name: "",
+                description: "",
+                price: "",
+                category: "Momo"
+              });
+              setImage(false);
         }catch(err){
              toast.error("error", {
                 autoClose:2000
