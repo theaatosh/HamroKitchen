@@ -6,8 +6,9 @@ export const PlaceOrder=()=>{
 
     const {getTotalCartAmount}=useContext(StoreContext);
     const location=useLocation();
-    const {selectedTime}=location.state||{};
-
+    const {selectedDateTime}=location.state||{};
+  console.log(selectedDateTime);
+  
     return(
         <>
         <div className={styles.place_order_container}>
@@ -27,7 +28,7 @@ export const PlaceOrder=()=>{
             <div className={styles.place_order_right}>
             <div className={styles.cart_bottom}>
           <div className={styles.cart_total}>
-            {selectedTime&& <p>Order scheduled for:{selectedTime}</p>}
+            {selectedDateTime&& <p>Order scheduled for: <br /> {selectedDateTime.toLocaleString()}</p>} <br />
             <h2>Cart Totals</h2>
             <div className={styles.cart_total_details}>
               <p>Sub Total</p>

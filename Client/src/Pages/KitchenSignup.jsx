@@ -1,11 +1,11 @@
 import styles from '../Styles/Login_Signup/KitchenSignup.module.css';
-import { useState } from 'react';
+import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from 'react-leaflet';
+import { useEffect, useState } from 'react';
 
 export const KitchenSignup=()=>{
-    const[error,setError]=useState('');
    const[formData,setFormData]=useState({
     category:[],
-    location:'',
+    location:{lat:null,lng:null},//esle lat ra lng lai store garxa
 
    })
 
@@ -17,14 +17,97 @@ export const KitchenSignup=()=>{
       category: selectedOptions,
     }));
   };
- console.log(formData);
+
  
+ //function to handle location update on map click
+ const handleMapClick=(e)=>{
+const{lat,lng}=e.latlng;
+setFormData((prevData)=>({
+  ...prevData,
+  location:{lat,lng},
+}))
+ }
+
+  // Leaflet map event listener component
+  const LocationMarker = () => {
+    useMapEvents({
+      click: (e) => handleMapClick(e),
+    });
+
+    return formData.location.lat ? (
+      <Marker position={[formData.location.lat, formData.location.lng]} />
+    ) : null;
+  };
   
    //handle submit
    const handleSubmit=(e)=>{
         e.preventDefault();
+        console.log(formData);
         
-   }
+  }
+
+  //esle xai user ko current location linxaif user le  manually map use garena bhane
+  useEffect(() => {
+
+      if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const { latitude, longitude } = position.coords;
+            setFormData((prevData) => ({
+              ...prevData,
+              location: { lat: latitude, lng: longitude },
+            }));
+          },
+          (err) => {
+            console.error("Error getting location, using default:", err);
+            // Default to Kathmandu if location not available
+            setFormData((prevData) => ({
+              ...prevData,
+              location: { lat: 27.7172, lng: 85.3240 },
+            }));
+          }
+        );
+      } else {
+        console.error("Geolocation not available, using default location");
+        setFormData((prevData) => ({
+          ...prevData,
+          location: { lat: 27.7172, lng: 85.3240 }, // Default location
+        }));
+      }
+    
+  }, []);
+
+  //esle xai marker anusar view lai center gardinxa
+  const UpdateMapCenter=()=>{
+    const map=useMap();
+    useEffect(()=>{
+      if(formData.location.lat&&formData.location.lng){
+        map.setView([formData.location.lat,formData.location.lng],20);
+        fetchAddress(formData.location.lat, formData.location.lng);
+      }
+    },[formData.location,map])
+  }
+
+  //function to fetch address from latitude and longitue
+  const fetchAddress = async (lat, lng) => {
+    try {
+      const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`);
+      const data = await response.json();
+      
+      setFormData((prevData) => ({
+        ...prevData,
+        address: data.display_name || 'Address not found',
+      }));
+    } catch (error) {
+      console.error('Error fetching address:', error);
+      setFormData((prevData) => ({
+        ...prevData,
+        address: 'Error fetching address',
+      }));
+    }
+  };
+
+
     return(
         <>
                 <div className={styles.main_container}>
@@ -64,11 +147,21 @@ export const KitchenSignup=()=>{
         
           </div>
 
+        {/* Leaflet Map for location  */}
         <div className={styles.form_group}>
-        <label htmlFor='location'>Provide your Location</label>
-
-
-      </div>
+                    <label htmlFor="location">Provide your Location</label>
+                    <MapContainer
+                      center={[27.7172, 85.3240]} 
+                      zoom={15}
+                      style={{ height: '200px', width: '100%',borderRadius:"2vh"}}
+                    >
+                      <TileLayer
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                      />
+                      <LocationMarker />
+                      <UpdateMapCenter/>
+                    </MapContainer>
+                  </div>
 
 
         {/* for signup button  */}
