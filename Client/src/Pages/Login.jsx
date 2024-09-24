@@ -44,20 +44,22 @@ export const LoginPage=()=>{
 
         try{
           const result =await axios.post('http://localhost:5010/login',formData);
-          setMessage(result.data);
+          setMessage(result.data.message);
           console.log(result.data);
           
           setShowNotification(true);
           if(result.status===200)
           {
-            if(result.data==="login sucessfully"){
+            if(result.data.message==="login sucessfully"){
+              const token=result.data.token;
+              localStorage.setItem('token', token); 
               setMessageType('success');
               login();
               setTimeout(() => {
               navigate('/');
             }, 2000);
 
-            }else if(result.data==="incorrect password"){
+            }else if(result.data.message==="incorrect password"){
               setMessageType('error');
             }
           }else{

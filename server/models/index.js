@@ -13,6 +13,10 @@ const userSchema=mongoose.Schema({
     },
     password:{
         type:String,
+    },
+    cart:{
+        type:Object,
+        default:{},
     }
 
 });
