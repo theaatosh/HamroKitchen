@@ -86,7 +86,7 @@ const addItemsRoute = require('./routes/addItemsRoute.js');
 app.use('/addItems', addItemsRoute);
 app.use("/uploads", express.static("uploads"));// access image publicly
 
-app.get('/',async (req, res)=>{
+app.get('/topDishes',async (req, res)=>{
   try {
     const foodItems = await foodItemDetails.find(); 
     res.status(200).send(foodItems);

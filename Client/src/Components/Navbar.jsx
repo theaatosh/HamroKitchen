@@ -11,8 +11,14 @@ export const Navbar = () => {
   const { scrollToAbout, scrollToFooter, cartItems } = useContext(StoreContext);
   const{isLoggedIn,logout}=useAuth();
   const [activeMenu, setActiveMenu] = useState("Home");
+  const[isUserMenuOpen,setIsUserMenuOpen]=useState(false);
+  const toggleUserMenu=()=>{
+    setIsUserMenuOpen(!isUserMenuOpen);
+    console.log(isUserMenuOpen);
+    
+  }
 
-  const cartItemsCount=Object.keys(cartItems).length;
+  const cartItemsCount=Object.keys(cartItems).length;//no of items in cart
   
   return (
     <div className={styles.navbar}>
@@ -58,16 +64,28 @@ export const Navbar = () => {
         </Link>
         <div className={styles.cartItemsCount}>{cartItemsCount>0?`(${cartItemsCount})`:""}</div>
         </div>
+
+        {/* this part is rendered only if the user is logged in  */}
           {isLoggedIn?(
             <>
+            <div className={styles.notification_icon_con}>
             <IoMdNotifications className={styles.notification_icon}/>
-            <FaUser  className={styles.user_icon}/>
-            <button className={styles.navbar_login_btn} onClick={()=>logout()}>Logout</button>
-            
+            </div>
+            <div className={styles.user_icon_con}>
+            <FaUser  onClick={toggleUserMenu} className={styles.user_icon}/>
+
+             {/* click garda khulne div ho  */}
+            {isUserMenuOpen&&(
+              <div className={styles.user_menu}>
+                <Link to='/profile'><p className={styles.user_menu_p}>My Profile</p></Link><hr />
+                <Link to='/kitchen/signUp'><p className={styles.user_menu_p}>Register as Kitchen</p></Link><hr />
+                <p onClick={()=>logout()} className={styles.user_menu_p}>Logout</p>
+
+              </div>
+            )}
+            </div>
             </>
-            
-            
-          ):
+            ):
           (
             <Link to="/login">
             <button className={styles.navbar_login_btn}>Login</button>

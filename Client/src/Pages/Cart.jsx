@@ -4,6 +4,8 @@ import { StoreContext } from "../Context/StoreContext";
 import { useNavigate } from "react-router-dom";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { CiCircleMinus } from "react-icons/ci";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css"; // Import the CSS
 
 export const Cart = () => {
   const {
@@ -15,20 +17,20 @@ export const Cart = () => {
     removeFromCart,
     getTotalCartAmount,
   } = useContext(StoreContext);
-  const [selectedTime, setSelectedTime] = useState("");
+  const [selectedDateTime, setSelectedDateTime] = useState(new Date());
+  console.log(selectedDateTime);
+  
   const navigate = useNavigate();
   const isCartEmpty = Object.keys(cartItems).length === 0;
 
-  const handleTimeChange = (e) => {
-    setSelectedTime(e.target.value);
-  };
+
 
   const handleProceedOrder = () => {
-    if (!selectedTime) {
+    if (!selectedDateTime) {
       alert("Please select a time to schedule your order");
       return;
     } else {
-      navigate("/placeOrder",{state:{selectedTime}});
+      navigate("/placeOrder",{state:{selectedDateTime}});
     }
   };
   // for removing item without decrement
@@ -118,15 +120,18 @@ export const Cart = () => {
             </button>
           </div>
 
+              {/* schedule order  */}
           <div className={styles.schedule_order_container}>
             <h2>Schedule Your Order</h2>
             <label htmlFor="schedule-time">Schedule here</label>
-            <input
-              type="time"
-              id="schedule-time"
-              disabled={isCartEmpty}
-              value={selectedTime}
-              onChange={handleTimeChange}
+            <DatePicker 
+            selected={selectedDateTime}
+            onChange={(date)=>setSelectedDateTime(date)}
+            showTimeSelect
+            dateFormat='Pp'
+            timeFormat="HH:mm"
+            timeIntervals={15} 
+            minDate={new Date()}
             />
           </div>
         </div>

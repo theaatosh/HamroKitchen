@@ -40,7 +40,7 @@ export const StoreContextProvider = (props) => {
     // Fetch food items from the backend
     const fetchFoodItems = async () => {
       try {
-        const response = await axios.get('http://localhost:5010/');
+        const response = await axios.get('http://localhost:5010/topDishes');
           setIsLoading(true);
             setFoodItems(response.data); // Set the data to the state
         } catch (error) {
