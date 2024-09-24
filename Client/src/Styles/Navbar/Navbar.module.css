@@ -1,9 +1,4 @@
-:root{
-    --primary:#3C096C;
-    --secondary:#7B2cBF;
-    --text-color:#9D4EDD;
 
-}
 .navbar{
     padding: 0.5vh 5vw;
     width:100%;
@@ -58,12 +53,42 @@
     right: 0;
 
 }
-
-.user_icon{
+.user_icon_con{
     position: relative;
+
+}
+.user_icon{
+   
     font-size: 4vh;
     cursor: pointer;
+
 }
+.user_menu {
+    position: absolute;
+    top: 120%; /* Places the menu directly below the user icon */
+    left: 50%;
+    transform: translateX(-60%);
+    padding: 1vh 2vw;
+   width: 13vw;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 3vh;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  }
+.user_menu_p{
+    padding: 2vh 2vw;
+    transition: 0.2s linear;
+    cursor: pointer;
+    border-radius: 2vh;
+    font-weight: 600;
+    &:hover{
+            color: #e2e2e2;
+            background-color: black;
+            
+        }
+}
+
 .notification_icon{
     position: relative;
     font-size: 5vh;
