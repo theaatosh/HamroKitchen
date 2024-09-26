@@ -7,6 +7,7 @@ import { SignUpPage } from "./Pages/Signup";
 import { PlaceOrder } from "./Pages/PlaceOrder";
 import { ProtectedRoute } from "./Components/ProtectedRoute";
 import { KitchenSignup } from "./Pages/KitchenSignup";
+import AuthUser from "./Context/AuthUser";
 
 
 export const App=()=>{
@@ -17,7 +18,9 @@ export const App=()=>{
         children:[
           {
             index:true,
-            element:<Home/>
+            element:
+              <Home/>
+              
           },
           {
             path:'cart',
@@ -40,7 +43,11 @@ export const App=()=>{
           },
           {
             path:'login',
-            element:<LoginPage/>
+            element:
+          
+              <LoginPage/>
+          
+              
           },
           {
             path:'kitchen/Signup',

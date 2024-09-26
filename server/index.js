@@ -1,5 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const axios = require('axios');
+
 const jwt=require('jsonwebtoken');
 const router=express.Router();
 const cors = require('cors'); // Import the cors middleware
@@ -94,6 +96,30 @@ app.get('/topDishes',async (req, res)=>{
     res.status(500).send({ error: 'Failed to fetch food items' });
   }
 });
+
+const https = require('https');
+const agent = new https.Agent({  
+  rejectUnauthorized: false // Disable SSL certificate verification
+});
+app.get('/api/geoCode', async (req,res)=>{
+  try{
+    console.log("here");
+    const {lat,lon}=req.query;
+    const response = await axios.get(`https://nominatim.openstreetmap.org/reverse`,{
+      params: {
+        lat,
+        lon,
+        format: 'json',
+    },
+    httpsAgent: agent,
+  });
+  console.log(response.data);
+  res.json(response.data);
+  }catch(err){
+    console.error('Error fetching address:', err);
+    res.status(500).send('Error fetching address');
+  }
+})
 
 const cartRoute= require('./routes/cartRoute.js');
 app.use('/cart',cartRoute);
