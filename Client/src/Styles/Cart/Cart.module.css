@@ -55,8 +55,9 @@
   background-color: #e2e2e2;
   border: none;
 }
-.cart_items_item .cross {
+.cart_items .del_icon {
   cursor: pointer;
+  font-size: 4vh;
 
   &:hover {
     color: red;

@@ -7,6 +7,10 @@ import { SignUpPage } from "./Pages/Signup";
 import { PlaceOrder } from "./Pages/PlaceOrder";
 import { ProtectedRoute } from "./Components/ProtectedRoute";
 import { KitchenSignup } from "./Pages/KitchenSignup";
+import { MyProfile } from "./Pages/MyProfile";
+import { MyOrders } from "./Pages/MyOrders";
+
+// import { AuthUser } from "./Context/AuthUser";
 
 
 export const App=()=>{
@@ -19,6 +23,14 @@ export const App=()=>{
             index:true,
             element:<Home/>
           },
+          {
+              path:'profile',
+              element:<MyProfile/>
+          },
+          {
+            path:'myorders',
+            element:<MyOrders/>
+        },
           {
             path:'cart',
             element:
@@ -55,7 +67,8 @@ export const App=()=>{
     )
   return (
       <>
-      <RouterProvider router={router}></RouterProvider>
+      <RouterProvider router={router}>
+      </RouterProvider>
       </>
   )
 }

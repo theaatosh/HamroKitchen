@@ -16,7 +16,9 @@ export const AuthContextProvider=({children})=>{
   
 
   const login=()=>setIsLoggedIn(true);
-  const logout=()=>setIsLoggedIn(false);
+  const logout=()=>{setIsLoggedIn(false)
+   
+  };
 
     const authValue={
         isLoggedIn,

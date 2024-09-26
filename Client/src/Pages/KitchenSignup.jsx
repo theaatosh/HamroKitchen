@@ -42,7 +42,7 @@ setFormData((prevData)=>({
    //handle submit
    const handleSubmit=(e)=>{
         e.preventDefault();
-        console.log(formData);
+        
         
   }
 

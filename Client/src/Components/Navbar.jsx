@@ -8,7 +8,7 @@ import { FaUser } from "react-icons/fa";
 import { IoMdNotifications } from "react-icons/io";
 
 export const Navbar = () => {
-  const { scrollToAbout, scrollToFooter, cartItems } = useContext(StoreContext);
+  const { scrollToAbout, scrollToFooter,scrollToDisplayFood, cartItems } = useContext(StoreContext);
   const{isLoggedIn,logout}=useAuth();
   const [activeMenu, setActiveMenu] = useState("Home");
   const[isUserMenuOpen,setIsUserMenuOpen]=useState(false);
@@ -22,10 +22,13 @@ export const Navbar = () => {
   
   return (
     <div className={styles.navbar}>
+      {/* for logo  */}
       <Link to="/">
         <img src="/Images/NavbarLogo.png" alt="logo" />
       </Link>
+
       <ul className={styles.navbar_menu}>
+        {/* for home  */}
         <Link to="">
           <li
             onClick={() => setActiveMenu("Home")}
@@ -34,8 +37,21 @@ export const Navbar = () => {
             Home
           </li>
         </Link>
-
-
+        {/* for food items  */}
+        <Link to="">
+        <li
+          onClick={() => {
+            setActiveMenu("FoodItems");
+            scrollToDisplayFood();
+            console.log('hello');
+            
+          }}
+          className={`${activeMenu === "FoodItems" ? styles.active : ""}`}
+        >
+          Food Items
+        </li>
+        </Link>
+        {/* for about us  */}
         <Link to="">
         <li
           onClick={() => {
@@ -47,6 +63,8 @@ export const Navbar = () => {
           About Us
         </li>
         </Link>
+
+        {/* for contact Us  */}
         <li
           onClick={() => {
             setActiveMenu("Contact Us");
@@ -79,6 +97,7 @@ export const Navbar = () => {
               <div className={styles.user_menu}>
                 <Link to='/profile'><p className={styles.user_menu_p}>My Profile</p></Link><hr />
                 <Link to='/kitchen/signUp'><p className={styles.user_menu_p}>Register as Kitchen</p></Link><hr />
+                <Link to='/myorders'><p className={styles.user_menu_p}>My Orders</p></Link><hr />
                 <p onClick={()=>logout()} className={styles.user_menu_p}>Logout</p>
 
               </div>
