@@ -7,7 +7,7 @@ export const KitchenSignup=()=>{
    const[formData,setFormData]=useState({
     category:[],
     location:{lat:null,lng:null},//esle lat ra lng lai store garxa
-
+    
    })
 
    //selected category are stored inside category array 
@@ -43,6 +43,7 @@ setFormData((prevData)=>({
    //handle submit
    const handleSubmit=(e)=>{
         e.preventDefault();
+        console.log(formData);
         
         
   }
@@ -84,30 +85,30 @@ setFormData((prevData)=>({
     useEffect(()=>{
       if(formData.location.lat&&formData.location.lng){
         map.setView([formData.location.lat,formData.location.lng],20);
-        fetchAddress(formData.location.lat, formData.location.lng);
+        // fetchAddress(formData.location.lat, formData.location.lng);
       }
     },[formData.location,map])
   }
 
   //function to fetch address from latitude and longitue
-  const fetchAddress = async (lat, lng) => {
-    try {
-      // const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`);
-      const response= await axios.get('http://localhost:5010/api/geoCode' ,{params:{lat, lon:lng}});
-      const data = response.json();
+  // const fetchAddress = async (lat, lng) => {
+  //   try {
+  //     // const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`);
+  //     // const response= await axios.get('http://localhost:5010/api/geoCode' ,{params:{lat, lon:lng}});
+  //     // const data = response.json();
       
-      setFormData((prevData) => ({
-        ...prevData,
-        address: data.display_name || 'Address not found',
-      }));
-    } catch (error) {
-      console.error('Error fetching address:', error);
-      setFormData((prevData) => ({
-        ...prevData,
-        address: 'Error fetching address',
-      }));
-    }
-  };
+  //     setFormData((prevData) => ({
+  //       ...prevData,
+  //       address: data.display_name || 'Address not found',
+  //     }));
+  //   } catch (error) {
+  //     console.error('Error fetching address:', error);
+  //     setFormData((prevData) => ({
+  //       ...prevData,
+  //       address: 'Error fetching address',
+  //     }));
+  //   }
+  // };
 
 
     return(

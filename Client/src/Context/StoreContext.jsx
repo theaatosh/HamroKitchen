@@ -138,9 +138,9 @@ export const StoreContextProvider = (props) => {
     setCartItems(response.data.cartData);
   }
 
-  useEffect(async ()=>{
-    await loadCartData(token);
-  },[]);
+  // useEffect(async ()=>{
+  //   await loadCartData(token);
+  // },[]);
   const contextValue = {
     isLoading,
     url,
