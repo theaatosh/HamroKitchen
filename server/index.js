@@ -124,4 +124,7 @@ app.get('/api/geoCode', async (req,res)=>{
 const cartRoute= require('./routes/cartRoute.js');
 app.use('/cart',cartRoute);
 
+const kitchenSignUpRoute=require('./routes/kitchenSignupRoute.js');
+app.use('/api/kitchenSignUp', kitchenSignUpRoute);
+
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
