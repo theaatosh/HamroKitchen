@@ -17,6 +17,22 @@ const userSchema=mongoose.Schema({
     cart:{
         type:Object,
         default:{},
+    },
+    role:{
+        type:String,
+        default:"customer",
+    },
+    cookLocation:{
+        type:Object,
+        default:{
+            lat:"",
+            lon:"",
+        }
+    },
+    cookFoodItem:{
+        type:Object,
+        default:{
+        }
     }
 
 });

@@ -131,13 +131,16 @@ export const StoreContextProvider = (props) => {
     }
      return totalAmount;  
   }
-  //geting data from database
-  // const fetchCartList= async()=>{
-  //   const response= await axios.get("http://localhost:5010/cart/remove",{itemId},{headers: {'Authorization': `Bearer ${token}`}});
-  // }
+  
 
- 
- 
+  const loadCartData= async (token)=>{
+    const response =await axios.get("http://localhost:5010/cart/get",{},{headers: {'Authorization': `Bearer ${token}`}});
+    setCartItems(response.data.cartData);
+  }
+
+  useEffect(async ()=>{
+    await loadCartData(token);
+  },[]);
   const contextValue = {
     isLoading,
     url,

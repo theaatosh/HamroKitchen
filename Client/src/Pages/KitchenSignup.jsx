@@ -1,6 +1,7 @@
 import styles from '../Styles/Login_Signup/KitchenSignup.module.css';
 import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from 'react-leaflet';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export const KitchenSignup=()=>{
    const[formData,setFormData]=useState({
@@ -92,8 +93,9 @@ setFormData((prevData)=>({
   //function to fetch address from latitude and longitue
   const fetchAddress = async (lat, lng) => {
     try {
-      const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`);
-      const data = await response.json();
+      // const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`);
+      const response= await axios.get('http://localhost:5010/api/geoCode' ,{params:{lat, lon:lng}});
+      const data = response.json();
       
       setFormData((prevData) => ({
         ...prevData,

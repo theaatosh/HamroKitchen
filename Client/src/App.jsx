@@ -52,7 +52,11 @@ export const App=()=>{
           },
           {
             path:'login',
-            element:<LoginPage/>
+            element:
+          
+              <LoginPage/>
+          
+              
           },
           {
             path:'kitchen/Signup',
