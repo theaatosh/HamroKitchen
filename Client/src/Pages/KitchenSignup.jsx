@@ -48,9 +48,9 @@ setFormData((prevData)=>({
         
   }
 
-  //esle xai user ko current location linxaif user le  manually map use garena bhane
+  //esle xai user ko current location linxa if user le  manually map use garena bhane
   useEffect(() => {
-
+    
       if ('geolocation' in navigator) {
         navigator.geolocation.getCurrentPosition(
           (position) => {

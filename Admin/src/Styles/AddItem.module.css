@@ -1,12 +1,20 @@
-p{
-    font-size: 2.5vh;
-}
-.addItems_main_container{
-    color: #6d6d6d;
 
+.addItems_main_container{
+    /* color: #6d6d6d; */
+    color: #36454F;
+    height: 80vh;
+    border-radius: 7vh;
+    width: 90%;
+    margin: auto;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+    p {
+        font-size: 2.5vh;
+        font-weight: 600;
+    }
 }
 .addItems_form{
-    margin: 3vh 0 0 8vh;
+    margin: 5vh 0 0 8vh;
     display: flex;
     flex-direction: column;
     gap: 4vh;

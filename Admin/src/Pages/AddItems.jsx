@@ -65,7 +65,7 @@ export const AddItems=()=>{
             <form className={styles.addItems_form} onSubmit={handleFormSubmit}>
                     {/* for adding Image  */}
                 <div className={styles.add_image_container}>
-                    <p>Upload Image</p>
+                    <p>Upload Image Of Food</p>
                     <label htmlFor="image">
                         <img src={image? URL.createObjectURL(image):'/Images/UploadImage.png'} alt="" />
                     </label>
@@ -73,18 +73,18 @@ export const AddItems=()=>{
                 </div>
                 {/* adding product name  */}
             <div className={styles.add_product_name}>
-                <p>Product Name</p>
+                <p>Food Name</p>
                 <input type="text" name="name" placeholder='Product Name' value={data.name} onChange={handleOnChange}required />
             </div>
             {/* Product description  */}
             <div className={styles.product_description}>
-                <p>Product Description</p>
+                <p>Food Description</p>
                 <textarea name="description" rows='6' placeholder='Write here' value={data.description} onChange={handleOnChange} required></textarea>
             </div>
             {/* for category  */}
             <div className={styles.add_category_price}>
                 <div className={styles.add_category}>
-                    <p>Product Category</p>
+                    <p>Food Category</p>
                     <select name='category' onChange={handleOnChange} value={data.category}required>
                         <option value="Momo">Momo</option>
                         <option value="Rolls">Rolls</option>
@@ -101,7 +101,7 @@ export const AddItems=()=>{
                 </div>
                 {/* for Price  */}
                 <div className={styles.add_price}>
-                    <p>Product Price</p>
+                    <p>Food Price</p>
                     <input type="number" name="price" placeholder='Rs.200' value={data.price} required onChange={handleOnChange} />
                 </div>
             </div>

@@ -1,0 +1,53 @@
+.main_container{
+    
+}
+.manageKitchen_container{
+    width: 90%;
+    margin: auto;
+}
+.manageKitchen_container h1{
+
+    color: #413839;
+    padding: 2vh 0;
+}
+.manageKitchen_details_container{
+    border-radius: 2vh;
+    margin-top: 5vh;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.manageKitchen_title{
+    /* border: 2px solid black; */
+    width: 100%;
+    padding: 3vh 1.5vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 0.3fr 0.3fr;
+
+}
+.manageKitchen_title p{
+    /* color: #413839; */
+    color: tomato;
+    font-size: 3vh;
+    font-weight: 600;
+}
+.accept_btn{
+    font-size: 1.9vw;
+    color: green;
+    cursor: pointer;
+}
+.reject_btn{
+    font-size: 1.9vw;
+    cursor: pointer;
+    color: red;
+}
+.manageKitchen_detail{
+    padding: 3vh 1.5vw;
+    margin-top: 2vh;
+    width: 100%;
+    display: grid;
+    grid-template-columns:1fr 1fr 1fr 1fr 1fr 0.3fr 0.3fr;
+}
+.manageKitchen_detail p{
+    color: #413839;
+    font-size: 2.5vh;
+    font-weight: 500;
+}

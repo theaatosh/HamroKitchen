@@ -57,10 +57,11 @@
 }
 .cart_items .del_icon {
   cursor: pointer;
-  font-size: 4vh;
-
+  font-size: 4.5vh;
+  color: red;
+  
   &:hover {
-    color: red;
+    color: tomato;
   }
 }
 
