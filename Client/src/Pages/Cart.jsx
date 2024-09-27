@@ -4,6 +4,7 @@ import { StoreContext } from "../Context/StoreContext";
 import { useNavigate } from "react-router-dom";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { CiCircleMinus } from "react-icons/ci";
+import { MdDeleteForever } from "react-icons/md";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"; // Import the CSS
 
@@ -25,7 +26,7 @@ export const Cart = () => {
 
 
 
-  const handleProceedOrder = () => {
+  const handleProceedOrder = () => {  
     if (!selectedDateTime) {
       alert("Please select a time to schedule your order");
       return;
@@ -83,7 +84,8 @@ export const Cart = () => {
                         className={styles.cross}
                         onClick={() => handleremoveFromCart(curItem._id)}
                       >
-                        X
+                       
+                       <MdDeleteForever className={styles.del_icon}/>
                       </p>
                     </div>
                     <hr />

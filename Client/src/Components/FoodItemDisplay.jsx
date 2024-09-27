@@ -3,18 +3,30 @@ import {  IoIosAddCircleOutline } from "react-icons/io";
 import { CiCircleMinus } from "react-icons/ci";
 import styles from '../Styles/Home/FoodItemDisplay.module.css';
 import { StoreContext } from '../Context/StoreContext';
+import { useAuth } from '../Context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 export const FoodItemDisplay=({id,name,description,image,price})=>{
 
     
     const{cartItems,addToCart,removeFromCart,url}=useContext(StoreContext);
-    // console.log(cartItems);
-    
+    const{isLoggedIn}=useAuth();
+    const navigate=useNavigate();
+
+    const handleAddToCart=()=>{
+        if(!isLoggedIn)
+        {
+            navigate('/login');
+        }
+        else{
+            addToCart(id);
+        }
+    }
 return(
     <>
     <div className={styles.food_item}>
         <div className={styles.foodItem_img_container}>
             <img className={styles.foodItem_img} src={url+"/"+image} alt={name} />
-            {!cartItems[id]? (<IoIosAddCircleOutline className={styles.add_icon}onClick={()=>addToCart(id)}/> ): (
+            {!cartItems[id]? (<IoIosAddCircleOutline className={styles.add_icon}onClick={()=>handleAddToCart()}/> ): (
                 <div className={styles.item_counter_container}>
                 <CiCircleMinus className={styles.sub1_icon} onClick={()=>removeFromCart(id)}/> 
                     <p>{cartItems[id]}</p>

@@ -45,7 +45,6 @@ export const LoginPage=()=>{
         try{
           const result =await axios.post('http://localhost:5010/login',formData);
           setMessage(result.data.message);
-          console.log(result.data);
           
           setShowNotification(true);
           if(result.status===200)
