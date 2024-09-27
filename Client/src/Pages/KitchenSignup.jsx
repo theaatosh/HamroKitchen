@@ -6,7 +6,7 @@ export const KitchenSignup=()=>{
    const[formData,setFormData]=useState({
     category:[],
     location:{lat:null,lng:null},//esle lat ra lng lai store garxa
-
+    
    })
 
    //selected category are stored inside category array 
@@ -42,13 +42,14 @@ setFormData((prevData)=>({
    //handle submit
    const handleSubmit=(e)=>{
         e.preventDefault();
+        console.log(formData);
         
         
   }
 
-  //esle xai user ko current location linxaif user le  manually map use garena bhane
+  //esle xai user ko current location linxa if user le  manually map use garena bhane
   useEffect(() => {
-
+    
       if ('geolocation' in navigator) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
