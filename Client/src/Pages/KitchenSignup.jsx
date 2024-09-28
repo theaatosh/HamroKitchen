@@ -8,6 +8,26 @@ export const KitchenSignup = () => {
     location: { lat: null, lng: null }, // stores latitude and longitude
   });
 
+  const handleCategoryItemChange = (e, category) => {
+    const { value, checked } = e.target;
+    setFormData((prevData) => {
+      const updatedCategory = { ...prevData.category };
+      if (!updatedCategory[category]) {
+        updatedCategory[category] = [];
+      }
+
+      if (checked) {
+        updatedCategory[category] = [...updatedCategory[category], value];
+      } else {
+        updatedCategory[category] = updatedCategory[category].filter(
+          (item) => item !== value
+        );
+      }
+
+      return { ...prevData, category: updatedCategory };
+    });
+  };
+
   // Function to handle location update on map click
   const handleMapClick = (e) => {
     const { lat, lng } = e.latlng;
@@ -68,30 +88,30 @@ export const KitchenSignup = () => {
     useEffect(()=>{
       if(formData.location.lat&&formData.location.lng){
         map.setView([formData.location.lat,formData.location.lng],20);
-        fetchAddress(formData.location.lat, formData.location.lng);
+        // fetchAddress(formData.location.lat, formData.location.lng);
       }
     },[formData.location,map])
   }
 
-  //function to fetch address from latitude and longitue
-  const fetchAddress = async (lat, lng) => {
-    try {
-      // const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`);
-      const response= await axios.get('http://localhost:5010/api/geoCode' ,{params:{lat, lon:lng}});
-      const data = response.json();
+  // function to fetch address from latitude and longitue
+  // const fetchAddress = async (lat, lng) => {
+  //   try {
+  //     // const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`);
+  //     const response= await axios.get('http://localhost:5010/api/geoCode' ,{params:{lat, lon:lng}});
+  //     const data = response.json();
       
-      setFormData((prevData) => ({
-        ...prevData,
-        address: data.display_name || 'Address not found',
-      }));
-    } catch (error) {
-      console.error('Error fetching address:', error);
-      setFormData((prevData) => ({
-        ...prevData,
-        address: 'Error fetching address',
-      }));
-    }
-  };
+  //     setFormData((prevData) => ({
+  //       ...prevData,
+  //       address: data.display_name || 'Address not found',
+  //     }));
+  //   } catch (error) {
+  //     console.error('Error fetching address:', error);
+  //     setFormData((prevData) => ({
+  //       ...prevData,
+  //       address: 'Error fetching address',
+  //     }));
+  //   }
+  // };
 
   return (
     <>
