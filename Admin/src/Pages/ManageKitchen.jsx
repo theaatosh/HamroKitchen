@@ -1,8 +1,10 @@
 import styles from '../Styles/ManageKitchen.module.css';
+import axios from 'axios';
 import { FaCheckCircle } from "react-icons/fa";
 import { FaTimesCircle } from "react-icons/fa";
-export const ManageKitchen=()=>{
 
+// const pendingKitchenDetails=await axios.get('http://localhost:5010/api/manageKitchen');
+export const ManageKitchen=()=>{
     const kitchenDetails=[
         {
             userName:"test",

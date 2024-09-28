@@ -4,30 +4,34 @@ const user = require("../models/index");
 
 
 const kitchenSignUp=async (req,res)=>{
-    const {foodItemCook,location,id }=req.body;
-    
+    const {category,location }=req.body;
+    // console.log(category);
+    // console.log(location);
+    // console.log(req.body);
+    // console.log(req.user.userId);
     try{
-        const userDetails= await user.findOne({userName:"test"});
-        console.log(userDetails);
+        const userDetails= await user.findById(req.user.userId);
+        // console.log(userDetails);
         if(userDetails){
             const userStatus= userDetails.role;
+            // console.log(userStatus);
             if(userStatus==="kitchen"){
-                res.send("already registered as cook");
+                res.status(400).send("already registered as cook");
             }else if(userStatus==="admin"){
-                res.send("admin can't registered itself as cook");
+                res.status(400).send("admin can't registered itself as cook");
             }else if(userStatus==="customer"){
-                console.log("we are here");
-                const updatedUser=await user.findOneAndUpdate({userName:"test"},{ 
+                // console.log("we are here");
+                const updatedUser=await user.findByIdAndUpdate(req.user.userId,{ 
                     role:"pending",
                 cookLocation:location,
-                cookFoodItem:foodItemCook,
+                cookFoodItem:category,
             });
-
-            if(updatedUser){res.send("registered as Kitchen");}
-            else{res.send("error");}
+            // console.log("here");
+            if(updatedUser){res.status(200).send("registered as Kitchen");}
+            else{res.status(400).send("error");}
         }
         }else{
-            res.send("user not found");
+            res.status(400).send("user not found");
         }
     } catch(err){
         console.log(err);

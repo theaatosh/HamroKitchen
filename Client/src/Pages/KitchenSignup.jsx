@@ -1,6 +1,9 @@
 import styles from '../Styles/Login_Signup/KitchenSignup.module.css';
 import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from 'react-leaflet';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
+
+const token= localStorage.getItem('token');
 
 export const KitchenSignup = () => {
   const [formData, setFormData] = useState({
@@ -49,9 +52,11 @@ export const KitchenSignup = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
+    const result =await axios.post('http://localhost:5010/api/kitchenSignUp',formData, {headers:{'Authorization': `Bearer ${token}`}});
+    console.log(result);
   };
 
   // If the user doesn't manually select the map, get their current location

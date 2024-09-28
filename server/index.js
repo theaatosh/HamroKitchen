@@ -127,4 +127,7 @@ app.use('/cart',cartRoute);
 const kitchenSignUpRoute=require('./routes/kitchenSignupRoute.js');
 app.use('/api/kitchenSignUp', kitchenSignUpRoute);
 
+const manageKitchen=require('./routes/manageKitchenRoutes.js')
+app.use('/api/manageKitchen',manageKitchen);
+
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

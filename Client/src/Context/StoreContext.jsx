@@ -1,17 +1,18 @@
 import { createContext, useEffect, useRef, useState } from "react";
 import axios from 'axios';
 
-
 export const StoreContext = createContext(null);
 export const StoreContextProvider = (props) => {
   
-  const [token,setToken]=useState();
+  // const [token,setToken]=useState();
   const [category,setCategory]=useState("All");//for menu category
   const [isLoading, setIsLoading] = useState(true); 
   const aboutUsRef = useRef(null); //for about us reference
   const contactUsRef = useRef(null); //for contact  us reference
   const foodDisplayRef=useRef(null);
   
+  const token= localStorage.getItem('token');
+
   const scrollToAbout = () => {
     aboutUsRef.current.scrollIntoView({ behavior: "smooth" });
   }
