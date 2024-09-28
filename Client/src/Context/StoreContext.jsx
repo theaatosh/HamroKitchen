@@ -25,7 +25,7 @@ export const StoreContextProvider = (props) => {
   }
   const [searchItem,setSearchItem]=useState('');//for landing page search bar
   const handleSearchItem=(e)=>{
-    setSearchItem(e.target.value.toLowerCase());
+    setSearchItem(e.target.value.toLowerCase());  
 
     if(e.key==='Enter')
     {
@@ -64,12 +64,13 @@ export const StoreContextProvider = (props) => {
   useEffect(()=>{
     async function loadData() {
       await fetchFoodItems();
+      
       // if(localStorage.getItem("token")){
       //      setToken(localStorage.getItem("token"));
       //      await loadCartData(localStorage.getItem("token"));
       //    }
     }
-    loadData();
+     loadData();
   },[])
 
 
@@ -133,14 +134,14 @@ export const StoreContextProvider = (props) => {
   }
   
 
-  const loadCartData= async (token)=>{
-    const response =await axios.get("http://localhost:5010/cart/get",{},{headers: {'Authorization': `Bearer ${token}`}});
-    setCartItems(response.data.cartData);
-  }
+  // const loadCartData= async (token)=>{
+  //   const response =await axios.get("http://localhost:5010/cart/get",{},{headers: {'Authorization': `Bearer ${token}`}});
+  //   setCartItems(response.data.cartData);
+  // }
 
-  useEffect(async ()=>{
-    await loadCartData(token);
-  },[]);
+  // useEffect(async ()=>{
+  //   await loadCartData(token);
+  // },[]);
   const contextValue = {
     isLoading,
     url,

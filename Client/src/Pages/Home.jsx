@@ -7,7 +7,6 @@ import { AboutUs } from '../Components/AboutUs';
 export const Home = () => {
     return (
    <>
-   <p>Home</p>
     <Landing/>
     <ExploreMenu/>
     <FoodDisplay/>

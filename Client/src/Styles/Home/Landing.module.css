@@ -3,6 +3,7 @@
     height: 88vh;
     max-width: 100%;
     margin-top: 12vh;
+    animation: searchBox 0.5s ease-in 0s ;
 }
 .sliding_img_container{
 
@@ -52,6 +53,7 @@
 /* search Bar  */
 .search_bar{
     position: absolute;
+    display: flex;
     top: 45%;
     left: 30%;
     padding: 2vh 3vw;
@@ -61,19 +63,37 @@
         width: 30vw;
         padding: 2vh 2vw;
         font-size: 3vh;
-        color: #fff;
+        /* color: #fff; */
+        color: black;        
         border: none;
         outline: none;
-        border-radius: 5vh;
+        border-radius: 5vh 0 0 5vh;
         background: transparent;
-        background-color: rgba(3, 3, 3, 0.3); 
-    backdrop-filter: blur(100px);
+        background-color: #cecece;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;        backdrop-filter: blur(100px);
 
     &::placeholder{
-        color: #fff;
+        /* color: #fff; */
+        color: black;
     }
     }
     
+}
+.search_icon_container{
+    border: none;
+    background-color: tomato;
+    text-align: center;
+    width: 6vw;
+    cursor: pointer;
+    border-radius: 0 2vh 2vh 0;
+
+
+    &:hover{
+       background-color: rgb(220, 100, 79);
+    }
+    & .search_icon{
+       font-size: 2vw;
+    }
 }
 @keyframes searchBox {
     0%{

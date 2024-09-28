@@ -5,7 +5,7 @@ import { FoodItemDisplay } from "./FoodItemDisplay";
 
 export const FoodDisplay = () => {
   //from store context
-  const { foodItems, category, searchItem,isLoading,aboutUsRef } = useContext(StoreContext);
+  const { foodItems,  category, searchItem,isLoading,aboutUsRef } = useContext(StoreContext);
 
   const [filteredItem, setFilteredItem] = useState([]);
   useEffect(() => {

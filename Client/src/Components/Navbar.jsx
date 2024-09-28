@@ -1,6 +1,6 @@
 import styles from "../Styles/Navbar/Navbar.module.css";
 import { FaCartShopping } from "react-icons/fa6";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { StoreContext } from "../Context/StoreContext";
 import { useAuth } from "../Context/AuthContext";
@@ -12,12 +12,30 @@ export const Navbar = () => {
   const{isLoggedIn,logout}=useAuth();
   const [activeMenu, setActiveMenu] = useState("Home");
   const[isUserMenuOpen,setIsUserMenuOpen]=useState(false);
+
   const toggleUserMenu=()=>{
-    setIsUserMenuOpen(!isUserMenuOpen);
-    console.log(isUserMenuOpen);
+    setIsUserMenuOpen((prevState)=>!prevState);
+
     
   }
-
+  //userMenu banda garne if outside the menu click bhayo bhane
+  const userMenuRef=useRef(null);
+     useEffect(()=>{
+      const handleClickOutside = (event) => {
+        if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+          setIsUserMenuOpen(false);
+        }
+      };
+  
+      // Add the event listener
+      document.addEventListener("mousedown", handleClickOutside);
+  
+      // Cleanup the event listener on unmount
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    },[])
+    
   const cartItemsCount=Object.keys(cartItems).length;//no of items in cart
   
   return (
@@ -89,12 +107,12 @@ export const Navbar = () => {
             <div className={styles.notification_icon_con}>
             <IoMdNotifications className={styles.notification_icon}/>
             </div>
-            <div className={styles.user_icon_con}>
+            <div className={styles.user_icon_con} ref={userMenuRef}>
             <FaUser  onClick={toggleUserMenu} className={styles.user_icon}/>
 
              {/* click garda khulne div ho  */}
             {isUserMenuOpen&&(
-              <div className={styles.user_menu}>
+              <div className={styles.user_menu} >
                 <Link to='/profile'><p className={styles.user_menu_p}>My Profile</p></Link><hr />
                 <Link to='/kitchen/signUp'><p className={styles.user_menu_p}>Register as Kitchen</p></Link><hr />
                 <Link to='/myorders'><p className={styles.user_menu_p}>My Orders</p></Link><hr />

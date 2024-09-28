@@ -1,16 +1,16 @@
 import { NavLink } from 'react-router-dom';
 import styles from '../Styles/Sidebar.module.css';
-import { FaHome } from "react-icons/fa";
 import { IoSettings } from "react-icons/io5";
 import { IoIosAddCircle } from "react-icons/io";
 import { FaKitchenSet } from "react-icons/fa6";
 import { IoMenu } from "react-icons/io5";
+import { MdDashboard } from "react-icons/md";
 import { useState } from 'react';
 const routeArray=[
     {
         path:'/',
         name:"Dashboard",
-        icon:<FaHome className={styles.icon}/>
+        icon:<MdDashboard  className={styles.icon}/>
     },
     {
         path:'/addItems',

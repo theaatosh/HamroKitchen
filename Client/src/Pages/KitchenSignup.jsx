@@ -1,33 +1,21 @@
 import styles from '../Styles/Login_Signup/KitchenSignup.module.css';
 import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from 'react-leaflet';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 
-export const KitchenSignup=()=>{
-   const[formData,setFormData]=useState({
-    category:[],
-    location:{lat:null,lng:null},//esle lat ra lng lai store garxa
-    
-   })
+export const KitchenSignup = () => {
+  const [formData, setFormData] = useState({
+    category: {},
+    location: { lat: null, lng: null }, // stores latitude and longitude
+  });
 
-   //selected category are stored inside category array 
-   const handleCategoryChange = (e) => {
-    const selectedOptions = Array.from(e.target.selectedOptions).map((opt) => opt.value);
+  // Function to handle location update on map click
+  const handleMapClick = (e) => {
+    const { lat, lng } = e.latlng;
     setFormData((prevData) => ({
       ...prevData,
-      category: selectedOptions,
+      location: { lat, lng },
     }));
   };
-
- 
- //function to handle location update on map click
- const handleMapClick=(e)=>{
-const{lat,lng}=e.latlng;
-setFormData((prevData)=>({
-  ...prevData,
-  location:{lat,lng},
-}))
- }
 
   // Leaflet map event listener component
   const LocationMarker = () => {
@@ -39,151 +27,204 @@ setFormData((prevData)=>({
       <Marker position={[formData.location.lat, formData.location.lng]} />
     ) : null;
   };
-  
-   //handle submit
-   const handleSubmit=(e)=>{
-        e.preventDefault();
-        console.log(formData);
-        
-        
-  }
 
-  //esle xai user ko current location linxa if user le  manually map use garena bhane
-  useEffect(() => {
-    
-      if ('geolocation' in navigator) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const { latitude, longitude } = position.coords;
-            setFormData((prevData) => ({
-              ...prevData,
-              location: { lat: latitude, lng: longitude },
-            }));
-          },
-          (err) => {
-            console.error("Error getting location, using default:", err);
-            // Default to Kathmandu if location not available
-            setFormData((prevData) => ({
-              ...prevData,
-              location: { lat: 27.7172, lng: 85.3240 },
-            }));
-          }
-        );
-      } else {
-        console.error("Geolocation not available, using default location");
-        setFormData((prevData) => ({
-          ...prevData,
-          location: { lat: 27.7172, lng: 85.3240 }, // Default location
-        }));
-      }
-    
-  }, []);
-
-  //esle xai marker anusar view lai center gardinxa
-  const UpdateMapCenter=()=>{
-    const map=useMap();
-    useEffect(()=>{
-      if(formData.location.lat&&formData.location.lng){
-        map.setView([formData.location.lat,formData.location.lng],20);
-        fetchAddress(formData.location.lat, formData.location.lng);
-      }
-    },[formData.location,map])
-  }
-
-  //function to fetch address from latitude and longitue
-  const fetchAddress = async (lat, lng) => {
-    try {
-      // const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`);
-      const response= await axios.get('http://localhost:5010/api/geoCode' ,{params:{lat, lon:lng}});
-      const data = response.json();
-      
-      setFormData((prevData) => ({
-        ...prevData,
-        address: data.display_name || 'Address not found',
-      }));
-    } catch (error) {
-      console.error('Error fetching address:', error);
-      setFormData((prevData) => ({
-        ...prevData,
-        address: 'Error fetching address',
-      }));
-    }
+  // Handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData);
   };
 
+  // If the user doesn't manually select the map, get their current location
+  useEffect(() => {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setFormData((prevData) => ({
+            ...prevData,
+            location: { lat: latitude, lng: longitude },
+          }));
+        },
+        (err) => {
+          console.error("Error getting location, using default:", err);
+          setFormData((prevData) => ({
+            ...prevData,
+            location: { lat: 27.7172, lng: 85.3240 }, // Default: Kathmandu
+          }));
+        }
+      );
+    } else {
+      console.error("Geolocation not available, using default location");
+      setFormData((prevData) => ({
+        ...prevData,
+        location: { lat: 27.7172, lng: 85.3240 }, // Default location
+      }));
+    }
+  }, []);
 
-    return(
-        <>
-                <div className={styles.main_container}>
-            <div className={styles.signUp_container}>
-                <div className={styles.left_container}>
-                    <div className={styles.overlay}></div>
-                    <div className={styles.text_overlay}>
-                    <h1>Welcome To Hamro kitchen</h1>
-                    <h3>Experience the essence of <br/>
-                    home, anytime, anywhere</h3>
-                    </div>
-                </div>
-                <div className={styles.right_container}>
-                    <div className={styles.inner_right}>
-                        <div className={styles.heading_signup}> <h1>Get listed in Hamro kitchen</h1></div>
-                        
-          {/* input details  */}
-        <div className={styles.input_details}>
-            <form onSubmit={handleSubmit} >
-         
-            <div className={styles.form_group}>
-    
-            <label htmlFor="food_items" >Select Food Items:<span><br /> (Note:Hold Ctrl to select mutiple items)</span> </label>
-            <select name='category' className={styles.select_dropdown}onChange={handleCategoryChange } multiple required>
-                        <option value="Momo">Momo</option>s
-                        <option value="Rolls">Rolls</option>
-                        <option value="Chowmein">Chowmein</option>
-                        <option value="Sandwich">Sandwich</option>
-                        <option value="Cake">Cake</option>
-                        <option value="Fry Rice">Fry Rice</option>
-                        <option value="Pasta">Pasta</option>
-                        <option value="Sausage">Sausage</option>
-                        <option value="Burger">Burger</option>
-                        <option value="Pizza">Pizza</option>
-                        <option value="Sekuwa">Sekuwa</option>
-                    </select>
-        
-          </div>
+  // Automatically centers the map based on the marker
+  const UpdateMapCenter = () => {
+    const map = useMap();
+    useEffect(() => {
+      if (formData.location.lat && formData.location.lng) {
+        map.setView([formData.location.lat, formData.location.lng], 20);
+      }
+    }, [map]);
+  };
 
-        {/* Leaflet Map for location  */}
-        <div className={styles.form_group}>
-                    <label htmlFor="location">Provide your Location</label>
-                    <MapContainer
-                      center={[27.7172, 85.3240]} 
-                      zoom={15}
-                      style={{ height: '200px', width: '100%',borderRadius:"2vh"}}
-                    >
-                      <TileLayer
-                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                      />
-                      <LocationMarker />
-                      <UpdateMapCenter/>
-                    </MapContainer>
-                  </div>
+  // Handle changes for category and items
+  const handleCategoryItemChange = (e, category) => {
+    const { value, checked } = e.target;
 
+    setFormData((prevData) => {
+      const updatedCategory = { ...prevData.category };
+      if(!updatedCategory[category])
+      {
+        updatedCategory[category]=[];
+      }
 
-        {/* for signup button  */}
-        <div className={styles.signup_btn}>
-      <button type="submit" className={styles.submit_button}>Register</button>
-      </div>
-    </form>
+      if (checked) {
+        updatedCategory[category] = [...updatedCategory[category], value];
+      } else {
+        updatedCategory[category] = updatedCategory[category].filter(
+          (item) => item !== value
+        );
+      }
 
-    
-                        </div>
-                    </div>
-                </div>
+      return { ...prevData, category: updatedCategory };
+    });
+  };
+
+  return (
+    <>
+      <div className={styles.main_container}>
+        <div className={styles.signUp_container}>
+          <div className={styles.inner}>
+            <div className={styles.heading_signup}>
+              <h1>Get Listed as a Kitchen Chef</h1>
             </div>
 
+            {/* Input Details */}
+            <div className={styles.input_details}>
+              <form onSubmit={handleSubmit}>
+                <div className={styles.form_group}>
+                  <h3>Select the Categories and Items You Prepare</h3>
+
+                  {/* Momo Category */}
+                  <div className={styles.food_select_container}>
+                    <div className={styles.common_food_select}>
+                      <h3>Momo</h3>
+                      <label>
+                        <input
+                          type="checkbox"
+                          value="veg momo"
+                          onChange={(e) => handleCategoryItemChange(e, 'momo')}
+                        />
+                        Veg Momo
+                      </label>
+                      <label>
+                        <input
+                          type="checkbox"
+                          value="chicken momo"
+                          onChange={(e) => handleCategoryItemChange(e, 'momo')}
+                        />
+                        Chicken Momo
+                      </label>
+                    </div>
+
+                    {/* Chowmein Category */}
+                    <div className={styles.common_food_select}>
+                      <h3>Chowmein</h3>
+                      <label>
+                        <input
+                          type="checkbox"
+                          value="veg chowmein"
+                          onChange={(e) => handleCategoryItemChange(e, 'chowmein')}
+                        />
+                        Veg Chowmein
+                      </label>
+                      <label>
+                        <input
+                          type="checkbox"
+                          value="chicken chowmein"
+                          onChange={(e) => handleCategoryItemChange(e, 'chowmein')}
+                        />
+                        Chicken Chowmein
+                      </label>
+                    </div>
+
+                    {/* Rolls Category */}
+                    <div className={styles.common_food_select}>
+                      <h3>Rolls</h3>
+                      <label>
+                        <input
+                          type="checkbox"
+                          value="chicken roll"
+                          onChange={(e) => handleCategoryItemChange(e, 'rolls')}
+                        />
+                        Chicken Roll
+                      </label>
+                      <label>
+                        <input
+                          type="checkbox"
+                          value="veg roll"
+                          onChange={(e) => handleCategoryItemChange(e, 'rolls')}
+                        />
+                        Veg Roll
+                      </label>
+                    </div>
+                    
+                    {/* sandwich category */}
+                    <div className={styles.common_food_select}>
+                      <h3>Sandwich</h3>
+                      <label>
+                        <input
+                          type="checkbox"
+                          value="chicken sandwich"
+                          onChange={(e) => handleCategoryItemChange(e, 'sandwich')}
+                        />
+                        Chicken sandwich
+                      </label>
+                      <label>
+                        <input
+                          type="checkbox"
+                          value="veg sandwich"
+                          onChange={(e) => handleCategoryItemChange(e, 'sandwich')}
+                        />
+                        Veg sandwich
+                      </label>
+                    </div>
+
+                  </div>
+                </div>
+
+                {/* Leaflet Map for Location */}
+                <div className={styles.form_group}>
+                  <label htmlFor="location">Provide your Location</label>
+                  <MapContainer
+                    center={[27.7172, 85.3240]}
+                    zoom={15}
+                    style={{ height: '200px', width: '100%', borderRadius: '2vh' }}
+                  >
+                    <TileLayer
+                      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
+                    <LocationMarker />
+                    <UpdateMapCenter />
+                  </MapContainer>
+                </div>
+
+                {/* Sign-up Button */}
+                <div className={styles.signup_btn}>
+                  <button type="submit" className={styles.submit_button}>
+                    Register
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
-        </>
-    )
-
-
-}
-
-
+      </div>
+    </>
+  );
+};

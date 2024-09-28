@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import styles from "../Styles/Home/Landing.module.css";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import { FaSearch } from "react-icons/fa";
 import { StoreContext } from "../Context/StoreContext";
 
 
@@ -13,7 +14,7 @@ export const Landing = () => {
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const {searchItem,handleSearchItem,}=useContext(StoreContext);
+  const {searchItem,handleSearchItem}=useContext(StoreContext);
   const intervalRef = useRef(null);
 
   //handle left image sliding
@@ -72,6 +73,10 @@ export const Landing = () => {
         <div className={styles.search_bar}>
           <input type="text" placeholder="Search here" value={searchItem } onChange={(e)=>handleSearchItem(e)} 
             onKeyDown={(e)=>handleSearchItem(e)}/>
+            <button className={styles.search_icon_container} onClick={(e)=>handleSearchItem(e)}>
+            <FaSearch className={styles.search_icon}/>
+            </button>
+
         </div>
       </div>
     </>
