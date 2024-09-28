@@ -62,37 +62,35 @@ export const KitchenSignup = () => {
     }
   }, []);
 
-  // Automatically centers the map based on the marker
-  const UpdateMapCenter = () => {
-    const map = useMap();
-    useEffect(() => {
-      if (formData.location.lat && formData.location.lng) {
-        map.setView([formData.location.lat, formData.location.lng], 20);
+  //esle xai marker anusar view lai center gardinxa
+  const UpdateMapCenter=()=>{
+    const map=useMap();
+    useEffect(()=>{
+      if(formData.location.lat&&formData.location.lng){
+        map.setView([formData.location.lat,formData.location.lng],20);
+        fetchAddress(formData.location.lat, formData.location.lng);
       }
-    }, [map]);
-  };
+    },[formData.location,map])
+  }
 
-  // Handle changes for category and items
-  const handleCategoryItemChange = (e, category) => {
-    const { value, checked } = e.target;
-
-    setFormData((prevData) => {
-      const updatedCategory = { ...prevData.category };
-      if(!updatedCategory[category])
-      {
-        updatedCategory[category]=[];
-      }
-
-      if (checked) {
-        updatedCategory[category] = [...updatedCategory[category], value];
-      } else {
-        updatedCategory[category] = updatedCategory[category].filter(
-          (item) => item !== value
-        );
-      }
-
-      return { ...prevData, category: updatedCategory };
-    });
+  //function to fetch address from latitude and longitue
+  const fetchAddress = async (lat, lng) => {
+    try {
+      // const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`);
+      const response= await axios.get('http://localhost:5010/api/geoCode' ,{params:{lat, lon:lng}});
+      const data = response.json();
+      
+      setFormData((prevData) => ({
+        ...prevData,
+        address: data.display_name || 'Address not found',
+      }));
+    } catch (error) {
+      console.error('Error fetching address:', error);
+      setFormData((prevData) => ({
+        ...prevData,
+        address: 'Error fetching address',
+      }));
+    }
   };
 
   return (
