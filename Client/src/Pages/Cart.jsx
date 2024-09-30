@@ -7,6 +7,7 @@ import { CiCircleMinus } from "react-icons/ci";
 import { MdDeleteForever } from "react-icons/md";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"; // Import the CSS
+import axios from 'axios';
 
 export const Cart = () => {
   const {
@@ -19,19 +20,29 @@ export const Cart = () => {
     getTotalCartAmount,
   } = useContext(StoreContext);
   const [selectedDateTime, setSelectedDateTime] = useState(new Date());
-  console.log(selectedDateTime);
+  // console.log(selectedDateTime);
   
   const navigate = useNavigate();
   const isCartEmpty = Object.keys(cartItems).length === 0;
 
+  const token= localStorage.getItem('token');
 
 
-  const handleProceedOrder = () => {  
+  const handleProceedOrder = async () => {  
     if (!selectedDateTime) {
       alert("Please select a time to schedule your order");
       return;
     } else {
-      navigate("/placeOrder",{state:{selectedDateTime}});
+     const order={
+      orderTime:selectedDateTime.toISOString()
+     }
+      try{await axios.post("http://localhost:5010/api/scheduleOrder",order,{headers:{'Authorization': `Bearer ${token}`}});
+        
+      // console.log(`This is date ${selectedDateTime} hahs`);
+      navigate("/placeOrder",{state:{selectedDateTime}});}
+      catch(err){
+        console.log(err);
+      }
     }
   };
   // for removing item without decrement
@@ -82,7 +93,7 @@ export const Cart = () => {
 
                       <p
                         className={styles.cross}
-                        onClick={() => handleremoveFromCart(curItem._id)}
+                        onClick={() => handleremoveFromCart(curItem._id) }
                       >
                        
                        <MdDeleteForever className={styles.del_icon}/>

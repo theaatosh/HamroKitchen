@@ -50,8 +50,8 @@ export const LoginPage=()=>{
           if(result.status===200)
           {
             if(result.data.message==="login sucessfully"){
-              const token=result.data.token;
-              localStorage.setItem('token', token); 
+              // const token=result.data.token;
+              localStorage.setItem('token', result.data.token); 
               setMessageType('success');
               login();
               setTimeout(() => {
