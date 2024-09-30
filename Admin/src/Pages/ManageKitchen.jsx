@@ -21,13 +21,13 @@
                     }
                 }
                 manageKitchen();
-        },[])
+        },[kitchenDetails])
 
         //handle Kitchen Approve Function
         const handleKitchenApprove=async(curElem)=>{
             
             try{
-                    const approveResponse=await axios.post('http://localhost:5010/api/manageKitchen esma Link Milau hai',{
+                    const approveResponse=await axios.post('http://localhost:5010/api/manageKitchen/updateStatusRight',{
                         userName: curElem.userName,
                         email: curElem.email,
                         cookFoodItem: curElem.cookFoodItem,
@@ -42,13 +42,13 @@
                     console.error("error approving kitchen",err);
                     
             }
-            console.log(curElem);
+            // console.log(curElem);
             
             
         }
         const handleKitchenReject=async(curElem)=>{
             try{
-            const rejectResponse=await axios.post('http://localhost:5010/api/manageKitchen/esma Link Milau hai',{
+            const rejectResponse=await axios.post('http://localhost:5010/api/manageKitchen/updateStatusWrong',{
                 userName: curElem.userName,
                 email: curElem.email,
                 cookFoodItem: curElem.cookFoodItem,
