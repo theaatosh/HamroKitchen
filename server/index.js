@@ -130,4 +130,7 @@ app.use('/api/kitchenSignUp', kitchenSignUpRoute);
 const manageKitchen=require('./routes/manageKitchenRoutes.js')
 app.use('/api/manageKitchen',manageKitchen);
 
+const scheduleOder=require('./routes/scheduleOrder.js');
+app.use('/api/scheduleOrder',scheduleOder);
+
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
