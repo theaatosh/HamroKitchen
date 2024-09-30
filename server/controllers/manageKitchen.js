@@ -5,7 +5,7 @@ const axios = require('axios');
 
 const manageKitchen= async(req,res)=>{
     try{
-        const kitchenDetails=await user.findOne({role:"pending"},{_id:0,userName:1,email:1,cookFoodItem:1,cookLocation:1,role:1});
+        const kitchenDetails=await user.find({role:"pending"},{_id:0,userName:1,email:1,cookFoodItem:1,cookLocation:1,role:1});
         console.log(kitchenDetails);
         res.json(kitchenDetails);
     }catch(err){
