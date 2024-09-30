@@ -54,9 +54,28 @@ export const KitchenSignup = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    const result =await axios.post('http://localhost:5010/api/kitchenSignUp',formData, {headers:{'Authorization': `Bearer ${token}`}});
-    console.log(result);
+  
+    
+    try{
+      const result =await axios.post('http://localhost:5010/api/kitchenSignUp',formData, {headers:{'Authorization': `Bearer ${token}`}});
+      console.log(result.data);
+      
+
+    }
+    catch(err)
+    {
+        if(err.response.status===400)
+        {
+          console.log(err.response.data);
+          
+        }
+    }
+  //  if(result.status===400)
+  //  {
+  //   console.log(result.response);
+    
+  //  }
+   
   };
 
   // If the user doesn't manually select the map, get their current location

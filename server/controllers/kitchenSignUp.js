@@ -19,7 +19,11 @@ const kitchenSignUp=async (req,res)=>{
                 res.status(400).send("already registered as cook");
             }else if(userStatus==="admin"){
                 res.status(400).send("admin can't registered itself as cook");
-            }else if(userStatus==="customer"){
+            }
+            else if(userStatus==="pending"){
+                res.status(200).send("waiting for admin to aprove");
+            }
+            else if(userStatus==="customer"){
                 // console.log("we are here");
                 const updatedUser=await user.findByIdAndUpdate(req.user.userId,{ 
                     role:"pending",
