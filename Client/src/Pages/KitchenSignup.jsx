@@ -2,6 +2,8 @@ import styles from '../Styles/Login_Signup/KitchenSignup.module.css';
 import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from 'react-leaflet';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 
 const token= localStorage.getItem('token');
 
@@ -54,13 +56,14 @@ export const KitchenSignup = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
     
     try{
+      console.log(formData);
+      
       const result =await axios.post('http://localhost:5010/api/kitchenSignUp',formData, {headers:{'Authorization': `Bearer ${token}`}});
       console.log(result.data);
       
-
+      toast.success(result.data);
     }
     catch(err)
     {
@@ -144,6 +147,7 @@ export const KitchenSignup = () => {
           <div className={styles.inner}>
             <div className={styles.heading_signup}>
               <h1>Get Listed as a Kitchen Chef</h1>
+              <ToastContainer/>
             </div>
 
             {/* Input Details */}

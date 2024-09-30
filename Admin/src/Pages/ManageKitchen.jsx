@@ -1,98 +1,135 @@
-import styles from '../Styles/ManageKitchen.module.css';
-import axios from 'axios';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { FaCheckCircle } from "react-icons/fa";
-import { FaTimesCircle } from "react-icons/fa";
+    import styles from '../Styles/ManageKitchen.module.css';
+    import axios from 'axios';
+    import { useState } from 'react';
+    import { useEffect } from 'react';
+    import { FaCheckCircle } from "react-icons/fa";
+    import { FaTimesCircle } from "react-icons/fa";
 
-export const ManageKitchen=()=>{
-    const[kitchenDetails,setKitchenDetails]=useState([]);
+    export const ManageKitchen=()=>{
+        const[kitchenDetails,setKitchenDetails]=useState([]);
 
-    
-    useEffect(()=>{
-        const manageKitchen=async()=>{
-            try{
-                const pendingcurElem=await axios.get('http://localhost:5010/api/manageKitchen');
-                console.log(pendingcurElem.data);
-                    setKitchenDetails(pendingcurElem.data);
-                   }
-                catch(err)
-                {
-                    console.error("error fetching data",err)
+        
+        useEffect(()=>{
+            const manageKitchen=async()=>{
+                try{
+                    const pendingcurElem=await axios.get('http://localhost:5010/api/manageKitchen');
+                        setKitchenDetails(pendingcurElem.data);
+                    }
+                    catch(err)
+                    {
+                        console.error("error fetching data",err)
+                    }
                 }
+                manageKitchen();
+        },[])
+
+        //handle Kitchen Approve Function
+        const handleKitchenApprove=async(curElem)=>{
+            
+            try{
+                    const approveResponse=await axios.post('http://localhost:5010/api/manageKitchen esma Link Milau hai',{
+                        userName: curElem.userName,
+                        email: curElem.email,
+                        cookFoodItem: curElem.cookFoodItem,
+                        cookLocation: curElem.cookLocation,
+                        role: curElem.role
+                    });
+
+                    
             }
-            manageKitchen();
-    },[])
-    kitchenDetails&&console.log(kitchenDetails.length);
+            catch(err)
+            {
+                    console.error("error approving kitchen",err);
+                    
+            }
+            console.log(curElem);
+            
+            
+        }
+        const handleKitchenReject=async(curElem)=>{
+            try{
+            const rejectResponse=await axios.post('http://localhost:5010/api/manageKitchen/esma Link Milau hai',{
+                userName: curElem.userName,
+                email: curElem.email,
+                cookFoodItem: curElem.cookFoodItem,
+                cookLocation: curElem.cookLocation,
+                role: curElem.role
+            })
+            }
+            catch(err)
+            {
+                console.error("error Rejecting  kitchen",err);
+            }
+        }
 
-    return(
-        <>
-            <div className={styles.main_container}>
-                <div className={styles.manageKitchen_container}>
-                    <h1>Kitchen Request</h1>
-                    <div className={styles.manageKitchen_details_container}>
-                        <div className={styles.manageKitchen_title}>
-                            <p>UserName</p>
-                            <p>Email</p>
-                            <p>Food Items</p>
-                            <p>Location</p>
-                            <p>Status</p>
-                            <p>App/Rej</p>
-                        </div>
-                        <hr /><hr />
+        return(
+            <>
+                <div className={styles.main_container}>
+                    <div className={styles.manageKitchen_container}>
+                        <h1>Kitchen Request</h1>
+                        <div className={styles.manageKitchen_details_container}>
+                            <div className={styles.manageKitchen_title}>
+                                <p>UserName</p>
+                                <p>Email</p>
+                                <p>Food Items</p>
+                                <p>Location</p>
+                                <p>Status</p>
+                                <p>App/Rej</p>
+                            </div>
+                            <hr /><hr />
 
-                        {/* Mapping through curElem */}
-                        {kitchenDetails.length===0? (
-                        <p>Loading kitchen details...</p>
-                    ) : (
-                        kitchenDetails.map((curElem,index)=>{
-                        return(
-                        <>
-                            <div className={styles.manageKitchen_detail} key={index}>
-                            <p>{curElem.userName}</p>
-                            <p>{curElem.email}</p>
+                            {/* Mapping through curElem */}
+                            {kitchenDetails.length===0? (
+                            <p>Loading curElem details...</p>
+                        ) : (
+                            kitchenDetails.map((curElem,index)=>{
+                            return(
+                            
+                                <div className={styles.manageKitchen_detail} key={curElem.id || index}>
+                                <p>{curElem.userName}</p>
+                                <p>{curElem.email}</p>
 
-                            {/* Displaying Food Items */}
-                            <p>
-                                {curElem.cookFoodItem &&
-                                    Object.entries(curElem.cookFoodItem).map(([category, items]) => (    
-                                        <span key={category}>
-                                            <strong>{category}:</strong> {items.join(", ")}<br />
-                                        </span>
-                                    ))}
-                            </p>
+                                {/* Displaying Food Items */}
+                                <p>
+                                    {curElem.cookFoodItem &&
+                                        Object.entries(curElem.cookFoodItem).map(([category, items]) => (    
+                                            <span key={category}>
+                                                <strong>{category}:</strong> {items.join(", ")}<br />
+                                            </span>
+                                        ))}
+                                </p>
 
-                            {/* Displaying Location */}
-                            <p>
-                                Lat: {curElem.cookLocation.lat}, Lng: {curElem.cookLocation.lng}
-                            </p>
+                                {/* Displaying Location */}
+                                <p>
+                                    Lat: {curElem.cookLocation.lat}, Lng: {curElem.cookLocation.lng}
+                                </p>
 
-                            <p>{curElem.role}</p>
-                            <FaCheckCircle
-                                className={styles.accept_btn}
-                                onClick={() => alert("Kitchen Accepted")}
-                            />
-                            <FaTimesCircle
-                                className={styles.reject_btn}
-                                onClick={() => alert("Kitchen Rejected")}
-                            />
-                        </div>
-                        </>
-                        )
-                       
-                       })
+                                <p>{curElem.role}</p>
+                                <FaCheckCircle
+                                    className={styles.accept_btn}
+                                    onClick={() => handleKitchenApprove(curElem)}
+                                />
+                                <FaTimesCircle
+                                    className={styles.reject_btn}
+                                    onClick={() => handleKitchenReject(curElem)}
+                                />
+                            </div>
+                            
+                            )
                         
-                    )}
+                        })
+                            
+                        )}
 
+                        </div>
                     </div>
                 </div>
-            </div>
-        </>
-    );
-}
+            </>
+        );
+    }
 
-{/* <h1 key={index}>{curElem.userName}</h1>
-<h2>{curElem.email}</h2>
-<h2>{curElem.role}</h2>
-<h2>{curElem.cookFoodItem.chowmein[0]}</h2>
-<h2>{`${curElem.cookLocation.lat}   ${curElem.cookLocation.lng}`}</h2> */}
+    {/* <h1 key={index}>{curElem.userName}</h1>
+    <h2>{curElem.email}</h2>
+    <h2>{curElem.role}</h2>
+    <h2>{curElem.cookFoodItem.chowmein[0]}</h2>
+    <h2>{`${curElem.cookLocation.lat}   ${curElem.cookLocation.lng}`}</h2> */}
