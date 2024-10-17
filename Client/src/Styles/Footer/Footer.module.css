@@ -138,3 +138,10 @@
 
   width: 80%;
 }
+
+@media (max-width:600px) {
+  .footer_columns {
+    display: flex;
+    flex-direction: column;
+  }
+}

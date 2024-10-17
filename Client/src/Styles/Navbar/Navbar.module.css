@@ -122,13 +122,22 @@
     border-radius: 0.9vh;
 }
 
-@media (max-width:760px) {
-
+@media (max-width:395px) {
+    .navbar{
+        width:100%;
+    }
     .navbar_menu{
         display:none;                 
     }
     .navbar img{
-        width: 15vw; 
+        width: 18vw; 
         height: 10vh;
+    }
+    .cart_icon_div .cart_icon{
+        font-size: 3.5vh;
+    }
+    .navbar_login_btn{
+        padding: 1vh 2vw;
+        font-size: 2vh;
     }
 }

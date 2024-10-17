@@ -5,18 +5,9 @@ import { StoreContext } from '../Context/StoreContext';
 import { useNavigate } from 'react-router-dom';
 export const PlaceOrder=()=>{
 
-    const {getTotalCartAmount,cartData,selectedDateTime}=useContext(StoreContext);
+    const {getTotalCartAmount,cartData,selectedDateTime,deliveryInfo,setDeliveryInfo}=useContext(StoreContext);
     const navigate=useNavigate();
-      const[deliveryInfo,setDeliveryInfo]=useState({
-        firstName:'',
-        lastName:'',
-        email:'',
-        phoneNumber:'',
-        deliveryLocation:{
-          lat:'',
-          lng:''
-        }
-      })
+
       const[error,setError]=useState({});
       const validate=()=>{
         let formErrors={};

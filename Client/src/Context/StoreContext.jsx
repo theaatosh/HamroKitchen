@@ -12,6 +12,18 @@ export const StoreContextProvider = (props) => {
     deliveryFee:50,
     scheduledTime:selectedDateTime,
   })
+  //yo xai placeorder wala page ko
+  const[deliveryInfo,setDeliveryInfo]=useState({
+    firstName:'',
+    lastName:'',
+    email:'',
+    phoneNumber:'',
+    deliveryLocation:{
+      lat:'',
+      lng:''
+    }
+  })
+  
   const [category,setCategory]=useState("All");//for menu category
   const [isLoading, setIsLoading] = useState(true); 
   const aboutUsRef = useRef(null); //for about us reference
@@ -178,9 +190,9 @@ export const StoreContextProvider = (props) => {
     handleSearchAction,
     selectedDateTime, 
     setSelectedDateTime,
-    cartData,setCartData
-    
-  };
+    cartData,setCartData,
+   deliveryInfo,setDeliveryInfo
+     };
 return (
     <StoreContext.Provider value={contextValue} >
       {props.children}
