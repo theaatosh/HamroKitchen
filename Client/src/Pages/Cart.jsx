@@ -1,7 +1,7 @@
-import { useContext, useState } from "react";
+import { useContext, } from "react";
 import styles from "../Styles/Cart/Cart.module.css";
 import { StoreContext } from "../Context/StoreContext";
-import { useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { CiCircleMinus } from "react-icons/ci";
 import { MdDeleteForever } from "react-icons/md";
@@ -18,22 +18,38 @@ export const Cart = () => {
     addToCart,
     removeFromCart,
     getTotalCartAmount,
+    selectedDateTime,setSelectedDateTime,
+    setCartData,
+
   } = useContext(StoreContext);
-  const [selectedDateTime, setSelectedDateTime] = useState(new Date());
-  // console.log(selectedDateTime);
-  
+ 
   const navigate = useNavigate();
   const isCartEmpty = Object.keys(cartItems).length === 0;
 
   const token= localStorage.getItem('token');
 
-
   const handleProceedOrder = async () => {  
-    if (!selectedDateTime) {
-      alert("Please select a time to schedule your order");
-      return;
-    } else {
-     const order={
+    //backend ma data pathauna ko lagi 
+    const itemsInCart=Object.keys(cartItems).map((id)=>{
+      const item=foodItems.find((curItem)=>curItem._id===id);
+      
+      return{
+        id:item._id,
+        name:item.productName,
+        price:item.productPrice,
+        quantity:cartItems[item._id],
+        total:item.productPrice*cartItems[item._id]
+      }
+      })
+    const orderData={
+      items:itemsInCart,
+      totalAmount:getTotalCartAmount()+(getTotalCartAmount()===0?0:50),
+      deliveryFee:getTotalCartAmount()===0?0:50,
+      scheduledTime:selectedDateTime.toLocaleString(),
+    };
+    setCartData(orderData);
+    
+      const order={
       orderTime:selectedDateTime.toISOString()
      }
       try{await axios.post("http://localhost:5010/api/scheduleOrder",order,{headers:{'Authorization': `Bearer ${token}`}});
@@ -43,7 +59,7 @@ export const Cart = () => {
       catch(err){
         console.log(err);
       }
-    }
+    
   };
   // for removing item without decrement
   const handleremoveFromCart = (id) => {
@@ -53,6 +69,7 @@ export const Cart = () => {
       return updatedCart;
     });
   };
+
 
   return (
     <>
@@ -70,7 +87,8 @@ export const Cart = () => {
           <hr />
 
           <ul>
-            {foodItems.map((curItem) => {
+          {isCartEmpty?(<h1>Cart is empty!!</h1>):
+            (foodItems.map((curItem) => {
               if (cartItems[curItem._id] > 0)
                 return (
                   <div key={curItem._id}>
@@ -102,7 +120,7 @@ export const Cart = () => {
                     <hr />
                   </div>
                 );
-            })}
+            }))}
           </ul>
         </div>
         {/* showing Cart total details */}

@@ -9,6 +9,8 @@ import { ProtectedRoute } from "./Components/ProtectedRoute";
 import { KitchenSignup } from "./Pages/KitchenSignup";
 import { MyProfile } from "./Pages/MyProfile";
 import { MyOrders } from "./Pages/MyOrders";
+import { NotFound } from "./Components/NotFound";
+import { Payment } from "./Pages/Payment";
 
 // import { AuthUser } from "./Context/AuthUser";
 
@@ -40,6 +42,10 @@ export const App=()=>{
             
           },
           {
+            path:'/payment',
+            element:<Payment/>
+          },
+          {
             path:'placeOrder',
             element:
             <ProtectedRoute>
@@ -55,14 +61,15 @@ export const App=()=>{
             element:
           
               <LoginPage/>
-          
-              
           },
           {
             path:'kitchen/Signup',
             element:<KitchenSignup/>
+          },
+          {
+            path:'*',
+            element:<NotFound/>
           }
-          
         ]
       }
 

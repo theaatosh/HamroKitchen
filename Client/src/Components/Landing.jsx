@@ -14,7 +14,7 @@ export const Landing = () => {
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const {searchItem,handleSearchItem}=useContext(StoreContext);
+  const {searchItem,handleSearchItem,handleSearchAction}=useContext(StoreContext);
   const intervalRef = useRef(null);
 
   //handle left image sliding
@@ -73,7 +73,7 @@ export const Landing = () => {
         <div className={styles.search_bar}>
           <input type="text" placeholder="Search here" value={searchItem } onChange={(e)=>handleSearchItem(e)} 
             onKeyDown={(e)=>handleSearchItem(e)}/>
-            <button className={styles.search_icon_container} onClick={(e)=>handleSearchItem(e)}>
+            <button className={styles.search_icon_container} onClick={()=>handleSearchAction()}>
             <FaSearch className={styles.search_icon}/>
             </button>
 

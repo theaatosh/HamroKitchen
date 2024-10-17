@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { FaEye, FaEyeSlash, FaUserCircle } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
 import styles from '../Styles/Login_Signup/Login.module.css';
@@ -6,10 +6,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { LogSignupNotification } from '../Components/LogSignupNotification';
 import { useAuth } from '../Context/AuthContext';
+import { StoreContext } from '../Context/StoreContext';
 export const LoginPage=()=>{
 
   const navigate=useNavigate();
   const{showNotification,setShowNotification,message,setMessage,messageType,setMessageType,login}=useAuth();
+  const{token,setToken}=useContext(StoreContext);
     const [error,setError]=useState({});
     const [showPassword,setShowPassword]=useState(false);
     const [formData,setFormData]=useState({
@@ -44,13 +46,17 @@ export const LoginPage=()=>{
 
         try{
           const result =await axios.post('http://localhost:5010/login',formData);
-          setMessage(result.data.message);
           
           setShowNotification(true);
           if(result.status===200)
-          {
-            if(result.data.message==="login sucessfully"){
-              // const token=result.data.token;
+            {
+              if(result.data.message==="login sucessfully"){
+                console.log(result.data.token);
+                
+              setMessage(result.data.message);
+              setToken(result.data.token);
+              console.log(token);
+              
               localStorage.setItem('token', result.data.token); 
               setMessageType('success');
               login();
@@ -59,6 +65,7 @@ export const LoginPage=()=>{
             }, 2000);
 
             }else if(result.data.message==="incorrect password"){
+              setMessage(result.data.message)
               setMessageType('error');
             }
           }else{
@@ -68,7 +75,7 @@ export const LoginPage=()=>{
         }
         catch(error)
         {
-          setMessage(error);
+           setMessage(error.message);
           setShowNotification(true);
           setMessageType('error');
         }

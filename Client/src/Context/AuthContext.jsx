@@ -1,4 +1,6 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { StoreContext } from "./StoreContext";
+
 
 
  const AuthContext=createContext();
@@ -12,15 +14,31 @@ export const AuthContextProvider=({children})=>{
   const[message,setMessage]=useState('');//successfull and error message
   const[messageType,setMessageType]=useState('');//for setting the message type of success and error
   const [isLoggedIn,setIsLoggedIn]=useState(false);
-    
-  
 
-  const login=()=>setIsLoggedIn(true);
+  const {token,setToken}=useContext(StoreContext);
+  
+  
+  
+  const login=()=>{
+    setIsLoggedIn(true);
+
+    }
+    
   const logout=()=>{
-    localStorage.removeItem("token");
-    setIsLoggedIn(false)
+    console.log(token);
+    setIsLoggedIn(false);
+    localStorage.removeItem('token');
+    setToken(null);
+    console.log(token);
+    
+ 
    
   };
+  useEffect(() => {
+   const storedToken=localStorage.getItem('token');
+   console.log(storedToken);
+   
+  }, []);
 
     const authValue={
         isLoggedIn,

@@ -42,10 +42,11 @@
 
 .cart_icon_div{
     position: relative;
-    width: 4vw;
-
+    min-width: 60px;
+    
+    
     & .cart_icon{
-        font-size: 4.5vh;
+    font-size: 4.5vh;
     cursor: pointer;
     }
 }
@@ -121,3 +122,13 @@
     border-radius: 0.9vh;
 }
 
+@media (max-width:760px) {
+
+    .navbar_menu{
+        display:none;                 
+    }
+    .navbar img{
+        width: 15vw; 
+        height: 10vh;
+    }
+}
