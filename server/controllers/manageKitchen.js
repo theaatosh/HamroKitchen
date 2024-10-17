@@ -17,8 +17,6 @@ const updateStatusRight=async(req,res)=>{
     
    const {userName}=req.body;
    try{ const makeDecision= await user.findOneAndUpdate({userName:userName}, {role:"kitchen"});
-   console.log(makeDecision);
-    // res.send("here");
     if(makeDecision){
         res.status(200).send("upgrade to Kitchen");
     }}catch(err){
