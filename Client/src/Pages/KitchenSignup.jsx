@@ -58,7 +58,7 @@ export const KitchenSignup = () => {
     e.preventDefault();
     
     try{
-      console.log(formData);
+      // console.log(formData);
       
       const result =await axios.post('http://localhost:5010/api/kitchenSignUp',formData, {headers:{'Authorization': `Bearer ${token}`}});
       console.log(result.data);
