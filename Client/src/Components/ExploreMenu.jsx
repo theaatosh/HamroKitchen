@@ -7,12 +7,12 @@ export const ExploreMenu = () => {
   const{ category, setCategory,foodDisplayRef }=useContext(StoreContext);
   return (
     <>
-      <div className={styles.explore_menu}>
+      <div className={styles.explore_menu} ref={foodDisplayRef}>
         <h1>Explore Menu</h1>
         <div className={styles.menu_container}>
           {MenuList.map((curImg) => {
             return (
-              <div ref={foodDisplayRef}
+              <div 
                 key={curImg.id}
                 className={styles.menu_item}
                 onClick={() =>

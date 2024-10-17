@@ -112,7 +112,7 @@ async function checkUserName(userName){
      }
 }
 
-//hash password
+//hash password 
 const hashPassword = async (password) => {
     const saltRounds=Number(process.env.SALT);
         try {

@@ -74,7 +74,6 @@ export const SignUpPage=()=>{
         else 
         {
           try{
-            console.log("ok");
             const result = await axios.post('http://localhost:5010/signup',formData);
             setMessage(result.data);
             setShowNotification(true);

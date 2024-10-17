@@ -4,14 +4,21 @@ import axios from 'axios';
 export const StoreContext = createContext(null);
 export const StoreContextProvider = (props) => {
   
-  // const [token,setToken]=useState();
+  const [token,setToken]=useState('');
+  const [selectedDateTime, setSelectedDateTime] = useState(new Date());
+  const [cartData,setCartData]=useState({
+    items:[],
+    totalAmount:0,
+    deliveryFee:50,
+    scheduledTime:selectedDateTime,
+  })
   const [category,setCategory]=useState("All");//for menu category
   const [isLoading, setIsLoading] = useState(true); 
   const aboutUsRef = useRef(null); //for about us reference
   const contactUsRef = useRef(null); //for contact  us reference
   const foodDisplayRef=useRef(null);
   
-  const token= localStorage.getItem('token');
+  // const token= localStorage.getItem('token');
 
   const scrollToAbout = () => {
     aboutUsRef.current.scrollIntoView({ behavior: "smooth" });
@@ -27,13 +34,15 @@ export const StoreContextProvider = (props) => {
   const [searchItem,setSearchItem]=useState('');//for landing page search bar
   const handleSearchItem=(e)=>{
     setSearchItem(e.target.value.toLowerCase());  
-
-    if(e.key==='Enter')
+  if(e.key==='Enter')
     {
-      scrollToDisplayFood();
-    }
-    
+      searchItem.length>0 && scrollToDisplayFood();
+    }   
   }
+
+  const handleSearchAction = () => {
+    searchItem.length>0 && scrollToDisplayFood();  // Scroll down when Enter is pressed or button is clicked
+   };
 
   //fetching fooditems from the database
   const[foodItems,setFoodItems]=useState([]);
@@ -52,27 +61,27 @@ export const StoreContextProvider = (props) => {
       }
   };
   
-  // const loadCartData= async (token)=>{
-  //   try{
-  //     const response =await axios.get("http://localhost:5010/cart/get",{headers:{'Authorization': `Bearer ${token}`}});
-  //     setCartItems(response.data.cartData);
-  //     }
-  //     catch(error){
-  //       console.error("error Fetching cart data",error);
-  //     }
-  // };
+  const loadCartData= async (token)=>{
+    try{
+      const response =await axios.get("http://localhost:5010/cart/get",{headers:{'Authorization': `Bearer ${token}`}});
+      setCartItems(response.data.cartData);
+      }
+      catch(error){
+        console.error("error Fetching cart data",error);
+      }
+  };
 
   useEffect(()=>{
     async function loadData() {
       await fetchFoodItems();
       
-      // if(localStorage.getItem("token")){
-      //      setToken(localStorage.getItem("token"));
-      //      await loadCartData(localStorage.getItem("token"));
-      //    }
+      if(localStorage.getItem("token")){
+           setToken(localStorage.getItem("token"));
+           await loadCartData(localStorage.getItem("token"));
+         }
     }
      loadData();
-  },[])
+  },[token])
 
 
 
@@ -133,6 +142,8 @@ export const StoreContextProvider = (props) => {
     }
      return totalAmount;  
   }
+
+  
   
 
   // const loadCartData= async (token)=>{
@@ -161,7 +172,13 @@ export const StoreContextProvider = (props) => {
     setCartItems,
     addToCart,
     removeFromCart,
-    getTotalCartAmount
+    getTotalCartAmount,
+    token,
+    setToken,
+    handleSearchAction,
+    selectedDateTime, 
+    setSelectedDateTime,
+    cartData,setCartData
     
   };
 return (

@@ -4,25 +4,28 @@
     import { useEffect } from 'react';
     import { FaCheckCircle } from "react-icons/fa";
     import { FaTimesCircle } from "react-icons/fa";
+    import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 
     export const ManageKitchen=()=>{
         const[kitchenDetails,setKitchenDetails]=useState([]);
-
+        
+        const manageKitchen=async()=>{
+            try{
+                const pendingcurElem=await axios.get('http://localhost:5010/api/manageKitchen');
+                    setKitchenDetails(pendingcurElem.data);
+                }
+                catch(err)
+                {
+                    console.error("error fetching data",err)
+                }
+            }
         
         useEffect(()=>{
-            const manageKitchen=async()=>{
-                try{
-                    const pendingcurElem=await axios.get('http://localhost:5010/api/manageKitchen');
-                        setKitchenDetails(pendingcurElem.data);
-                    }
-                    catch(err)
-                    {
-                        console.error("error fetching data",err)
-                    }
-                }
                 manageKitchen();
-        },[kitchenDetails])
-
+        },[])
+        kitchenDetails.length>0&&console.log(kitchenDetails);
+        
         //handle Kitchen Approve Function
         const handleKitchenApprove=async(curElem)=>{
             
@@ -34,15 +37,16 @@
                         cookLocation: curElem.cookLocation,
                         role: curElem.role
                     });
-
+                    
+                    toast.success(approveResponse.data)
+                    manageKitchen();
                     
             }
             catch(err)
             {
                     console.error("error approving kitchen",err);
-                    
+                    toast.error(err);
             }
-            // console.log(curElem);
             
             
         }
@@ -54,17 +58,20 @@
                 cookFoodItem: curElem.cookFoodItem,
                 cookLocation: curElem.cookLocation,
                 role: curElem.role
-            })
+            });
+            toast.success(rejectResponse.data)
+            manageKitchen();
             }
             catch(err)
             {
                 console.error("error Rejecting  kitchen",err);
+                toast.error(err);
             }
         }
-
         return(
             <>
                 <div className={styles.main_container}>
+                <ToastContainer/>
                     <div className={styles.manageKitchen_container}>
                         <h1>Kitchen Request</h1>
                         <div className={styles.manageKitchen_details_container}>
@@ -78,7 +85,10 @@
                             </div>
                             <hr /><hr />
 
+
+                            
                             {/* Mapping through curElem */}
+                            <div className={styles.detail_container}>
                             {kitchenDetails.length===0? (
                             <p>Loading curElem details...</p>
                         ) : (
@@ -113,6 +123,7 @@
                                     className={styles.reject_btn}
                                     onClick={() => handleKitchenReject(curElem)}
                                 />
+                                
                             </div>
                             
                             )
@@ -120,6 +131,7 @@
                         })
                             
                         )}
+                        </div>
 
                         </div>
                     </div>
@@ -127,9 +139,3 @@
             </>
         );
     }
-
-    {/* <h1 key={index}>{curElem.userName}</h1>
-    <h2>{curElem.email}</h2>
-    <h2>{curElem.role}</h2>
-    <h2>{curElem.cookFoodItem.chowmein[0]}</h2>
-    <h2>{`${curElem.cookLocation.lat}   ${curElem.cookLocation.lng}`}</h2> */}
