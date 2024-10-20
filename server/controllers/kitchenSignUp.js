@@ -4,12 +4,15 @@ const user = require("../models/index");
 
 
 const kitchenSignUp=async (req,res)=>{
+    console.log("hereeee");
     const {category,location }=req.body;
+    // console.log(req.body);
     // console.log(category);
     // console.log(location);
     // console.log(req.body);
     // console.log(req.user.userId);
     try{
+        // console.log(req.user.userId);
         const userDetails= await user.findById(req.user.userId);
         // console.log(userDetails);
         if(userDetails){
@@ -22,30 +25,16 @@ const kitchenSignUp=async (req,res)=>{
                 cookLocation:location,
                 cookFoodItem:category,
             });
-            // console.log("here");
             if(updatedUser){res.status(200).send("registered as Kitchen");}
             else{res.status(400).send("error");}
            }
-            else if(userStatus==="kitchen"){
+             else if(userStatus==="kitchen"){
                 res.status(400).send("already registered as cook");
             }else if(userStatus==="admin"){
                 res.status(400).send("admin can't registered itself as cook");
+            }else{
+                res.status(400).send("waiting for admin aproval");
             }
-        //     else if(userStatus==="customer"){
-        //         // console.log("we are here");
-        //         const updatedUser=await user.findByIdAndUpdate(req.user.userId,{ 
-        //             role:"pending",
-        //         cookLocation:location,
-        //         cookFoodItem:category,
-        //     }
-        // );
-        //     // console.log("here");
-        //     if(updatedUser){res.status(200).send("registered as Kitchen");}
-        //     else{res.status(400).send("error");}
-        // } 
-        // else if(userStatus==="pending"){
-        //     res.status(400).send("waiting for admin to aprove");
-        // }
         }else{
             res.status(400).send("user not found");
         }
