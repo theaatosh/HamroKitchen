@@ -20,9 +20,8 @@ export const Cart = () => {
     getTotalCartAmount,
     selectedDateTime,setSelectedDateTime,
     setCartData,
-
-  } = useContext(StoreContext);
- 
+    cartData,
+  } = useContext(StoreContext); 
   const navigate = useNavigate();
   const isCartEmpty = Object.keys(cartItems).length === 0;
 
@@ -40,6 +39,7 @@ export const Cart = () => {
         quantity:cartItems[item._id],
         total:item.productPrice*cartItems[item._id]
       }
+      
       })
     const orderData={
       items:itemsInCart,
@@ -47,15 +47,16 @@ export const Cart = () => {
       deliveryFee:getTotalCartAmount()===0?0:50,
       scheduledTime:selectedDateTime.toLocaleString(),
     };
+    console.log(cartData);
     setCartData(orderData);
     
       const order={
       orderTime:selectedDateTime.toISOString()
      }
-      try{await axios.post("http://localhost:5010/api/scheduleOrder",order,{headers:{'Authorization': `Bearer ${token}`}});
-        
+      try{ 
+        axios.post("http://localhost:5010/api/scheduleOrder", cartData,{headers:{'Authorization': `Bearer ${token}`}})
       // console.log(`This is date ${selectedDateTime} hahs`);
-      navigate("/placeOrder",{state:{selectedDateTime}});}
+      navigate("/placeOrder");}
       catch(err){
         console.log(err);
       }

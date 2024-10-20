@@ -12,6 +12,7 @@ export const StoreContextProvider = (props) => {
     deliveryFee:50,
     scheduledTime:selectedDateTime,
   })
+  
   //yo xai placeorder wala page ko
   const[deliveryInfo,setDeliveryInfo]=useState({
     firstName:'',
