@@ -69,7 +69,9 @@ export const KitchenSignup = () => {
     {
         if(err.response.status===400)
         {
-          console.log(err.response.data);
+          
+            toast.error(err.response.data);
+             
           
         }
     }
