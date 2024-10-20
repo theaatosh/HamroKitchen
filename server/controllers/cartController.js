@@ -3,7 +3,7 @@ const mongoose=require("mongoose");
 
 //add items to cart
 const addToCart=async (req,res)=>{
-    console.log("hi");
+    // console.log("hi");
 
    try{
         let userData= await user.findById(req.user.userId);
@@ -14,7 +14,7 @@ const addToCart=async (req,res)=>{
         cartData[req.body.itemId]+=1;
         }
         await user.findByIdAndUpdate(req.user.userId, {cart:cartData});
-        console.log("added to cart");
+        // console.log("added to cart");
         res.send("Added to cart");
     }catch(err){
         console.log(err);
@@ -26,14 +26,22 @@ const addToCart=async (req,res)=>{
 //remove items from the cart
 const removeFromCart=async (req,res)=>{
     try{
-        console.log("here at");
         let userData= await user.findById(req.user.userId);
         let cartData= await userData.cart;
-        if(cartData[req.body.itemId]>0){
+        if(cartData[req.body.itemId]>0)
+            {
             cartData[req.body.itemId]-=1;
+            await user.findByIdAndUpdate(req.user.userId, {cart:cartData});
         }
-        await user.findByIdAndUpdate(req.user.userId, {cart:cartData});
-        console.log("removed");
+        else if (cartData[req.body.itemId]==0){
+            await user.findByIdAndUpdate(req.user.userId, {
+            // cart:cartData
+                $unset: { [`cart.${req.body.itemId}`]:0}  // Remove the item from the cart
+            });
+        
+        }
+
+        // console.log("removed");
         res.send("removed from cart");
     }catch(err){
         console.log("Error1");
@@ -42,10 +50,7 @@ const removeFromCart=async (req,res)=>{
 }
 
 //fetch cart data
-const getCart=async (req,res)=>{
-
-    console.log("1st")
-    
+const getCart=async (req,res)=>{    
     try{    
         let userData= await user.findById(req.user.userId);
         let cartData= await userData.cart;

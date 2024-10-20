@@ -13,7 +13,7 @@ export const LoginPage=()=>{
 
   const navigate=useNavigate();
   const{login}=useAuth();
-  const{setToken,setUserName}=useContext(StoreContext);
+  const{setToken,setUserName,userName}=useContext(StoreContext);
   const [isLoading, setIsLoading] = useState(false);
 
     const [error,setError]=useState({});
@@ -65,9 +65,8 @@ export const LoginPage=()=>{
 
               //token bata decode gareko user details
               const decodedToken=jwtDecode(token);
-              console.log(decodedToken.userId);
-              setUserName(decodedToken.userId);
-                
+              // console.log(decodedToken.userName);
+              setUserName(decodedToken.userName);
               
               login();
               setTimeout(() => {

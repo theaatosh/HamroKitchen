@@ -118,6 +118,7 @@ export const StoreContextProvider = (props) => {
      if(token){
       console.log("hi"); 
       await axios.post("http://localhost:5010/cart/add",{itemId},{headers: {'Authorization': `Bearer ${token}`}});
+      loadCartData(localStorage.getItem("token"));
      }
   }
 
@@ -138,6 +139,7 @@ export const StoreContextProvider = (props) => {
     })
     if(token){
       await axios.post("http://localhost:5010/cart/remove",{itemId},{headers:{'Authorization': `Bearer ${token}`}});
+      loadCartData(localStorage.getItem("token"));
      }
 }
 
