@@ -20,13 +20,13 @@ export const Cart = () => {
     getTotalCartAmount,
     selectedDateTime,setSelectedDateTime,
     setCartData,
-
+    token
   } = useContext(StoreContext);
  
   const navigate = useNavigate();
-  const isCartEmpty = Object.keys(cartItems).length === 0;
+  const isCartEmpty = Object.keys(cartItems).filter(key=>cartItems[key]).length === 0;
 
-  const token= localStorage.getItem('token');
+  // const token= localStorage.getItem('token');
 
   const handleProceedOrder = async () => {  
     //backend ma data pathauna ko lagi 

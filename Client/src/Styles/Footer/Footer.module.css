@@ -2,7 +2,6 @@
 .footer {
   width: 100%;
   margin: auto;
-  height: 45vh;
   margin-top: 4vh;
   /* background-color: #828384; */
   background-color:#FAFAFA;
@@ -14,31 +13,30 @@
 }
 .footer_columns {
   width: 90%;
-  height: 50%;
   margin: auto;
   padding: 3vh 0;
   display: flex;
   justify-content: space-between;
+
 }
- h2{
+.footer_columns h2{
   font-size: 4vh;
 
 }
 .col_1 {
-  
-    height: 20vh;
     display: flex;
     flex-direction: column;
     gap: 1vh 0;
     font-size: 2.5vh;
+
+}
+.footer_list {
+  margin-top: 1.5vh;
+  line-height: 4vh;
+  font-size: 2.5vh;
 }
 .col_2 {
 
-  & .footer_list {
-    margin-top: 1.5vh;
-    line-height: 4vh;
-    font-size: 2.5vh;
-  }
   & li {
     list-style: none;
     cursor: pointer;
@@ -50,11 +48,6 @@
 }
 .col_3 {
 
-  & .footer_list {
-    margin-top: 1.5vh;
-    line-height: 4vh;
-    font-size: 2.5vh;
-  }
   & li {
     list-style: none;
     cursor: pointer;
@@ -65,13 +58,7 @@
   }
 }
 .col_4 {
-  & .footer_list {
-    margin-top: 1.5vh;
-    line-height: 4vh;
-    font-size: 2.5vh;
-  }
-
-  & li {
+& li {
     list-style: none;
     cursor: pointer;
 
@@ -83,11 +70,10 @@
 
 .footer_bottom{
     width: 90%;
-    height: 50%;
     margin: auto;
-    padding: 3vh 0;
     display: flex;
     justify-content: space-between;
+   
 }
 .left{
     margin-top: 5vh;
@@ -120,8 +106,6 @@
     cursor: pointer;
 }
 .social_icons{
-    /* display: flex; */
-    flex-direction: row;
     font-size: 3vw;
 }
 
@@ -143,5 +127,38 @@
   .footer_columns {
     display: flex;
     flex-direction: column;
+  }
+  .footer_columns h2{
+    font-size: 2.5vh;
+  }
+  .footer_list {
+    margin-top: 1vh;
+    line-height: 3.5vh;
+    font-size: 2.5vh;
+  }
+  .col_1,.col_2,.col_3,.col_4{
+    margin-top: 3vh;
+  }
+
+  /* footer bottom  */
+  .footer_bottom{
+    display: flex;
+    flex-direction: column;
+  }
+  .footer_bottom .left{
+    margin-top: 0vh;
+  }
+  .social_icons{
+    font-size: 6vw;
+  }
+  .footer_bottom h2{
+    font-size: 2.5vh;
+
+  }
+  .footer_bottom .right{
+    display: none;
+  }
+  .copyright_div hr{
+    margin-top: 2vh;
   }
 }

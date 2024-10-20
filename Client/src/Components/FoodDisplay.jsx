@@ -36,7 +36,7 @@ export const FoodDisplay = () => {
   return (
     <>
       <div  className={styles.food_display_container}>
-        <h2>Available Dishes</h2>
+        <h1>Available Dishes</h1>
         <div  className={styles.food_display_list}>
           
         {isLoading ? (

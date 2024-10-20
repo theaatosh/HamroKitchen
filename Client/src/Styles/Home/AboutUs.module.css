@@ -18,7 +18,6 @@
 
 .aboutUs_details_container{
     position: absolute;
-    height: 45vh;
     width: 80%;
     margin: auto;
     display: flex;
@@ -55,5 +54,37 @@
         {
         background-color: #D3D3D3;
         }
+    }
+}
+@media (max-width:600px){
+    .aboutUs_img_container{
+        height: 40vh;
+        & img{
+            width: 100%;
+            height: 100%;
+    
+        }
+    }
+    .aboutUs_details_container{
+        top: 1vh;
+        gap:2.5vh;
+    & button{
+        font-size: 2vh;
+        padding: 2vh 9vw;
+        border-radius: 2vh;
+        background-color: #fff;
+        color: black;
+        cursor: pointer;
+       
+    }
+    }
+    .aboutUs_details_container h2{
+        font-size: 5vw;
+            
+        }
+.aboutUs_details_container p{
+            width: 80%;
+            font-size:1.9vh;
+            line-height: 3vh;   
     }
 }

@@ -5,8 +5,7 @@
     background-color:#FFFEFE;
 }
 
-.food_display_container h2{
-    font-size: 2vw;
+.food_display_container h1{
     color:rgb(70, 63, 63);
     font-weight: 600;
 }
@@ -26,4 +25,15 @@
     flex-wrap: wrap;
    gap: 8vh 4vw ;
    
+}
+@media (max-width:600px) {
+    .food_display_container{
+        width: 95%;
+        margin-top: 7vh;
+    }
+    .food_display_container h1{
+        font-size: 3vh;
+      font-weight: 500;
+      text-align: center;
+    }
 }

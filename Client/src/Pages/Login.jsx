@@ -4,14 +4,18 @@ import { RiLockPasswordFill } from "react-icons/ri";
 import styles from '../Styles/Login_Signup/Login.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { LogSignupNotification } from '../Components/LogSignupNotification';
 import { useAuth } from '../Context/AuthContext';
 import { StoreContext } from '../Context/StoreContext';
+import {  toast } from 'react-toastify';
+import {jwtDecode} from 'jwt-decode';
+
 export const LoginPage=()=>{
 
   const navigate=useNavigate();
-  const{showNotification,setShowNotification,message,setMessage,messageType,setMessageType,login}=useAuth();
-  const{token,setToken}=useContext(StoreContext);
+  const{login}=useAuth();
+  const{setToken,setUserName}=useContext(StoreContext);
+  const [isLoading, setIsLoading] = useState(false);
+
     const [error,setError]=useState({});
     const [showPassword,setShowPassword]=useState(false);
     const [formData,setFormData]=useState({
@@ -45,28 +49,35 @@ export const LoginPage=()=>{
       {
 
         try{
+          setIsLoading(true);
           const result =await axios.post('http://localhost:5010/login',formData);
-          
-          setShowNotification(true);
+
           if(result.status===200)
             {
               if(result.data.message==="login sucessfully"){
-                console.log(result.data.token);
+                toast.success(result.data.message,{
+                  autoClose:1000,
+                });
+                const token = result.data.token;
+             localStorage.setItem('token', token); 
+              setToken(token);
+
+              //token bata decode gareko user details
+              const decodedToken=jwtDecode(token);
+              console.log(decodedToken.userId);
+              setUserName(decodedToken.userId);
                 
-              setMessage(result.data.message);
-              setToken(result.data.token);
-              console.log(token);
               
-              localStorage.setItem('token', result.data.token); 
-              setMessageType('success');
               login();
               setTimeout(() => {
               navigate('/');
-            }, 2000);
+            }, 3000);
 
             }else if(result.data.message==="incorrect password"){
-              setMessage(result.data.message)
-              setMessageType('error');
+              toast.error(result.data.message,{autoClose:1500});
+            }
+            else if(result.data.message==="user doesnt exist please register first"){
+              toast.error(result.data.message,{autoClose:1500});
             }
           }else{
             console.log("hi");
@@ -75,9 +86,10 @@ export const LoginPage=()=>{
         }
         catch(error)
         {
-           setMessage(error.message);
-          setShowNotification(true);
-          setMessageType('error');
+          toast.error(error.message,{autoClose:1500})
+        }
+        finally {
+          setIsLoading(false); 
         }
         }
   }
@@ -157,8 +169,8 @@ export const LoginPage=()=>{
       <p className={styles.forgot_password}>Forgot your password?</p>
       </div>
 
-        <div className={styles.signup_btn}>
-      <button type="submit" className={styles.submit_button}>Login</button>
+        <div className={styles.login_btn}>
+      <button type="submit" className={styles.submit_button}>{isLoading ? 'Logging in...' : 'Login'}</button>
       </div>
     </form>
     <div className={styles.haveAccount}>
@@ -170,9 +182,6 @@ export const LoginPage=()=>{
             </div>
 
         </div>
-
-        {/* showing notification bar */}
-        {showNotification&& <LogSignupNotification message={message} messageType={messageType} onClose={()=>setShowNotification(false)}/>}
         </>
     )
 }
