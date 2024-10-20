@@ -3,7 +3,7 @@ import { useAuth } from './AuthContext';
 import { LoginPage } from '../Pages/Login';
 
 
-const AuthUser= ({Component}) => {
+const AuthUser= () => {
     const navigate=useNavigate();
     const { login } = useAuth();
     const token = localStorage.getItem('token');

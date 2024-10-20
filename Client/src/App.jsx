@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import { AppLayout } from "./Components/AppLayout";
 import { Home } from "./Pages/Home";
 import {Cart} from './Pages/Cart';
@@ -11,22 +11,29 @@ import { MyProfile } from "./Pages/MyProfile";
 import { MyOrders } from "./Pages/MyOrders";
 import { NotFound } from "./Components/NotFound";
 import { Payment } from "./Pages/Payment";
+import { KitchenLayout } from "./KitchenComponents/KitchenLayout";
+import { Orders } from "./KitchenPages/Orders";
+import { KitchenSettings } from "./KitchenPages/KitchenSettings";
+import { KitchenDashboard } from "./KitchenPages/KitchenDashboard";
+import { useContext } from "react";
+import { StoreContext } from "./Context/StoreContext";
 
 // import { AuthUser } from "./Context/AuthUser";
 
 
 export const App=()=>{
+  const {token}=useContext(StoreContext);
     const router=createBrowserRouter([
       {
         path:'/',
-        element:<AppLayout/>,
+       element:<AppLayout /> ,
         children:[
           {
             index:true,
             element:<Home/>
           },
           {
-              path:'profile',
+              path:'profile/:userid',
               element:<MyProfile/>
           },
           {
@@ -58,9 +65,9 @@ export const App=()=>{
           },
           {
             path:'login',
-            element:
+            element:token ? <Navigate to={"/"}/> : <LoginPage/>
           
-              <LoginPage/>
+            
           },
           {
             path:'kitchen/Signup',
@@ -70,8 +77,28 @@ export const App=()=>{
             path:'*',
             element:<NotFound/>
           }
+        ],
+        
+      },
+      {
+        path:'/kitchen',
+        element:<KitchenLayout/>,
+        children:[
+          {
+            path:'dashboard',
+            element:<KitchenDashboard/>
+          },
+          {
+            path:'orders',
+            element:<Orders/>
+          },
+          {
+            path:'settings',
+            element:<KitchenSettings/>
+          }
         ]
       }
+      
 
     ]
 

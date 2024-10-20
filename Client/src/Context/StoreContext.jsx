@@ -5,6 +5,7 @@ export const StoreContext = createContext(null);
 export const StoreContextProvider = (props) => {
   
   const [token,setToken]=useState('');
+  const[userName,setUserName]=useState('');
   const [selectedDateTime, setSelectedDateTime] = useState(new Date());
   const [cartData,setCartData]=useState({
     items:[],
@@ -31,7 +32,7 @@ export const StoreContextProvider = (props) => {
   const contactUsRef = useRef(null); //for contact  us reference
   const foodDisplayRef=useRef(null);
   
-  // const token= localStorage.getItem('token');
+
 
   const scrollToAbout = () => {
     aboutUsRef.current.scrollIntoView({ behavior: "smooth" });
@@ -89,19 +90,22 @@ export const StoreContextProvider = (props) => {
       await fetchFoodItems();
       
       if(localStorage.getItem("token")){
-           setToken(localStorage.getItem("token"));
+        setToken(localStorage.getItem("token"));
+        
            await loadCartData(localStorage.getItem("token"));
          }
+         
     }
-     loadData();
+    loadData();
+    
   },[token])
+  
 
 
 
 
   //for cart items
   const[cartItems,setCartItems]=useState({}); 
-
   const addToCart= async (itemId)=>{
      if(!cartItems[itemId]){
       setCartItems((prev)=>({...prev,[itemId]:1}))
@@ -120,26 +124,22 @@ export const StoreContextProvider = (props) => {
 
   // remove cart here
   const removeFromCart= async (itemId)=>{   
-    setCartItems((prev)=>({...prev,[itemId]:prev[itemId]-1}))
+    setCartItems((prevCartItems)=>{
+      const updatedCart={...prevCartItems};
+      if(updatedCart[itemId]>1)
+      {
+       updatedCart[itemId]=updatedCart[itemId]-1;
+      }
+
+      if(updatedCart[itemId]===1)
+      {
+        delete updatedCart[itemId];
+      }
+      return updatedCart;
+    })
     if(token){
       await axios.post("http://localhost:5010/cart/remove",{itemId},{headers:{'Authorization': `Bearer ${token}`}});
      }
-    setCartItems((prev)=>{
-      const updatedCart={...prev};
-     if(updatedCart[itemId]>1)
-     {
-      updatedCart[itemId]=updatedCart[itemId]-1
-     }
-     else{
-      delete updatedCart[itemId];
-     }
-
-     return updatedCart;
-   })
-
-
-
-    
 }
 
   const getTotalCartAmount=()=>{
@@ -156,17 +156,7 @@ export const StoreContextProvider = (props) => {
      return totalAmount;  
   }
 
-  
-  
 
-  // const loadCartData= async (token)=>{
-  //   const response =await axios.get("http://localhost:5010/cart/get",{},{headers: {'Authorization': `Bearer ${token}`}});
-  //   setCartItems(response.data.cartData);
-  // }
-
-  // useEffect(async ()=>{
-  //   await loadCartData(token);
-  // },[]);
   const contextValue = {
     isLoading,
     url,
@@ -192,7 +182,8 @@ export const StoreContextProvider = (props) => {
     selectedDateTime, 
     setSelectedDateTime,
     cartData,setCartData,
-   deliveryInfo,setDeliveryInfo
+   deliveryInfo,setDeliveryInfo,
+   userName,setUserName
      };
 return (
     <StoreContext.Provider value={contextValue} >

@@ -73,7 +73,7 @@
         box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;        backdrop-filter: blur(100px);
 
     &::placeholder{
-        /* color: #fff; */
+        
         color: black;
     }
     }
@@ -101,5 +101,43 @@
     }
     100%{
         opacity: 1;
+    }
+}
+
+@media (max-width:600px) {
+    .main_container{
+        height: 40vh;
+    }
+    .left_white_btn{
+        font-size: 5vh;
+    }
+    .left_btn{
+        font-size: 5vh;
+    }
+    .right_white_btn{
+        font-size: 5vh;
+    }
+    .right_btn{
+        font-size: 5vh;
+    }
+
+    /* search bar  */
+    .search_bar{
+    top: 32%;
+    left: 13%;
+    
+    & input{
+        width: 55vw;
+        padding: 1.5vh 2vw;
+        font-size: 2vh;
+       
+    }
+    }
+    .search_icon_container{
+        width: 13vw;
+
+        & .search_icon{
+            font-size: 4vw;
+        }
     }
 }

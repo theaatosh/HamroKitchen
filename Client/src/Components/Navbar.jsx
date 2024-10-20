@@ -18,6 +18,8 @@ export const Navbar = () => {
 
     
   }
+  const {userName}=useContext(StoreContext);
+  
   //userMenu banda garne if outside the menu click bhayo bhane
   const userMenuRef=useRef(null);
      useEffect(()=>{
@@ -36,7 +38,11 @@ export const Navbar = () => {
       };
     },[])
     
-  const cartItemsCount=Object.keys(cartItems).length;//no of items in cart
+  const cartItemsCount=Object.keys(cartItems).filter(key=>cartItems[key]>0).length;//no of items in cart
+  // console.log(cartItemsCount);
+  // console.log(JSON.stringify(cartItems,null ,2));
+  
+  
   
   return (
     <div className={styles.navbar}>
@@ -113,10 +119,11 @@ export const Navbar = () => {
              {/* click garda khulne div ho  */}
             {isUserMenuOpen&&(
               <div className={styles.user_menu} >
-                <Link to='/profile'><p className={styles.user_menu_p}>My Profile</p></Link><hr />
-                <Link to='/kitchen/signUp'><p className={styles.user_menu_p}>Register as Kitchen</p></Link><hr />
+                <Link to={`/profile/${userName}`}><p className={styles.user_menu_p}>My Profile</p></Link><hr />
                 <Link to='/myorders'><p className={styles.user_menu_p}>My Orders</p></Link><hr />
-                <p onClick={()=>logout()} className={styles.user_menu_p}>Logout</p>
+                <Link to='/kitchen/signUp'><p className={styles.user_menu_p}>Register as Kitchen</p></Link><hr />
+                <Link to='/kitchen/dashboard'><p className={styles.user_menu_p}>Kitchen Dashboard</p></Link><hr />
+                <p onClick={()=>logout(setIsUserMenuOpen)} className={styles.user_menu_p}>Logout</p>
 
               </div>
             )}

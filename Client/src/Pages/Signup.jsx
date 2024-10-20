@@ -8,13 +8,11 @@ import { FaEyeSlash } from "react-icons/fa";
 import styles from '../Styles/Login_Signup/Signup.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { LogSignupNotification } from '../Components/LogSignupNotification';
-import { useAuth } from '../Context/AuthContext';
+import {  toast } from 'react-toastify';
 
 export const SignUpPage=()=>{
-
-  const{showNotification,setShowNotification,message,setMessage,messageType,setMessageType}=useAuth();
   const navigate=useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   
   //user details
   const [formData,setFormData]=useState({
@@ -74,36 +72,37 @@ export const SignUpPage=()=>{
         else 
         {
           try{
+            setIsLoading(true)
             const result = await axios.post('http://localhost:5010/signup',formData);
-            setMessage(result.data);
-            setShowNotification(true);
+            
             
             if(result.status===200)
             {
-                setMessageType('success');
+              toast.success(result.data,{autoClose:1500});
                 setTimeout(() => {
                 navigate('/login');
               }, 2000);
             }
             else if(result.status===400)
               {
-                setMessage("error while registering");
+                toast.error(result.data,{autoClose:1500});
   
               }
         }
           catch(err)
           {
-          if(err.status===401)
+          if(err.status===201)
             {
-              setMessage("User Already Exists");
+                toast.error(err.response.data,{autoClose:1500});
+
             }
             else
             {
-              setMessage(err.data);
+              toast.error(err.response.data,{autoClose:1500});
             }
-            setMessageType("error");
-            setShowNotification(true);
-
+          }
+          finally {
+            setIsLoading(false); 
           }
           
           
@@ -230,14 +229,14 @@ export const SignUpPage=()=>{
 
         {/* for signup button  */}
         <div className={styles.signup_btn}>
-      <button type="submit" className={styles.submit_button}>SignUp</button>
+      <button type="submit" className={styles.submit_button}>{isLoading ? 'Signing Up...' : 'SignUp'}</button>
+      
       </div>
     </form>
 
     <div className={styles.haveAccount}>
        <p>Already have account? <Link to='/login'><span>Login Now</span></Link></p>
     </div>
-    {showNotification&&<LogSignupNotification message={message} onClose={()=>setShowNotification(false)} messageType={messageType}/>}
                         </div>
                     </div>
                 </div>

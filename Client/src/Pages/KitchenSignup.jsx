@@ -246,7 +246,7 @@ export const KitchenSignup = () => {
 
                 {/* Leaflet Map for Location */}
                 <div className={styles.form_group}>
-                  <label htmlFor="location">Provide your Location</label>
+                  <label htmlFor="location">Choose your location :</label>
                   <MapContainer
                     center={[27.7172, 85.3240]}
                     zoom={15}
