@@ -6,6 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
 
 const token= localStorage.getItem('token');
+// console.log(token);
 
 export const KitchenSignup = () => {
   const [formData, setFormData] = useState({

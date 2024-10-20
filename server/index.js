@@ -71,7 +71,8 @@ app.post('/login', async (req, res) =>{
     const matched= await comparePasswords(password, userFound.password);
     if(matched){
       // console.log(userFound);
-      const token= jwt.sign({userId:userFound.id, userName:userName}, secretKey, {expiresIn: '12h'});
+      const role=await user.findById(userFound._id).select('role');
+      const token= jwt.sign({userId:userFound.id, userName:userName, role:role.role}, secretKey, {expiresIn: '12h'});
       res.status(200).json({message:"login sucessfully",
         token:token,
       });
