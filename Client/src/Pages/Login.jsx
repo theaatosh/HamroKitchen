@@ -51,7 +51,8 @@ export const LoginPage=()=>{
         try{
           setIsLoading(true);
           const result =await axios.post('http://localhost:5010/login',formData);
-
+          console.log(result.data.message);
+          
           if(result.status===200)
             {
               if(result.data.message==="login sucessfully"){

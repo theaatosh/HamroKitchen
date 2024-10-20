@@ -4,6 +4,8 @@ const user = require("../models/index");
 
 
 const kitchenSignUp=async (req,res)=>{
+    console.log("bhayo");
+    
     const {category,location }=req.body;
     // console.log(category);
     // console.log(location);

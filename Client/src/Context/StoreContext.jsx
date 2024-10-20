@@ -40,7 +40,6 @@ export const StoreContextProvider = (props) => {
 
   const scrollToFooter = () => {
     contactUsRef.current.scrollIntoView({ behavior: "smooth" });
-    console.log(contactUsRef);
   }
   const scrollToDisplayFood=()=>{
     foodDisplayRef.current.scrollIntoView({behavior:"smooth"});
