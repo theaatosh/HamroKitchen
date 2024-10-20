@@ -12,8 +12,8 @@ const verifyToken= async (req, res, next)=>{
           return res.status(401).send("Invalid token.");
         }
         req.user = decoded;
-        console.log(decoded);
-        console.log("verified");
+        // console.log(decoded);
+        // console.log("verified");
         next(); 
       });
     };
