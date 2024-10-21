@@ -7,7 +7,7 @@ const{userDetails}=useAuth();
     return(
         <>
         <div className={styles.main_container}>
-            <h1>{`Profile of UserId:${userDetails.userName}`}</h1>
+            <h1>{`UserName :${userDetails.userName} and Role :${userDetails.role}`}</h1>
         </div>
         </>
     )
