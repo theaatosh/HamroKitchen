@@ -17,6 +17,7 @@ import { KitchenSettings } from "./KitchenPages/KitchenSettings";
 import { KitchenDashboard } from "./KitchenPages/KitchenDashboard";
 import { useContext } from "react";
 import { StoreContext } from "./Context/StoreContext";
+import { KitchenProtectedRoute } from "./KitchenComponents/KitchenProtectedRoute";
 
 // import { AuthUser } from "./Context/AuthUser";
 
@@ -86,7 +87,10 @@ export const App=()=>{
         children:[
           {
             path:'dashboard',
-            element:<KitchenDashboard/>
+            element:<KitchenProtectedRoute>
+              <KitchenDashboard/>
+            </KitchenProtectedRoute>
+
           },
           {
             path:'orders',

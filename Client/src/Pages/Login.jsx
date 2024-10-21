@@ -7,13 +7,13 @@ import axios from 'axios';
 import { useAuth } from '../Context/AuthContext';
 import { StoreContext } from '../Context/StoreContext';
 import {  toast } from 'react-toastify';
-import {jwtDecode} from 'jwt-decode';
+
 
 export const LoginPage=()=>{
 
   const navigate=useNavigate();
-  const{login}=useAuth();
-  const{setToken,setUserName,userName}=useContext(StoreContext);
+  const{login,userCredentials}=useAuth();
+  const{setToken}=useContext(StoreContext);
   const [isLoading, setIsLoading] = useState(false);
 
     const [error,setError]=useState({});
@@ -64,9 +64,7 @@ export const LoginPage=()=>{
               setToken(token);
 
               //token bata decode gareko user details
-              const decodedToken=jwtDecode(token);
-              // console.log(decodedToken.userName);
-              setUserName(decodedToken.userName);
+              userCredentials(token);
               
               login();
               setTimeout(() => {

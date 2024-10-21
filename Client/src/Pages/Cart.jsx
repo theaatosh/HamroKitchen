@@ -50,9 +50,6 @@ export const Cart = () => {
     console.log(cartData);
     setCartData(orderData);
     
-      const order={
-      orderTime:selectedDateTime.toISOString()
-     }
       try{ 
         axios.post("http://localhost:5010/api/scheduleOrder", cartData,{headers:{'Authorization': `Bearer ${token}`}})
       // console.log(`This is date ${selectedDateTime} hahs`);
@@ -125,6 +122,8 @@ export const Cart = () => {
           </ul>
         </div>
         {/* showing Cart total details */}
+
+            {!isCartEmpty&&
         <div className={styles.cart_bottom}>
           <div className={styles.cart_total}>
             <h2>Cart Totals</h2>
@@ -167,6 +166,8 @@ export const Cart = () => {
             />
           </div>
         </div>
+        }
+
       </div>
     </>
   );
