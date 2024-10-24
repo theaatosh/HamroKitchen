@@ -4,7 +4,22 @@
     width: 80%;
   margin: auto;
   margin-top: 20vh;
+}
+.empty_cart{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+  & img{
+    width: 300px;
+  }
 
+  & h1{
+    color: tomato;
+    font-style:italic;
+    margin-bottom: 10px;
+  }
 }
 .cart_items{
    width: 100%;

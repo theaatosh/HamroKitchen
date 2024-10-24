@@ -7,19 +7,21 @@ import { useAuth } from "../Context/AuthContext";
 import { FaUser } from "react-icons/fa";
 import { IoMdNotifications } from "react-icons/io";
 
+
+
 export const Navbar = () => {
   const { scrollToAbout, scrollToFooter,scrollToDisplayFood, cartItems } = useContext(StoreContext);
-  const{isLoggedIn,logout}=useAuth();
+  const{isLoggedIn,logout,userDetails}=useAuth();
   const [activeMenu, setActiveMenu] = useState("Home");
   const[isUserMenuOpen,setIsUserMenuOpen]=useState(false);
-
+  
   const toggleUserMenu=()=>{
     setIsUserMenuOpen((prevState)=>!prevState);
 
-    
   }
-  const {userName}=useContext(StoreContext);
-  
+
+ 
+
   //userMenu banda garne if outside the menu click bhayo bhane
   const userMenuRef=useRef(null);
      useEffect(()=>{
@@ -119,12 +121,21 @@ export const Navbar = () => {
              {/* click garda khulne div ho  */}
             {isUserMenuOpen&&(
               <div className={styles.user_menu} >
-                <Link to={`/profile/${userName}`}><p className={styles.user_menu_p}>My Profile</p></Link><hr />
+                <Link to={`/profile/${userDetails.userName}`}><p className={styles.user_menu_p}>My Profile</p></Link><hr />
                 <Link to='/myorders'><p className={styles.user_menu_p}>My Orders</p></Link><hr />
-                <Link to='/kitchen/signUp'><p className={styles.user_menu_p}>Register as Kitchen</p></Link><hr />
-                <Link to='/kitchen/dashboard'><p className={styles.user_menu_p}>Kitchen Dashboard</p></Link><hr />
+                {userDetails.role==='kitchen'?(
+                  <>
+                  <Link to='/kitchen/dashboard'><p className={styles.user_menu_p}>Kitchen Dashboard</p></Link><hr />
+                  </>
+                  )
+                  :
+                  (
+                    <>
+                    <Link to='/kitchen/signUp'><p className={styles.user_menu_p}>Register as Kitchen</p></Link><hr />
+                    </>
+                    )
+                  }
                 <p onClick={()=>logout(setIsUserMenuOpen)} className={styles.user_menu_p}>Logout</p>
-
               </div>
             )}
             </div>
@@ -139,3 +150,8 @@ export const Navbar = () => {
     </div>
   );
 };
+                    
+                  
+                
+                
+

@@ -19,9 +19,9 @@ export const KitchenNavbar=()=>{
                     <span>{isOnline?'Online':'Offline'}</span>
                     </div>
             </div>
-            <div className={styles.user_logo_con}>
+            {/* <div className={styles.user_logo_con}>
             <img src="/Images/PP.jpg" alt="chef_photo" />
-            </div>
+            </div> */}
             
             </div>
         </>

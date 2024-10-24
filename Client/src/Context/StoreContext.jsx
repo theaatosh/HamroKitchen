@@ -5,7 +5,7 @@ export const StoreContext = createContext(null);
 export const StoreContextProvider = (props) => {
   
   const [token,setToken]=useState('');
-  const[userName,setUserName]=useState('');
+  
   const [selectedDateTime, setSelectedDateTime] = useState(new Date());
   const [cartData,setCartData]=useState({
     items:[],
@@ -114,6 +114,7 @@ export const StoreContextProvider = (props) => {
      else{
       setCartItems((prev)=>({...prev,[itemId]:prev[itemId]+1}));
      }
+     
 // add to cart here
   
      if(token){
@@ -122,7 +123,6 @@ export const StoreContextProvider = (props) => {
       loadCartData(localStorage.getItem("token"));
      }
   }
-
   // remove cart here
   const removeFromCart= async (itemId)=>{   
     setCartItems((prevCartItems)=>{
@@ -144,7 +144,6 @@ export const StoreContextProvider = (props) => {
       loadCartData(localStorage.getItem("token"));
      }
 }
-
   const getTotalCartAmount=()=>{
     let totalAmount=0;
 
@@ -186,7 +185,6 @@ export const StoreContextProvider = (props) => {
     setSelectedDateTime,
     cartData,setCartData,
    deliveryInfo,setDeliveryInfo,
-   userName,setUserName
      };
 return (
     <StoreContext.Provider value={contextValue} >
