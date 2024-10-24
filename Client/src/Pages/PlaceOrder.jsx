@@ -3,9 +3,10 @@ import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from 'react-lea
 import styles from '../Styles/PlaceOrder/PlaceOrder.module.css';
 import { StoreContext } from '../Context/StoreContext';
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 export const PlaceOrder=()=>{
 
-    const {getTotalCartAmount,cartData,selectedDateTime,deliveryInfo,setDeliveryInfo}=useContext(StoreContext);
+    const {getTotalCartAmount,cartData,selectedDateTime,deliveryInfo,setDeliveryInfo,token}=useContext(StoreContext);
     const navigate=useNavigate();
 
       const[error,setError]=useState({});
@@ -117,8 +118,14 @@ export const PlaceOrder=()=>{
               setError(validation);
           }
           else{
-
-            console.log(deliveryInfo);
+            try{
+              console.log(token);
+              axios.post("http://localhost:5010/api/scheduleOrder", {cartData,deliveryInfo},{headers:{'Authorization': `Bearer ${token}`}})
+              console.log(cartData);
+            }catch(err){
+              console.log(err);
+            }
+            // console.log(deliveryInfo);
             navigate('/payment');
           }
           

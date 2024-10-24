@@ -127,6 +127,7 @@ export const StoreContextProvider = (props) => {
   const removeFromCart= async (itemId)=>{   
     setCartItems((prevCartItems)=>{
       const updatedCart={...prevCartItems};
+      updatedCart[itemId] += 1;
       if(updatedCart[itemId]>1)
       {
        updatedCart[itemId]=updatedCart[itemId]-1;

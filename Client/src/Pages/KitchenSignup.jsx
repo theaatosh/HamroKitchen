@@ -5,10 +5,11 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
 
-const token= localStorage.getItem('token');
-// console.log(token);
+
 
 export const KitchenSignup = () => {
+  const token= localStorage.getItem('token');
+// console.log(token);
   const [formData, setFormData] = useState({
     category: {},
     location: { lat: null, lng: null }, // stores latitude and longitude

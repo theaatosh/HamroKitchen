@@ -6,7 +6,6 @@ const user = require("../models/index");
 const kitchenSignUp=async (req,res)=>{
     const {category,location }=req.body;
     try{
-        // console.log(req.user.userId);
         const userDetails= await user.findById(req.user.userId);
         // console.log(userDetails);
         if(userDetails){
@@ -27,6 +26,8 @@ const kitchenSignUp=async (req,res)=>{
                 res.status(400).send("admin can't registered itself as cook");
             }else if(userStatus==="pending"){
                 res.status(400).send("waiting for admin aproval");
+            }else{
+                res.status(400).send("invalid user status");
             }
         }else{
             res.status(400).send("user not found");

@@ -1,4 +1,4 @@
-import { useContext, } from "react";
+import { useContext, useEffect, } from "react";
 import styles from "../Styles/Cart/Cart.module.css";
 import { StoreContext } from "../Context/StoreContext";
 import {  useNavigate } from "react-router-dom";
@@ -47,14 +47,11 @@ export const Cart = () => {
       deliveryFee:getTotalCartAmount()===0?0:50,
       scheduledTime:selectedDateTime.toLocaleString(),
     };
-    console.log(cartData);
+    // console.log(cartData);
     setCartData(orderData);
-    
-      const order={
-      orderTime:selectedDateTime.toISOString()
      }
       try{ 
-        axios.post("http://localhost:5010/api/scheduleOrder", cartData,{headers:{'Authorization': `Bearer ${token}`}})
+        // axios.post("http://localhost:5010/api/scheduleOrder", cartData,{headers:{'Authorization': `Bearer ${token}`}})
       // console.log(`This is date ${selectedDateTime} hahs`);
       navigate("/placeOrder");}
       catch(err){

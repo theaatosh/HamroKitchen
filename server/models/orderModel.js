@@ -8,6 +8,7 @@ const orderSchema=mongoose.Schema({
     totalAmount:{
         type:Number,
     },
+    deliveryFee:{type:String},
     scheduledTime:{type:String},
     orderStatus:{type:String,
         default:"Onprocess"
@@ -18,6 +19,9 @@ const orderSchema=mongoose.Schema({
             lat:"",
             lon:"",
         }
+    },
+    deliveryInfo:{
+        type:Object,
     },
     paymentStatus:{type:String,
         default:"notPaid"

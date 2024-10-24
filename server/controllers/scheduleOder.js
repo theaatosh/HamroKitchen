@@ -1,13 +1,18 @@
 const order=require("../models/orderModel");
+const mongoose=require('mongoose');
 const scheduleOder=async (req,res)=>{
-
     const{userId}= req.user;
-    const{items,totalAmount,deliveryFee,scheduledTime}=req.body;
+    const{items,totalAmount,deliveryFee,scheduledTime}=req.body.cartData;
+    const deliveryInfo=req.body.deliveryInfo;
+    // const{fNAme,lNAme,email,phNumber,deliveryLocation}=req.body.deliveryInfo;
+    console.log(items);
     const orderStatus='Onprocess'
-    const alreadySaveOrder=await order.find({userId:userId, orderStatus:orderStatus});
-    // console.log(alreadySaveOrder);
-    if(alreadySaveOrder){
-       const updateOrder= await order.findOneAndUpdate({_id:alreadySaveOrder[0]}, 
+    const alreadySaveOrder=await order.findOne({userId:userId, orderStatus:orderStatus});
+    if(alreadySaveOrder!==null){
+        const orderId=alreadySaveOrder._id.toString();
+        const h=await order.findOne({_id:orderId});
+       try{
+        await order.findOneAndUpdate({_id:orderId}, 
         {$set:{
             userId:userId,
             orderedItem:items,
@@ -22,6 +27,10 @@ const scheduleOder=async (req,res)=>{
     // }else{
     //     console.log("not updated");
     // }
+    }catch(err){
+        console.log(err);
+    }
+   
     }
     else{
     try{
@@ -31,7 +40,7 @@ const scheduleOder=async (req,res)=>{
             totalAmount:totalAmount,
             scheduledTime:scheduledTime,
         });
-        listOrder.save();
+       await listOrder.save();
     }catch(err){
         console.log(err);
     }
