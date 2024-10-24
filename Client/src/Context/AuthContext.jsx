@@ -28,7 +28,7 @@ export const AuthContextProvider=({children})=>{
   useEffect(()=>{
     const token=localStorage.getItem('token');
     userCredentials(token);
-    console.log(userDetails.role);
+
 },[])
 
    const login=()=>{

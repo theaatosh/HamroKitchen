@@ -85,7 +85,7 @@ export const Cart = () => {
           <hr />
 
           <ul>
-          {isCartEmpty?(<h1>Cart is empty!!</h1>):
+          {isCartEmpty?(<div className={styles.empty_cart}><img src="/Images/EmptyCart.png" alt="" /><h1>Your cart is empty!!</h1></div>):
             (foodItems.map((curItem) => {
               if (cartItems[curItem._id] > 0)
                 return (

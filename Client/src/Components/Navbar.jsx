@@ -14,7 +14,6 @@ export const Navbar = () => {
   const{isLoggedIn,logout,userDetails}=useAuth();
   const [activeMenu, setActiveMenu] = useState("Home");
   const[isUserMenuOpen,setIsUserMenuOpen]=useState(false);
-  console.log(userDetails.userName);
   
   const toggleUserMenu=()=>{
     setIsUserMenuOpen((prevState)=>!prevState);

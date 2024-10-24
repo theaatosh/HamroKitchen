@@ -79,3 +79,47 @@
         font-size: 3vh;
     }
 }
+
+@media (max-width:600px) {
+    .food_item{
+        margin: 5px 20px;
+    }
+    .foodItem_img_container{
+        width: 100%
+    }
+    .foodItem_img_container img{
+        width: 100%;
+    }
+    .foodItem_img_container .add_icon{
+      font-size: 10vw;
+      right: 3vw;
+      box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+
+    }
+    .item_counter_container{
+    right: 4vw;
+    bottom: 1vh;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+   
+    }
+    .item_counter_container .sub1_icon
+    {
+    font-size: 8vw;
+    }
+    .item_counter_container p
+    {
+    font-size: 6vw;
+    }
+.item_counter_container .add1_icon
+    {
+    font-size: 8vw;
+    color: green; 
+    cursor: pointer;
+    }
+
+    .foodItem_info{
+        /* border: 2px solid red; */
+        padding:1vw 4vw;
+    }
+}

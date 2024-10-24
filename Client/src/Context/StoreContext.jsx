@@ -144,7 +144,6 @@ export const StoreContextProvider = (props) => {
       loadCartData(localStorage.getItem("token"));
      }
 }
-
   const getTotalCartAmount=()=>{
     let totalAmount=0;
 

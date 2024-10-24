@@ -13,11 +13,7 @@ export const KitchenSignup = () => {
     category: {},
     location: { lat: null, lng: null }, // stores latitude and longitude
   });
-
-  useEffect(()=>{
-    console.log(formData);
-    
-  },[formData])
+  
   const handleCategoryItemChange = (e, category) => {
     const { value, checked } = e.target;
     setFormData((prevData) => {
