@@ -135,4 +135,7 @@ app.use('/api/manageKitchen',manageKitchen);
 const scheduleOder=require('./routes/scheduleOrder.js');
 app.use('/api/scheduleOrder',scheduleOder);
 
+const {khalti,khaltiCallback}=require('./tryKhalti.js');
+app.use('/api/khalti/init', khalti);
+
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

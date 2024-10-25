@@ -49,7 +49,6 @@ export const Cart = () => {
     };
     // console.log(cartData);
     setCartData(orderData);
-     }
       try{ 
         // axios.post("http://localhost:5010/api/scheduleOrder", cartData,{headers:{'Authorization': `Bearer ${token}`}})
       // console.log(`This is date ${selectedDateTime} hahs`);

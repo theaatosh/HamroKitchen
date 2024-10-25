@@ -5,7 +5,7 @@ const scheduleOder=async (req,res)=>{
     const{items,totalAmount,deliveryFee,scheduledTime}=req.body.cartData;
     const deliveryInfo=req.body.deliveryInfo;
     // const{fNAme,lNAme,email,phNumber,deliveryLocation}=req.body.deliveryInfo;
-    console.log(items);
+    // console.log(items);
     const orderStatus='Onprocess'
     const alreadySaveOrder=await order.findOne({userId:userId, orderStatus:orderStatus});
     if(alreadySaveOrder!==null){
@@ -17,7 +17,9 @@ const scheduleOder=async (req,res)=>{
             userId:userId,
             orderedItem:items,
             totalAmount:totalAmount,
+            deliveryFee:deliveryFee,
             scheduledTime:scheduledTime,
+            deliveryInfo:deliveryInfo,
         }
         }, 
         { new: true }  
@@ -38,7 +40,9 @@ const scheduleOder=async (req,res)=>{
             userId:userId,
             orderedItem:items,
             totalAmount:totalAmount,
+            deliveryFee:deliveryFee,
             scheduledTime:scheduledTime,
+            deliveryInfo:deliveryInfo,
         });
        await listOrder.save();
     }catch(err){
