@@ -1,11 +1,8 @@
-import { useState } from 'react';
 import styles from '../Styles/Kitchen/KitchenNavbar.module.css'
+import { useAuth } from '../Context/AuthContext';
 
 export const KitchenNavbar=()=>{
-    const [isOnline, setIsOnline] = useState(true);
-    const handleToggle = () => {
-        setIsOnline((prevState) => !prevState); // Toggle between true and false
-    };
+    const{isOnline,handleToggle}=useAuth();
     return (
         <>
             <div className={styles.navbar}>
@@ -19,9 +16,7 @@ export const KitchenNavbar=()=>{
                     <span>{isOnline?'Online':'Offline'}</span>
                     </div>
             </div>
-            {/* <div className={styles.user_logo_con}>
-            <img src="/Images/PP.jpg" alt="chef_photo" />
-            </div> */}
+           
             
             </div>
         </>

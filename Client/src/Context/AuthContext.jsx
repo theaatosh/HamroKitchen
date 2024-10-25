@@ -12,6 +12,12 @@ export const AuthContextProvider=({children})=>{
   const[userDetails,setUserDetails]=useState({userName:'',role:''});
   const {setCartItems,token,setToken}=useContext(StoreContext);
 
+
+  //for kitchen Chef
+  const [isOnline, setIsOnline] = useState(true);
+    const handleToggle = () => {
+        setIsOnline((prevState) => !prevState); // Toggle between true and false
+    };
   const userCredentials=(token)=>{
     try{
       const decodedToken=jwtDecode(token);
@@ -54,7 +60,8 @@ const authValue={
         login,
         logout,
         userCredentials,
-        userDetails
+        userDetails,
+        isOnline,setIsOnline,handleToggle
     }
 
   return(

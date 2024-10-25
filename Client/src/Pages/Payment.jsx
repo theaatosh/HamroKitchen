@@ -1,8 +1,11 @@
+import { useNavigate } from 'react-router-dom';
 import styles from '../Styles/Payment/Payment.module.css';
 export const Payment=()=>{
-
+const navigate=useNavigate();
     const handlePayment=()=>{
-        console.log('hello');
+
+            navigate('/paymentSuccessful');
+       
 
 
     }
