@@ -13,13 +13,13 @@ const orderSchema=mongoose.Schema({
     orderStatus:{type:String,
         default:"Onprocess"
     },
-    deliveryAddress:{
-        type:Object,
-        default:{
-            lat:"",
-            lon:"",
-        }
-    },
+    // deliveryAddress:{
+    //     type:Object,
+    //     default:{
+    //         lat:"",
+    //         lon:"",
+    //     }
+    // },
     deliveryInfo:{
         type:Object,
     },
