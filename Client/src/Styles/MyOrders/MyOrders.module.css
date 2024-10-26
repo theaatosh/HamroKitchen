@@ -4,12 +4,12 @@
     margin: 20vh;
     padding: 5vh 2vh;
     border-radius: 5vh;
-    color: #454545;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    color: #a8a2a2;
+    /* box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset; */
 }
 .main_container h1{
     text-align: center;
-    color: tomato;
+    color: black;
 }
 .orders_container{
     margin-top: 5vh;
@@ -26,7 +26,7 @@
     align-items: center;
 
     & h3,h5{
-        color: black;
+        color:black;
     }
 }
 .orders_container img{
@@ -78,7 +78,7 @@
     max-height: none;
 }
 .completed{
-background-color: #01A86A;
+background-color: #32CD32;
 color: #efefef;
 }
 .processing{

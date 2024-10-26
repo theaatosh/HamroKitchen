@@ -138,8 +138,14 @@ export const MyOrders=()=>{
         
       }
     const fetchOrders=async()=>{
-        const response=await axios.post('url halne',{},{headers:{'Authorization':`Bearer ${token}`}});
-        setData(response.data);
+        try{
+            const response=await axios.post('url halne',{},{headers:{'Authorization':`Bearer ${token}`}});
+            setData(response.data);
+
+        }catch(error){
+            console.log(error);
+            
+        }
     }
     useEffect(()=>{
         if(token){

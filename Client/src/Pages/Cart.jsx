@@ -1,4 +1,4 @@
-import { useContext, useEffect, } from "react";
+import { useContext } from "react";
 import styles from "../Styles/Cart/Cart.module.css";
 import { StoreContext } from "../Context/StoreContext";
 import {  useNavigate } from "react-router-dom";
@@ -7,7 +7,6 @@ import { CiCircleMinus } from "react-icons/ci";
 import { MdDeleteForever } from "react-icons/md";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"; // Import the CSS
-import axios from 'axios';
 
 export const Cart = () => {
   const {
@@ -20,7 +19,7 @@ export const Cart = () => {
     getTotalCartAmount,
     selectedDateTime,setSelectedDateTime,
     setCartData,
-    cartData,    token
+  
   } = useContext(StoreContext); 
   const navigate = useNavigate();
   const isCartEmpty = Object.keys(cartItems).filter(key=>cartItems[key]).length === 0;

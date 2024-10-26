@@ -1,7 +1,12 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import styles from '../Styles/Kitchen/KitchenPages/Orders.module.css';
+import axios from "axios";
+import {  toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useAuth } from "../Context/AuthContext";
 export const Orders=()=>{
- 
+  const{isOnline}=useAuth();
+
     const [orders, setOrders] = useState([
         {
           _id: '1',
@@ -25,9 +30,9 @@ export const Orders=()=>{
         },
         {
           _id: '3',
-          customer: { name: 'Alice Johnson' },
+          customer: { name: 'prameet' },
           items: [
-            { foodItem: { name: 'prameet' }, quantity: 1 },
+            { foodItem: { name: 'momo' }, quantity: 1 },
             { foodItem: { name: 'Juice' }, quantity: 2 }
           ],
           scheduledTime: 'October 21, 2024, 12:00 PM',
@@ -43,40 +48,79 @@ export const Orders=()=>{
           status: 'rejected',
         }
       ]);
+
+      const fetchCustomerOrders=async()=>{
+        try{
+          const response=await axios.get('url halne',{},{headers:{'Authorization':`Bearer ${token}`}});
+          setOrders(response.data);
+
+      }catch(error){
+          console.log(error);
+         toast.error(error);
+          
+      }
+      }
+      const statusHandler=async(event,orderId)=>{
+          try{
+            const response=await axios.post('url halne',{orderId,status:event.target.value})
+            console.log(event,orderId);
+            
+          }
+          catch(error)
+          {
+            toast.error(error);
+          }
+      }
+
+      useEffect(()=>{
+        fetchCustomerOrders();
+      },[])
       
     return(
         <div className={styles.main_order_container}>
-            <h2>Kitchen Order</h2>
+            <h2>Food Order</h2>
+            {!isOnline?(<p >You are offline.No orders to display</p>):(
+              <>
+              <div className={styles.topic}>
+              <p>S.N</p>
+              <p>Customer Name</p>
+              <p>Food Items</p>
+              <p>Scheduled for</p>
+              <p>Status</p>
+            </div>
             <div className={styles.order_list}>
-                {orders.map((order)=>(
+                {orders.map((order,index)=>(
+                  <>
                 <div className={styles.order_card} key={order._id}>
-                        <h3>Order #{order._id}</h3>
-                        <p>customer:{order.customer.name}</p>
-                        <p>scheduled Time:{order.scheduledTime}</p>
+                        <h3>#{index+1}</h3>
+                        <p>{order.customer.name}</p>
                         <ul>
                             {order.items.map((item,index)=>(
-                                <li key={index}>
+                              <li key={index}>
                                     {item.foodItem.name}-{item.quantity}
                                 </li>
                             ))}
                         </ul>
-                     <div className={styles.orderActions}>
-                        {order.status==='pending'?(
-                            <>
-                            <button>Accept</button>
-                            <button>Reject</button>
-                            </>
-                        ):(
-                          <p>status:{order.status}</p>         
-                        )}
-                        </div>   
+                        <p>{order.scheduledTime}</p>
+                      <select onChange={(event)=>statusHandler(event,order._id)}
+                        className={styles.orderStatus}>
+                        <option value="processing">Processing</option>
+                        <option value="out for delivery">Out for delivery</option>
+                        <option value="delivered">Delivered</option>
+                      </select>
+                        
                  </div>
+                 <hr />
+                 </>     
                 )
                     
 
                     
                 )}
             </div>
+              </>
+            )}
+            
         </div>
     )
 }

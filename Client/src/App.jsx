@@ -18,6 +18,8 @@ import { KitchenDashboard } from "./KitchenPages/KitchenDashboard";
 import { useContext } from "react";
 import { StoreContext } from "./Context/StoreContext";
 import { KitchenProtectedRoute } from "./KitchenComponents/KitchenProtectedRoute";
+import { PaymentSuccessful } from "./Pages/PaymentSuccessful";
+
 
 // import { AuthUser } from "./Context/AuthUser";
 
@@ -50,8 +52,12 @@ export const App=()=>{
             
           },
           {
-            path:'/payment',
-            element:<Payment/>
+            path:'payment',
+            element:<Payment/>,
+          },
+          {
+            path:'paymentSuccessful',
+            element:<PaymentSuccessful/>
           },
           {
             path:'placeOrder',
