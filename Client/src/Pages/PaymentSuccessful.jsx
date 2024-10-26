@@ -12,11 +12,9 @@ export const PaymentSuccessful = () => {
             text: 'Your order has been placed successfully.',
             icon: 'success',
             confirmButtonText: 'OK',
-            showClass: {
-                popup: 'animate__animated animate__fadeInDown'
-            },
-            hideClass: {
-                popup: 'animate__animated animate__fadeOutUp'
+        }).then((result)=>{
+            if(result.isConfirmed){
+                navigate('/');
             }
         })
     }
@@ -28,12 +26,7 @@ export const PaymentSuccessful = () => {
     },[])
   return (
     <div className={styles.main_container}>
-        {/* <div className={styles.inner_container}> 
-        <h1>Payment Successful!</h1> 
-            <p>Your order has been placed successfully.</p>
-
-        </div> */}
-        <button onClick={handleNavigate}>GO back to Home Page</button>
+        <button  onClick={handleNavigate}className={styles.go_home_btn}>Go back to Home Page</button>
     </div>
   )
 }
