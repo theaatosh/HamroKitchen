@@ -23,7 +23,7 @@ export const Payment=()=>{
             purchase_order_id: "test12",
             purchase_order_name: "test",
             customer_info: {
-              name: `${deliveryInfo.firstName+deliveryInfo.lastName}`,
+              name: `${deliveryInfo.firstName+" "+deliveryInfo.lastName}`,
               email: `${deliveryInfo.email}`,
               phone: `${deliveryInfo.phoneNumber}`,
             }
@@ -31,6 +31,7 @@ export const Payment=()=>{
         );
           const paymentUrl = await response.data.data.payment_url;
            console.log(response.data.data.payment_url);
+           console.log(response.data.data);
           window.location.href =  paymentUrl;
         }catch(err){
             console.log(err);
