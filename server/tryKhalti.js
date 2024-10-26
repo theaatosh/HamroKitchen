@@ -11,7 +11,7 @@ const khalti= async (req,res)=>{
     };
     const { amount,purchase_order_id,purchase_order_name, customer_info } = req.body;
     const formData={
-        return_url: "http://localhost:5173/profile/test", 
+        return_url: "http://localhost:5173/paymentSuccessful", 
         website_url: "http://localhost:5173", 
         amount: amount, 
         purchase_order_id: purchase_order_id,

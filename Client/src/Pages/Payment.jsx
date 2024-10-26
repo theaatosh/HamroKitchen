@@ -1,11 +1,10 @@
-import { useNavigate } from 'react-router-dom';
 import styles from '../Styles/Payment/Payment.module.css';
 import axios from 'axios';
 import { StoreContext } from '../Context/StoreContext';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
 export const Payment=()=>{
-    const {cartData,deliveryInfo}=useContext(StoreContext);
+    const {cartData,deliveryInfo,setPaymentDetails}=useContext(StoreContext);
     const handlePayment=async()=>{
 
         // const formData={"return_url": "http://localhost:5173/profile/test",
@@ -17,7 +16,8 @@ export const Payment=()=>{
         //     console.log(h);
 
        try{
-        
+            console.log(cartData.totalAmount);
+            
             const response = await axios.post('http://localhost:5010/api/khalti/init', {
             amount: (cartData.totalAmount)*100, 
             purchase_order_id: "test12",
@@ -30,23 +30,45 @@ export const Payment=()=>{
           }
         );
           const paymentUrl = await response.data.data.payment_url;
-           console.log(response.data.data.payment_url);
-           console.log(response.data.data);
-          window.location.href =  paymentUrl;
+          setPaymentDetails(response.data.data);
+          localStorage.setItem('paymentDetails',JSON.stringify(response.data.data))
+           window.location.href =  paymentUrl;
         }catch(err){
             console.log(err);
         }
 
     }
+
+    
+    
+    const handleCodPayment=()=>{
+    }
     return(
         <div className={styles.payment_container}>
-            <h1>Payment Page</h1>
-            <p className={styles.subheading}>Select your preferred payment method:</p>
+          <div className={styles.payment_wrapper}>
+            <h2 className={styles.subheading}>Select your preferred payment method:</h2>
+            <div className={styles.payment_options}>
             <div
           className={`${styles.option} `}>
           <img src='/Images/khaltipay.png' alt="Khalti" className={styles.payment_logo} onClick={handlePayment}/>
           <p>Pay with Khalti</p>
-        </div>
+          </div>
+            
+          <div
+          className={`${styles.option} `}>
+          <img src='/Images/cod.png' alt="Khalti" className={styles.payment_logo} onClick={handleCodPayment}/>
+          <p>Cash on delivery</p>
+          </div>
+          </div>
+            </div>
+
+            <div className={styles.order_summary}>
+              <h3>Order Summary</h3>
+              <div className={styles.total_amt}>
+              <p>Total Amount</p>
+                <p>Rs:450</p>
+              </div>
+            </div>
 
         </div>
     )
