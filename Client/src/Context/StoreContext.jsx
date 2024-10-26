@@ -5,6 +5,8 @@ export const StoreContext = createContext(null);
 export const StoreContextProvider = (props) => {
   
   const [token,setToken]=useState('');
+  //payment wala part ko details
+  const [paymentDetails,setPaymentDetails]=useState('');
   
   const [selectedDateTime, setSelectedDateTime] = useState(new Date());
   const [cartData,setCartData]=useState({
@@ -185,6 +187,7 @@ export const StoreContextProvider = (props) => {
     setSelectedDateTime,
     cartData,setCartData,
    deliveryInfo,setDeliveryInfo,
+   paymentDetails,setPaymentDetails
      };
 return (
     <StoreContext.Provider value={contextValue} >

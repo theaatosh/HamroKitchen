@@ -1,10 +1,10 @@
 import styles from '../Styles/Payment/Payment.module.css';
 import axios from 'axios';
 import { StoreContext } from '../Context/StoreContext';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
 export const Payment=()=>{
-    const {cartData,deliveryInfo}=useContext(StoreContext);
+    const {cartData,deliveryInfo,setPaymentDetails}=useContext(StoreContext);
     const handlePayment=async()=>{
 
         // const formData={"return_url": "http://localhost:5173/profile/test",
@@ -30,18 +30,18 @@ export const Payment=()=>{
           }
         );
           const paymentUrl = await response.data.data.payment_url;
-           console.log(response.data.data.payment_url);
-           console.log(response.data.data);
-          window.location.href =  paymentUrl;
+          setPaymentDetails(response.data.data);
+          localStorage.setItem('paymentDetails',JSON.stringify(response.data.data))
+           window.location.href =  paymentUrl;
         }catch(err){
             console.log(err);
         }
 
     }
 
+    
+    
     const handleCodPayment=()=>{
-
-
     }
     return(
         <div className={styles.payment_container}>

@@ -1,9 +1,22 @@
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import styles from '../Styles/Payment/PaymentSuccessful.module.css'
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+import { StoreContext } from '../Context/StoreContext';
 
 export const PaymentSuccessful = () => {
+    const {paymentDetails,setPaymentDetails}=useContext(StoreContext);
+    
+    useEffect(()=>{
+        const storedPaymentDetails=localStorage.getItem('paymentDetails');
+        if(!paymentDetails&&storedPaymentDetails)
+        {
+            setPaymentDetails(JSON.parse(storedPaymentDetails));
+        }
+        console.log(paymentDetails);
+        
+      },[paymentDetails,setPaymentDetails])
+
     const navigate=useNavigate();
     const showPaymentSuccessful=()=>{
 
