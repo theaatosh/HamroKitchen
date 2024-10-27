@@ -28,7 +28,10 @@ const orderSchema=mongoose.Schema({
     },
     paymentMode:{
         type:String,
-    }
+    },
+    paymentDetails:{
+        type:Object,
+    },
 });
 const order=mongoose.model("Orders", orderSchema );
 

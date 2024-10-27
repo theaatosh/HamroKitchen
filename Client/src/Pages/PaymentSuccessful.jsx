@@ -3,20 +3,51 @@ import styles from '../Styles/Payment/PaymentSuccessful.module.css'
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import { StoreContext } from '../Context/StoreContext';
-
+import axios from 'axios';
 export const PaymentSuccessful = () => {
     const {paymentDetails,setPaymentDetails}=useContext(StoreContext);
     
     useEffect(()=>{
         const storedPaymentDetails=localStorage.getItem('paymentDetails');
+        const parsed=JSON.parse(storedPaymentDetails)
+        const {pidx}=parsed;
+        getVerified(pidx);
         if(!paymentDetails&&storedPaymentDetails)
         {
             setPaymentDetails(JSON.parse(storedPaymentDetails));
         }
-        console.log(paymentDetails);
-        
-      },[paymentDetails,setPaymentDetails])
 
+        // console.log(paymentDetails);
+
+      },[paymentDetails,setPaymentDetails])
+      const getVerified=async(pidx)=> { 
+          try {
+            const token = localStorage.getItem('token');
+            const tryK = await axios.post('http://localhost:5010/api/khaltiVerify', {pidx},{headers:{'Authorization': `Bearer ${token}`}});
+            console.log(tryK);
+    //         const response =  axios.post(
+    //     "https://a.khalti.com/api/v2/epayment/lookup/",
+    //     { pidx },
+    //      {
+    //         Authorization: `Key 29c390e3b2074c618cc6e169ae6186de`,
+    //        "Content-Type": "application/json",
+    //      }
+    //   );
+    //   console.log(response);
+    }
+      catch(err){
+        console.log(err);
+      }}
+    //   const getVerified=async(pidx)=>{
+    //     const hi= await axios.post('http://localhost:5010/api/khalti/init/verify',
+    //          {"pidx":pidx,
+    //         amount:1000,
+    //         purchase_order_id:'test',
+    //         purchase_order_name:'test1',
+
+    //          });
+    //     console.log(hi);
+    //   }
     const navigate=useNavigate();
     const showPaymentSuccessful=()=>{
 

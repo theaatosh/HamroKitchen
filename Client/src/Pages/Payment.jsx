@@ -32,7 +32,8 @@ export const Payment=()=>{
           const paymentUrl = await response.data.data.payment_url;
           setPaymentDetails(response.data.data);
           localStorage.setItem('paymentDetails',JSON.stringify(response.data.data))
-           window.location.href =  paymentUrl;
+          window.location.href =  paymentUrl;   
+          
         }catch(err){
             console.log(err);
         }

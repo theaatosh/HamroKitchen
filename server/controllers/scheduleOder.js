@@ -2,12 +2,14 @@ const order=require("../models/orderModel");
 const mongoose=require('mongoose');
 const scheduleOder=async (req,res)=>{
     const{userId}= req.user;
+    console.log("here");
     const{items,totalAmount,deliveryFee,scheduledTime}=req.body.cartData;
     const deliveryInfo=req.body.deliveryInfo;
     // const{fNAme,lNAme,email,phNumber,deliveryLocation}=req.body.deliveryInfo;
     // console.log(items);
     const orderStatus='Onprocess'
     const alreadySaveOrder=await order.findOne({userId:userId, orderStatus:orderStatus});
+    
     if(alreadySaveOrder!==null){
         const orderId=alreadySaveOrder._id.toString();
         const h=await order.findOne({_id:orderId});
@@ -36,6 +38,7 @@ const scheduleOder=async (req,res)=>{
     }
     else{
     try{
+
         const listOrder=new order({
             userId:userId,
             orderedItem:items,
@@ -44,7 +47,9 @@ const scheduleOder=async (req,res)=>{
             scheduledTime:scheduledTime,
             deliveryInfo:deliveryInfo,
         });
-       await listOrder.save();
+       const h=await listOrder.save();
+    //    console.log(h) ;
+       
     }catch(err){
         console.log(err);
     }

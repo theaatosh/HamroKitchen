@@ -72,7 +72,7 @@ app.post('/login', async (req, res) =>{
     if(matched){
       // console.log(userFound);
       const role=await user.findById(userFound._id).select('role');
-      const token= jwt.sign({userId:userFound.id, userName:userName, role:role.role}, secretKey, {expiresIn: '12h'});
+      const token= jwt.sign({userId:userFound.id, userName:userName, role:role.role}, secretKey, {expiresIn: '1h'});
       res.status(200).json({message:"login sucessfully",
         token:token,
       });
@@ -137,5 +137,9 @@ app.use('/api/scheduleOrder',scheduleOder);
 
 const {khalti,khaltiCallback}=require('./tryKhalti.js');
 app.use('/api/khalti/init', khalti);
+// app.use('/api/khalti/init/verify',khaltiCallback);
+
+const paymentVerifyRoute=require('./routes/paymentVerifyRoute.js');
+app.use('/api/khaltiVerify',paymentVerifyRoute);
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

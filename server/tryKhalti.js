@@ -1,6 +1,6 @@
 const axios=require('axios');
 require('dotenv').config();
-const cors = require('cors');
+const order=require("./models/orderModel");
 
 
 const khalti= async (req,res)=>{
@@ -18,22 +18,31 @@ const khalti= async (req,res)=>{
         purchase_order_name: purchase_order_name,
         customer_info: customer_info 
     };
-   const response= await axios.post(
+     const response= await axios.post(
         "https://a.khalti.com/api/v2/epayment/initiate/",
         formData,
         {
             headers,
         },
     );
+    
     // console.log(response.data);
-    console.log(response.data.payment_url);
-    // res.json({
-    //     message: "khalti success",
-    //     payment_method: "khalti",
-    //     data: response.data,
-    //   });
-    req.khalti=response.data;
-    next();
+    // console.log(response.data.payment_url);
+    // console.log(response.data);
+    if(response.data){
+        res.json({
+            message: "khalti success",
+            payment_method: "khalti",
+            data: response.data,
+          });
+    }else{
+        res.json({
+            message: "khalti unsuccess",
+            payment_method: "khalti",
+            data: "",
+          });
+    }
+    
     }catch(err){
         console.log(err);
         res.send(err);
@@ -47,11 +56,14 @@ const khalti= async (req,res)=>{
         return res.status(400).json({ message: 'Khalti payment not initiated properly' });
     }
     const{pidx}=req.khalti.pidx;
+    const payload={
+        pidx:pidx,
+    }
     const headers={
         Authorization: `Key ${process.env.KHALTI_SECRET_KEY}`,
        "Content-Type": "application/json",
     };
-    const response = await axios.post("https://a.khalti.com/api/v2/epayment/lookup/", { pidx },{headers});
+    const response = await axios.post("https://a.khalti.com/api/v2/epayment/lookup/", payload,{headers});
     console.log(response.data);
     res.send("heelo");
  }
