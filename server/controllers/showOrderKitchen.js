@@ -5,7 +5,7 @@ const showOrder=async(req,res)=>{
     const userId=req.user.userId;
     const orders = await order.find({kitchenId:userId});
     if(!orders || orders.length===0){
-        res.json({message:"no orders found for this kitchen"});
+        return res.json({message:"no orders found for this kitchen"});
     }
     res.json(orders);
     }catch(err){
