@@ -1,4 +1,5 @@
 const mongoose=require("mongoose");
+const { type } = require("os");
 
 const userSchema=mongoose.Schema({
     userName:{
@@ -34,7 +35,16 @@ const userSchema=mongoose.Schema({
         of: [String],
         default:{
         }
-    }
+    },
+    activeOrders:{
+        type:Number,
+        default:0,
+    },
+    weighted:{
+        type:Number,
+        default:5,
+    },
+
 
 });
 
