@@ -7,128 +7,7 @@ import { OrderHistoryModal } from '../Components/OrderHistoryModal';
 export const MyOrders=()=>{
 
     const[expandedIndex,setExpandedIndex]=useState(null);
-    const[data,setData]=useState([{
-        orderId: 'ORD001',
-        customerName: 'John Doe',
-        foodItems: [
-          { itemName: 'Margherita Pizza', quantity: 2, price: 10 },
-          { itemName: 'Caesar Salad', quantity: 1, price: 7 },
-          { itemName: 'Caesar Salad', quantity: 1, price: 7 },
-          { itemName: 'Caesar Salad', quantity: 1, price: 7 },
-          { itemName: 'Caesar Salad', quantity: 1, price: 7 },
-          { itemName: 'Caesar Salad', quantity: 1, price: 7 },
-          { itemName: 'Caesar Salad', quantity: 1, price: 7 },
-          { itemName: 'Caesar Salad', quantity: 1, price: 7 },
-          
-        ],
-        totalAmount: 27, // Calculated total: 2 * 10 + 7
-        orderStatus: 'Pending',
-        scheduledTime: '2024-10-23T18:00:00',
-        address: '123 Main St, Springfield',
-        placedDate: '2024-10-23',
-        status: 'completed', // New status field added
-      },
-      {
-        orderId: 'ORD002',
-        customerName: 'Emily Smith',
-        foodItems: [
-          { itemName: 'Chicken Biryani', quantity: 1, price: 12 },
-          { itemName: 'Garlic Naan', quantity: 3, price: 2 }
-        ],
-        totalAmount: 18, // Calculated total: 1 * 12 + 3 * 2
-        orderStatus: 'Accepted',
-        scheduledTime: '2024-10-23T19:30:00',
-        address: '456 Oak St, Metropolis',
-        placedDate: '2024-10-23',
-        status: 'completed', // New status field added
-      },
-      {
-        orderId: 'ORD003',
-        customerName: 'Michael Lee',
-        foodItems: [
-          { itemName: 'Beef Burger', quantity: 2, price: 8 },
-          { itemName: 'French Fries', quantity: 1, price: 3 },
-          { itemName: 'Coca-Cola', quantity: 2, price: 2 }
-        ],
-        totalAmount: 23, // Calculated total: 2 * 8 + 3 + 2 * 2
-        orderStatus: 'Completed',
-        scheduledTime: '2024-10-23T12:00:00',
-        address: '789 Maple St, Gotham',
-        placedDate: '2024-10-23',
-        status: 'processing', // New status field added
-      },
-      {
-        orderId: 'ORD004',
-        customerName: 'Michael Lee',
-        foodItems: [
-          { itemName: 'Beef Burger', quantity: 2, price: 8 },
-          { itemName: 'French Fries', quantity: 1, price: 3 },
-          { itemName: 'Coca-Cola', quantity: 2, price: 2 }
-        ],
-        totalAmount: 23, // Calculated total: 2 * 8 + 3 + 2 * 2
-        orderStatus: 'Completed',
-        scheduledTime: '2024-10-23T12:00:00',
-        address: '789 Maple St, Gotham',
-        placedDate: '2024-10-23',
-        status: 'processing', // New status field added
-      },
-      {
-        orderId: 'ORD005',
-        customerName: 'Michael Lee',
-        foodItems: [
-          { itemName: 'Beef Burger', quantity: 2, price: 8 },
-          { itemName: 'French Fries', quantity: 1, price: 3 },
-          { itemName: 'Coca-Cola', quantity: 2, price: 2 }
-        ],
-        totalAmount: 23, // Calculated total: 2 * 8 + 3 + 2 * 2
-        orderStatus: 'Completed',
-        scheduledTime: '2024-10-23T12:00:00',
-        address: '789 Maple St, Gotham',
-        placedDate: '2024-10-23',
-        status: 'processing', // New status field added
-      },
-      {
-        orderId: 'ORD006',
-        customerName: 'Michael Lee',
-        foodItems: [
-          { itemName: 'Beef Burger', quantity: 2, price: 8 },
-          { itemName: 'French Fries', quantity: 1, price: 3 },
-          { itemName: 'Coca-Cola', quantity: 2, price: 2 }
-        ],
-        totalAmount: 23, // Calculated total: 2 * 8 + 3 + 2 * 2
-        orderStatus: 'Completed',
-        scheduledTime: '2024-10-23T12:00:00',
-        address: '789 Maple St, Gotham',
-        placedDate: '2024-10-23',
-        status: 'processing', // New status field added
-      },{
-        orderId: 'ORD007',
-        customerName: 'Emily Smith',
-        foodItems: [
-          { itemName: 'Chicken Biryani', quantity: 1, price: 12 },
-          { itemName: 'Garlic Naan', quantity: 3, price: 2 }
-        ],
-        totalAmount: 18, // Calculated total: 1 * 12 + 3 * 2
-        orderStatus: 'Accepted',
-        scheduledTime: '2024-10-23T19:30:00',
-        address: '456 Oak St, Metropolis',
-        placedDate: '2024-10-23',
-        status: 'completed', // New status field added
-      },
-      {
-        orderId: 'ORD008',
-        customerName: 'Emily Smith',
-        foodItems: [
-          { itemName: 'Chicken Biryani', quantity: 1, price: 12 },
-          { itemName: 'Garlic Naan', quantity: 3, price: 2 }
-        ],
-        totalAmount: 18, // Calculated total: 1 * 12 + 3 * 2
-        orderStatus: 'Accepted',
-        scheduledTime: '2024-10-23T19:30:00',
-        address: '456 Oak St, Metropolis',
-        placedDate: '2024-10-23',
-        status: 'completed', // New status field added
-      },
+    const[data,setData]=useState([
       ]);
     const{token}=useContext(StoreContext);
     
@@ -137,10 +16,12 @@ export const MyOrders=()=>{
       //   console.log(index);
         
       // }
-    const fetchOrders=async()=>{
+    const fetchOrders=async(token)=>{
         try{
-            const response=await axios.post('url halne',{},{headers:{'Authorization':`Bearer ${token}`}});
+            const response=await axios.get('http://localhost:5010/api/customer/myOrder',{headers:{'Authorization':`Bearer ${token}`}});
+            console.log(response.data);
             setData(response.data);
+
 
         }catch(error){
             console.log(error);
@@ -149,7 +30,7 @@ export const MyOrders=()=>{
     }
     useEffect(()=>{
         if(token){
-            fetchOrders();
+            fetchOrders(token);
         }
     },[token])
 

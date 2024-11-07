@@ -1,129 +1,22 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import styles from '../Styles/Kitchen/KitchenPages/Orders.module.css';
 import axios from "axios";
 import {  toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from "../Context/AuthContext";
 import { ProcessingOrder } from "../KitchenComponents/kitchenDetails/ProcessingOrder";
+import { StoreContext } from "../Context/StoreContext";
 export const Orders=()=>{
   const{isOnline}=useAuth();
-
+  // const {token,setToken}=useContext(StoreContext);
     const [orders, setOrders] = useState([
-        {
-          _id: '1',
-          customer: { name: 'anesh' },
-          items: [
-            { foodItem: { name: 'Pizza' }, quantity: 2 },
-            { foodItem: { name: 'Pasta' }, quantity: 1 }
-          ],
-          scheduledTime: 'October 21, 2024, 2:30 PM', 
-          status: 'pending',
-        },
-        {
-          _id: '2',
-          customer: { name: 'kazi' },
-          items: [
-            { foodItem: { name: 'Burger' }, quantity: 3 },
-            { foodItem: { name: 'Fries' }, quantity: 2 }
-          ],
-          scheduledTime: 'October 21, 2024, 4:00 PM',
-          status: 'pending',
-        
-        },
-        {
-          _id: '2',
-          customer: { name: 'kazi' },
-          items: [
-            { foodItem: { name: 'Burger' }, quantity: 3 },
-            { foodItem: { name: 'Fries' }, quantity: 2 }
-          ],
-          scheduledTime: 'October 21, 2024, 4:00 PM',
-          status: 'pending',
-        
-        },
-        {
-          _id: '2',
-          customer: { name: 'kazi' },
-          items: [
-            { foodItem: { name: 'Burger' }, quantity: 3 },
-            { foodItem: { name: 'Fries' }, quantity: 2 }
-          ],
-          scheduledTime: 'October 21, 2024, 4:00 PM',
-          status: 'pending',
-        
-        },
-        {
-          _id: '2',
-          customer: { name: 'kazi' },
-          items: [
-            { foodItem: { name: 'Burger' }, quantity: 3 },
-            { foodItem: { name: 'Fries' }, quantity: 2 }
-          ],
-          scheduledTime: 'October 21, 2024, 4:00 PM',
-          status: 'pending',
-        
-        },
-        {
-          _id: '3',
-          customer: { name: 'prameet' },
-          items: [
-            { foodItem: { name: 'momo' }, quantity: 1 },
-            { foodItem: { name: 'Juice' }, quantity: 2 }
-          ],
-          scheduledTime: 'October 21, 2024, 12:00 PM',
-          status: 'accepted',
-        },
-        {
-          _id: '4',
-          customer: { name: 'dangi' },
-          items: [
-            { foodItem: { name: 'Sushi' }, quantity: 4 }
-          ],
-          scheduledTime: 'October 21, 2024, 6:00 PM',
-          status: 'processing',
-        },
-        {
-          _id: '4',
-          customer: { name: 'dangi' },
-          items: [
-            { foodItem: { name: 'Sushi' }, quantity: 4 }
-          ],
-          scheduledTime: 'October 21, 2024, 6:00 PM',
-          status: 'processing',
-        },
-        {
-          _id: '4',
-          customer: { name: 'dangi' },
-          items: [
-            { foodItem: { name: 'Sushi' }, quantity: 4 }
-          ],
-          scheduledTime: 'October 21, 2024, 6:00 PM',
-          status: 'processing',
-        },
-        {
-          _id: '4',
-          customer: { name: 'dangi' },
-          items: [
-            { foodItem: { name: 'Sushi' }, quantity: 4 }
-          ],
-          scheduledTime: 'October 21, 2024, 6:00 PM',
-          status: 'processing',
-        },
-        {
-          _id: '4',
-          customer: { name: 'dangi' },
-          items: [
-            { foodItem: { name: 'Sushi' }, quantity: 4 }
-          ],
-          scheduledTime: 'October 21, 2024, 6:00 PM',
-          status: 'rejected',
-        }
       ]);
 
-      const fetchCustomerOrders=async()=>{
+      const fetchCustomerOrders=async(token)=>{
         try{
-          const response=await axios.get('url halne',{},{headers:{'Authorization':`Bearer ${token}`}});
-          setOrders(response.data);
+          const res=await axios.get('http://localhost:5010/api/kitchen/showOrder',{headers:{'Authorization':`Bearer ${token}`}});
+          // setOrders(response.data);
+          console.log(res.data);
 
       }catch(error){
           console.log(error);
@@ -131,10 +24,23 @@ export const Orders=()=>{
           
       }
       }
-      const statusHandler=async(status,orderId)=>{
+      const fetchProcessingOrders=async(token)=>{
+        try{
+          // console.log(token);
+          const res=await axios.get('http://localhost:5010/api/kitchen/processingOrder',{headers:{'Authorization':`Bearer ${token}`}});
+          // setOrders(response.data);
+          console.log(res.data);
+
+      }catch(error){
+          console.log(error);
+         toast.error(error);
+          
+      }
+      }
+      const statusHandlerAcc=async(orderId)=>{
           try{
-            // const response=await axios.post('url halne',{orderId,status:status.target.value})
-            console.log(status,orderId);
+            const response=await axios.post('http://localhost:5010/api/kitchen/acceptOrder',{orderId},{headers:{'Authorization':`Bearer ${token}`}})
+            console.log(orderId);
             
           }
           catch(error)
@@ -143,8 +49,21 @@ export const Orders=()=>{
           }
       }
 
+      const statusHandlerRej=async(orderId)=>{
+        try{
+          const response=await axios.post('http://localhost:5010/api/kitchen/rejectOrder',{orderId},{headers:{'Authorization':`Bearer ${token}`}})
+          console.log(orderId);
+          
+        }
+        catch(error)
+        {
+          toast.error(error);
+        }
+    }
       useEffect(()=>{
-        fetchCustomerOrders();
+        const token=localStorage.getItem("token");
+        fetchProcessingOrders(token);
+        fetchCustomerOrders(token);
       },[])
       
     return(
@@ -176,8 +95,8 @@ export const Orders=()=>{
                         </ul>
                         <p>{order.scheduledTime}</p>
                         <div className={styles.btns}>
-                        <button className={styles.accept} onClick={()=>statusHandler('processing',order._id)}>Accept</button>
-                        <button className={styles.reject}>Reject</button>
+                        <button className={styles.accept} onClick={()=>statusHandlerAcc(order._id)}>Accept</button>
+                        <button className={styles.reject} onClick={()=>statusHandlerRej(order._id)}>Reject</button>
 
                         </div>
                       {/* <select onChange={(event)=>statusHandler(event,order._id)} */}

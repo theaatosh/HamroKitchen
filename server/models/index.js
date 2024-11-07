@@ -44,8 +44,6 @@ const userSchema=mongoose.Schema({
         type:Number,
         default:5,
     },
-
-
 });
 
 const user=mongoose.model("Users", userSchema );

@@ -35,6 +35,9 @@ const orderSchema=mongoose.Schema({
     cookId:{
         type:String
     },
+    rejectedCookId:{
+        type:String,
+    },
 
 });
 const order=mongoose.model("Orders", orderSchema );
