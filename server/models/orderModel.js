@@ -32,6 +32,10 @@ const orderSchema=mongoose.Schema({
     paymentDetails:{
         type:Object,
     },
+    cookId:{
+        type:String
+    },
+
 });
 const order=mongoose.model("Orders", orderSchema );
 

@@ -142,4 +142,7 @@ app.use('/api/khalti/init', khalti);
 const paymentVerifyRoute=require('./routes/paymentVerifyRoute.js');
 app.use('/api/khaltiVerify',paymentVerifyRoute);
 
+const showOrder=require('./routes/showOrderRoute.js');
+app.use('./api/kitchen/showOrder',showOrder);
+
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
