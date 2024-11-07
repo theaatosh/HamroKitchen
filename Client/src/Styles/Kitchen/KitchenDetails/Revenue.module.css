@@ -1,0 +1,26 @@
+.revenue_con{
+    width: 20vw;
+    height: 14vh;
+    background-color: #64ace2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:  4vw 1vw;
+    border-radius: 2vh;
+}
+.value{
+    width: 90px;
+    height: 50px;
+    border-radius: 2vh;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+
+    & p{
+        font-size: 3vh;
+        font-weight: 700;
+
+    }
+}

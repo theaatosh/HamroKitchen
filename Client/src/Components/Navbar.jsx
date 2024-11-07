@@ -6,6 +6,7 @@ import { StoreContext } from "../Context/StoreContext";
 import { useAuth } from "../Context/AuthContext";
 import { FaUser } from "react-icons/fa";
 import { IoMdNotifications } from "react-icons/io";
+import { HiMiniBellAlert } from "react-icons/hi2";
 
 
 
@@ -14,11 +15,38 @@ export const Navbar = () => {
   const{isLoggedIn,logout,userDetails}=useAuth();
   const [activeMenu, setActiveMenu] = useState("Home");
   const[isUserMenuOpen,setIsUserMenuOpen]=useState(false);
+  const[isNotificationOpen,setIsNotificationOpen]=useState(false);
+
+  const[isVisible,setIsVisible]=useState(true);
+  const[lastScrollY,setLastScrollY]=useState(0);
   
   const toggleUserMenu=()=>{
     setIsUserMenuOpen((prevState)=>!prevState);
 
   }
+
+  const toggleNotificationMenu=()=>{
+      setIsNotificationOpen((preState)=>!preState)
+  }
+  const handleScroll=()=>{    
+    let currentScrollY=window.scrollY;
+  
+    
+    if(currentScrollY>lastScrollY)
+    {
+      setIsVisible(false)
+      
+    }
+    else{
+      setIsVisible(true);
+      
+    }
+    setLastScrollY(currentScrollY);
+  }
+  useEffect(()=>{
+    window.addEventListener('scroll',handleScroll)
+    return()=>window.removeEventListener('scroll',handleScroll)
+  },[lastScrollY])
 
  
 
@@ -29,8 +57,15 @@ export const Navbar = () => {
         if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
           setIsUserMenuOpen(false);
         }
+
+        if(notiMenuRef.current&& !notiMenuRef.current.contains(event.target)){
+          setIsNotificationOpen(false)
+          
+        }
       };
-  
+      
+
+    
       // Add the event listener
       document.addEventListener("mousedown", handleClickOutside);
   
@@ -41,13 +76,12 @@ export const Navbar = () => {
     },[])
     
   const cartItemsCount=Object.keys(cartItems).filter(key=>cartItems[key]>0).length;//no of items in cart
-  // console.log(cartItemsCount);
-  // console.log(JSON.stringify(cartItems,null ,2));
+
   
-  
+  const notiMenuRef=useRef(null);
   
   return (
-    <div className={styles.navbar}>
+    <div className={`${styles.navbar} ${isVisible?styles.visible:styles.hidden}` }>
       {/* for logo  */}
       <Link to="/">
         <img src="/Images/NavbarLogo.png" alt="logo" />
@@ -112,9 +146,26 @@ export const Navbar = () => {
         {/* this part is rendered only if the user is logged in  */}
           {isLoggedIn?(
             <>
-            <div className={styles.notification_icon_con}>
-            <IoMdNotifications className={styles.notification_icon}/>
-            </div>
+            <div ref={notiMenuRef} className={styles.notification_icon_con} >
+              <IoMdNotifications onClick={toggleNotificationMenu} className={styles.notification_icon}/> 
+              {isNotificationOpen&& (
+                <div  className={styles.notification_menu}>
+                  <div className={styles.notification}> 
+                  <HiMiniBellAlert />
+                  <p className={styles.notification_item}>Notificationbkjbkbkbkbkbkbk 1</p>
+                  </div>
+                  <div className={styles.notification}> 
+                  <HiMiniBellAlert />
+                  <p className={styles.notification_item}>Notification 2</p>
+                  </div>
+                  <div className={styles.notification}> 
+                  <HiMiniBellAlert />
+                  <p className={styles.notification_item}>Notification 3</p>
+                  </div>
+                  
+                </div>
+              )}
+              </div>
             <div className={styles.user_icon_con} ref={userMenuRef}>
             <FaUser  onClick={toggleUserMenu} className={styles.user_icon}/>
 

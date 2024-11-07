@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import { StoreContext } from '../Context/StoreContext';
 import axios from 'axios';
+
 export const PaymentSuccessful = () => {
     const {paymentDetails,setPaymentDetails}=useContext(StoreContext);
     
@@ -16,9 +17,8 @@ export const PaymentSuccessful = () => {
         {
             setPaymentDetails(JSON.parse(storedPaymentDetails));
         }
-
-        // console.log(paymentDetails);
-
+        console.log(paymentDetails);
+        
       },[paymentDetails,setPaymentDetails])
       const getVerified=async(pidx)=> { 
           try {
@@ -59,11 +59,13 @@ export const PaymentSuccessful = () => {
         }).then((result)=>{
             if(result.isConfirmed){
                 navigate('/');
+
             }
         })
     }
     const handleNavigate=()=>{
         navigate('/');
+        window.location.reload(); 
     }
     useEffect(()=>{
         showPaymentSuccessful();

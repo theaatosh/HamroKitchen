@@ -3,6 +3,7 @@ import styles from '../Styles/MyOrders/MyOrders.module.css';
 import { StoreContext } from '../Context/StoreContext';
 import { FaChevronDown, FaChevronUp } from "react-icons/fa"; 
 import axios from 'axios';
+import { OrderHistoryModal } from '../Components/OrderHistoryModal';
 export const MyOrders=()=>{
 
     const[expandedIndex,setExpandedIndex]=useState(null);
@@ -18,8 +19,7 @@ export const MyOrders=()=>{
           { itemName: 'Caesar Salad', quantity: 1, price: 7 },
           { itemName: 'Caesar Salad', quantity: 1, price: 7 },
           { itemName: 'Caesar Salad', quantity: 1, price: 7 },
-          { itemName: 'Caesar Salad', quantity: 1, price: 7 },
-          { itemName: 'Caesar Salad', quantity: 1, price: 7 },
+          
         ],
         totalAmount: 27, // Calculated total: 2 * 10 + 7
         orderStatus: 'Pending',
@@ -132,11 +132,11 @@ export const MyOrders=()=>{
       ]);
     const{token}=useContext(StoreContext);
     
-      const handleContainerToggle=(index)=>{
-        setExpandedIndex(expandedIndex===index?null:index);
-        console.log(index);
+      // const handleContainerToggle=(index)=>{
+      //   setExpandedIndex(expandedIndex===index?null:index);
+      //   console.log(index);
         
-      }
+      // }
     const fetchOrders=async()=>{
         try{
             const response=await axios.post('url halne',{},{headers:{'Authorization':`Bearer ${token}`}});
@@ -152,56 +152,63 @@ export const MyOrders=()=>{
             fetchOrders();
         }
     },[token])
+
+    const[showModal,setShowModal]=useState(false);
+    const [selectedOrder, setSelectedOrder] = useState(null);
+
+    const handleshowModal=(order)=>{
+        setSelectedOrder(order)
+        setShowModal(true);
+    }
+    const handleCloseModal=()=>{
+      setShowModal(false);
+      setSelectedOrder(null); 
+    }
     return(
         <>
         <div className={styles.main_container}>
-            <h1>My orders</h1>
+            <h1>Order History</h1>
         <div className={styles.orders_container}>
-            {data.map((order,index)=>{
-                return (
-                    <div key={index} className={`${styles.my_orders_order} ${expandedIndex===index && styles.expanded} ${order.status==='completed'? styles.completed:''} ${order.status==='processing'? styles.processing:''}`} 
-                    onClick={()=>handleContainerToggle(index)}>
-                        <div className={styles.heading}>
-                       <h3>#{order.orderId}</h3>
-                       <h5>{order.placedDate}</h5>
-                        </div>
-                       <div className={styles.order_inner}>
-                       <img src="/Images/parcel.png" alt="" /> 
-                        <p className={styles.items}>{order.foodItems.map((item,index)=>{
-                           
-                                if(index===order.foodItems.length-1){
-                                    return (`${item.itemName} x ${item.quantity}`)
-                                }
-                                else{
-                                    return(`${item.itemName} x ${item.quantity} ,`)
-                                }
-                            })}
-                        </p> 
-                        {expandedIndex===index?(
-                            <FaChevronUp  className={styles.arrow_down}/>
-                            
-                        ):
-                        (
-                            <FaChevronDown  className={styles.arrow_down}/>
-                            
-                        )}
-                        
-                        </div>
-                        {expandedIndex===index&&
-                        <div className={styles.expanded}>
-                            <hr />
-                        <p><b>Total Amount :</b> Rs.{order.totalAmount}</p> 
-                        <p><b>No of Items:</b>{order.foodItems.length}</p>
-                        <p><b>Scheduled for:</b> {order.scheduledTime}</p>
-                        <p><b>Order Status:</b> {order.status}</p></div>
-                        }
-                        </div>
+          <hr />
+          <div className={styles.title}>
+            <p>Order id</p>
+            <p>Order Date</p>
+            <p>Order Status</p>
+            <p>Total Price</p>
+            
+          </div>
+          <hr />
+          <div>
+           {data.map((order,index)=>{
+          
+            return(
+              <>
+            <div key={index} className={styles.order_content}>
+              <p>{order.orderId}</p>
+              <p>{order.placedDate}</p>
+              <p className={` 
+              ${order.status==="completed" ? styles.statusCompleted:styles.orderStatus} `}>{order.status}</p>
+              <p>Rs.{order.totalAmount}</p>
+              <button className={styles.viewDetails_btn} onClick={()=>handleshowModal(order)}>View Details</button>
+            </div>
+            <hr />
+            </>
+            )
 
-                       
-                )
-            })}
+           })}
+           {showModal && (
+          <OrderHistoryModal
+            setShowModal={setShowModal}
+            handleCloseModal={handleCloseModal}
+            curOrder={selectedOrder}
+          />
+        )}
+            
+          </div>
         </div>
         </div>
         </>
     ) 
 }
+
+

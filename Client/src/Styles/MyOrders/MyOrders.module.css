@@ -1,118 +1,127 @@
 
 .main_container{    
-    background-color:  #E0E0E0;
-    margin: 20vh;
-    padding: 5vh 2vh;
+    /* background-color:  #E0E0E0; */
+    margin: 20vh 5vh;
+    padding: 5vh 10vh;
     border-radius: 5vh;
-    color: #a8a2a2;
-    /* box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset; */
+    color: black;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
 .main_container h1{
     text-align: center;
     color: black;
 }
 .orders_container{
+    /* border: 2px solid red;   */
     margin-top: 5vh;
     display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    /* flex-direction: column; */
-    gap: 4vh 10vh;
+    flex-direction: column;
+    gap: 3vh 10vh;
 
 }
-.heading{
-    display: flex;
-    justify-content: space-between;
+.orders_container .title{
+    /* border: 2px solid blue; */
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    color: gray;
+}
+.orders_container .order_content{
+    display: grid;
+    grid-template-columns:1fr 1fr 1fr 1fr 1fr ;
     align-items: center;
+    margin: 1vh 0vh;
 
-    & h3,h5{
-        color:black;
+   
+
+}
+.orderStatus{
+    width: 9vw;
+    padding: 0.5vh 2vw;
+    background-color: tomato;
+    color: black;
+    border-radius: 2vh;
+}
+.statusCompleted{
+    width: 9vw;
+    padding: 0.5vh 2vw;
+          background-color: #009150;
+
+    color: white;
+    border-radius: 2vh;
+}
+.viewDetails_btn{
+    width: 8vw;
+    padding: 1.5vh 2vh;
+    /* background-color: tomato; */
+    background-color: gray;
+    color: white;
+    cursor: pointer;
+    border-radius: 2vh;
+    border: none;
+        transition: all 0.5s linear;
+
+    &:hover{
+        background-color: black
     }
 }
-.orders_container img{
-    width: 40px;
-}
-.my_orders_order{
 
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-    border-radius: 5vh;
-    padding: 1vh 4vh;
-    display: flex;
-    flex-direction: column;
-    transition: all 0.3s ease-in-out;
-    height: 15vh;
-    width: 30vw;
-    cursor: pointer;
-  
-  & .items{
-    max-height: 50px;
-    overflow-y: hidden;
-  }
-    
-}
 
-.my_orders_order:hover{
-    transform: scale(1.02   )
-}
-.order_inner{
-    margin-top: 2vh;
-    width: 100%;
-    display: grid;
-    grid-template-columns: 70px 300px 14px ;
-    align-items: center;
-    /* border: 2px solid black; */
-    color: black;
-
-}
-.arrow_down{
-    cursor: pointer;
-}
-
-.expanded{
-    margin-top: 2vh;
-    line-height: 4vh;
-    height: auto;
-    color: black;
-}
-.expanded .items{
-    max-height: none;
-}
-.completed{
-background-color: #32CD32;
-color: #efefef;
-}
-.processing{
-    /* background-color: #FFF54F; */
-    background-color: #FFDB58;
-}
 
 @media (max-width:600px) {
 
-    .main_container{
-        width: 90vw;
-        margin: 20vh 5vw;
+    .main_container{    
+        margin: 13vh 2vh;
+        padding: 5vh 5vh;
+        border-radius: 5vh;
+        color: black;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
     }
-    .orders_container{
-        
-       flex-direction: column;
-       gap: 5vh;
+    .main_container h1{
+        font-size: 3vh;
     }
-    .my_orders_order{
-        width: 100%;
+    .orders_container .title{
+       display: none;
+    }
 
-       & p {
-            font-size: 2.5vh;
+    .orders_container .order_content{
+        display: flex;
+        flex-direction: column;
+        gap: 0.5vh 0vh;
+      
+    }
+    .orderStatus{
+        width: 25vw;
+        padding: 0vh 2vw;
+        background-color: tomato;
+        color: white;
+        border-radius: 2vh;
+        font-size: 2.5vh;
+    }
+    .statusCompleted{
+        width: 25vw;
+        padding: 0vh 2vw;
+        background-color: #32CD32;
+        color: white;
+        border-radius: 2vh;
+        font-size: 2.5vh;
+    }
+
+
+
+    .viewDetails_btn{
+        width: 25vw;
+        padding: 0.5vh 1vh;
+        /* background-color: tomato; */
+        background-color: gray;
+        color: white;
+        cursor: pointer;
+        border-radius: 2vh;
+        border: none;
+        font-size: 2vh;
+    
+        &:hover{
+            background-color: rgb(252, 76, 45);
         }
-        
-    }
-    .order_inner{
-        grid-template-columns: 1fr 3fr 0.5fr ;
-        
-    }
-    .orders_container img{
-        width: 40px;
-    }
-    .my_orders_order:hover{
-        transform: scale(1.02)
     }
 }
+

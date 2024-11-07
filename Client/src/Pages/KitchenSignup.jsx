@@ -15,6 +15,8 @@ export const KitchenSignup = () => {
     location: { lat: null, lng: null }, // stores latitude and longitude
   });
   
+  console.log(formData);
+  
   const handleCategoryItemChange = (e, category) => {
     const { value, checked } = e.target;
     setFormData((prevData) => {

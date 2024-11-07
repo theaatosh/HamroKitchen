@@ -63,7 +63,7 @@
 .sidebar {
     width: 18vw;
     height: 100vh;
-    background-color: #1E2A38; 
+    background-color: #26282A; 
     transition: width 0.5s linear;
     display: flex;
     flex-direction: column;
@@ -75,7 +75,7 @@
 .mini_sidebar {
     width: 5vw;
     height: 100vh;
-    background-color: #1E2A38;
+    background-color: #26282A;
     overflow: hidden;
     transition: width 0.5s linear;
     box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);

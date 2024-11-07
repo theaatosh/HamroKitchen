@@ -10,7 +10,15 @@
     top: 0;
     z-index: 1;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    transition: all 0.5s linear;
 
+}
+
+.visible{
+    transform: translateY(0%);
+}
+.hidden{
+    transform: translateY(-100%);
 }
 .navbar img{
     width: 6vw; 
@@ -27,9 +35,13 @@
         font-size: 3vh;
         font-weight: 600;
         cursor: pointer;
+        transition: all 0.2s linear;
+        padding: 1vh;
 
         &:hover{
-            color:#747474 ;
+            color:tomato ;
+            border-bottom: 2px solid tomato;
+            border-radius: 2vh;
         }
     }
 }
@@ -71,7 +83,7 @@
 }
 .user_menu {
     position: absolute;
-    top: 120%; /* Places the menu directly below the user icon */
+    top: 190%; /* Places the menu directly below the user icon */
     left: 50%;
     transform: translateX(-60%);
     padding: 1vh 2vw;
@@ -94,12 +106,32 @@
             
         }
 }
-
-.notification_icon{
+.notification_icon_con{
     position: relative;
+}
+.notification_icon{
     font-size: 5vh;
     cursor: pointer;
 
+}
+/* notification menu  */
+.notification_menu{
+    position: absolute;
+    width: 22vw;
+    height: auto;
+    top: 170%;
+    left: -10vw;
+    background-color:#fff;
+    border-radius: 2vh;
+    padding: 2vh 2vw;
+}
+.notification_item{
+    height: 5vh;
+
+}
+.notification{
+    display: flex;
+    justify-content: space-between;
 }
 .navbar_login_btn{
     background: transparent;
@@ -115,12 +147,8 @@
         color: white;
     }
 }
-.active{
-    color: red;
-    padding-bottom: 0.5vh;
-    border-bottom: 2px solid red;
-    border-radius: 0.9vh;
-}
+
+
 
 @media (max-width:600px) {
     .navbar_menu{

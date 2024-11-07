@@ -4,6 +4,7 @@ import axios from "axios";
 import {  toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from "../Context/AuthContext";
+import { ProcessingOrder } from "../KitchenComponents/kitchenDetails/ProcessingOrder";
 export const Orders=()=>{
   const{isOnline}=useAuth();
 
@@ -27,6 +28,40 @@ export const Orders=()=>{
           ],
           scheduledTime: 'October 21, 2024, 4:00 PM',
           status: 'pending',
+        
+        },
+        {
+          _id: '2',
+          customer: { name: 'kazi' },
+          items: [
+            { foodItem: { name: 'Burger' }, quantity: 3 },
+            { foodItem: { name: 'Fries' }, quantity: 2 }
+          ],
+          scheduledTime: 'October 21, 2024, 4:00 PM',
+          status: 'pending',
+        
+        },
+        {
+          _id: '2',
+          customer: { name: 'kazi' },
+          items: [
+            { foodItem: { name: 'Burger' }, quantity: 3 },
+            { foodItem: { name: 'Fries' }, quantity: 2 }
+          ],
+          scheduledTime: 'October 21, 2024, 4:00 PM',
+          status: 'pending',
+        
+        },
+        {
+          _id: '2',
+          customer: { name: 'kazi' },
+          items: [
+            { foodItem: { name: 'Burger' }, quantity: 3 },
+            { foodItem: { name: 'Fries' }, quantity: 2 }
+          ],
+          scheduledTime: 'October 21, 2024, 4:00 PM',
+          status: 'pending',
+        
         },
         {
           _id: '3',
@@ -37,6 +72,42 @@ export const Orders=()=>{
           ],
           scheduledTime: 'October 21, 2024, 12:00 PM',
           status: 'accepted',
+        },
+        {
+          _id: '4',
+          customer: { name: 'dangi' },
+          items: [
+            { foodItem: { name: 'Sushi' }, quantity: 4 }
+          ],
+          scheduledTime: 'October 21, 2024, 6:00 PM',
+          status: 'processing',
+        },
+        {
+          _id: '4',
+          customer: { name: 'dangi' },
+          items: [
+            { foodItem: { name: 'Sushi' }, quantity: 4 }
+          ],
+          scheduledTime: 'October 21, 2024, 6:00 PM',
+          status: 'processing',
+        },
+        {
+          _id: '4',
+          customer: { name: 'dangi' },
+          items: [
+            { foodItem: { name: 'Sushi' }, quantity: 4 }
+          ],
+          scheduledTime: 'October 21, 2024, 6:00 PM',
+          status: 'processing',
+        },
+        {
+          _id: '4',
+          customer: { name: 'dangi' },
+          items: [
+            { foodItem: { name: 'Sushi' }, quantity: 4 }
+          ],
+          scheduledTime: 'October 21, 2024, 6:00 PM',
+          status: 'processing',
         },
         {
           _id: '4',
@@ -60,10 +131,10 @@ export const Orders=()=>{
           
       }
       }
-      const statusHandler=async(event,orderId)=>{
+      const statusHandler=async(status,orderId)=>{
           try{
-            const response=await axios.post('url halne',{orderId,status:event.target.value})
-            console.log(event,orderId);
+            // const response=await axios.post('url halne',{orderId,status:status.target.value})
+            console.log(status,orderId);
             
           }
           catch(error)
@@ -77,22 +148,24 @@ export const Orders=()=>{
       },[])
       
     return(
+      <>
         <div className={styles.main_order_container}>
-            <h2>Food Order</h2>
-            {!isOnline?(<p >You are offline.No orders to display</p>):(
+            {!isOnline?(<h2 className={styles.offline_order}>You are offline.<br/>You will not get any order request</h2>):(
               <>
+            <h2>Order Request</h2>
               <div className={styles.topic}>
               <p>S.N</p>
               <p>Customer Name</p>
               <p>Food Items</p>
               <p>Scheduled for</p>
-              <p>Status</p>
             </div>
+            <div className={styles.inner_container}>
             <div className={styles.order_list}>
-                {orders.map((order,index)=>(
+                {orders.map((order)=>(
+                  order.status==='pending'&&
                   <>
-                <div className={styles.order_card} key={order._id}>
-                        <h3>#{index+1}</h3>
+                      <div className={styles.order_card} key={order._id}>
+                        <h3>#{order._id}</h3>
                         <p>{order.customer.name}</p>
                         <ul>
                             {order.items.map((item,index)=>(
@@ -102,25 +175,30 @@ export const Orders=()=>{
                             ))}
                         </ul>
                         <p>{order.scheduledTime}</p>
-                      <select onChange={(event)=>statusHandler(event,order._id)}
-                        className={styles.orderStatus}>
-                        <option value="processing">Processing</option>
-                        <option value="out for delivery">Out for delivery</option>
-                        <option value="delivered">Delivered</option>
-                      </select>
-                        
+                        <div className={styles.btns}>
+                        <button className={styles.accept} onClick={()=>statusHandler('processing',order._id)}>Accept</button>
+                        <button className={styles.reject}>Reject</button>
+
+                        </div>
+                      {/* <select onChange={(event)=>statusHandler(event,order._id)} */}
+                       
+                      
+                    
                  </div>
                  <hr />
                  </>     
                 )
-                    
-
-                    
                 )}
+            </div>
+              
             </div>
               </>
             )}
             
         </div>
+
+            <ProcessingOrder orders={orders}/>
+</>
+
     )
 }

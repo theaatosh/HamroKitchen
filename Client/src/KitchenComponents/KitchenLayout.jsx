@@ -12,7 +12,10 @@ export const KitchenLayout=()=>{
         <KitchenSidebar/>
         <div className={styles.inner_container}>
         <KitchenNavbar/>
+        <div className={styles.outlet_container}>
         <Outlet/>
+
+        </div>
 
         </div>
        

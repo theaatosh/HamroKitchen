@@ -1,0 +1,81 @@
+.main_container{
+    background-color:rgba(0, 0, 0, 0.581);
+    backdrop-filter: blur(2px);
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    
+}
+
+.modal_container{
+    position: relative;
+    background-color: #EEEEFF;
+    height: 50vh;
+    width: 40vw;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    border-radius: 2vh;
+
+}
+
+.cross_div{
+    position: absolute;
+    top: 0.5vh;
+    right: 0.5vh;
+    padding: 0.6vh 0.3vw;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s linear;
+
+    &:hover{
+    background-color: tomato;
+    }
+}
+.cross{
+    font-size: 3.5vh;
+    cursor: pointer;
+    color: rgb(20, 20, 20)
+ 
+    
+}
+.inner_container{
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+    align-items: center;
+    margin-top: 5vh;
+    padding: 1vh 3vw;
+}
+.inner_container h2{
+    text-align: center;
+}
+.items_content{
+    display: flex;
+    gap: 2vh;
+}
+.items_content input[type="checkbox"]:checked {
+    background-color: red;
+}
+
+.inner_container .btn{
+    width: 50%;
+    padding: 1.5vh 2vw;
+    font-size: 3vh;
+    background-color: rgb(240, 67, 36);
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 2vh;
+
+    
+    &:hover{
+        background-color: tomato;
+    }
+}

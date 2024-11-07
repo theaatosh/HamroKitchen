@@ -9,6 +9,8 @@ export const PlaceOrder=()=>{
     const {getTotalCartAmount,cartData,selectedDateTime,deliveryInfo,setDeliveryInfo,token}=useContext(StoreContext);
     const navigate=useNavigate();
 
+console.log(deliveryInfo);
+
       const[error,setError]=useState({});
       const validate=()=>{
         let formErrors={};

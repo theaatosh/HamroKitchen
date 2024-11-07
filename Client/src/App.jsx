@@ -19,6 +19,8 @@ import { useContext } from "react";
 import { StoreContext } from "./Context/StoreContext";
 import { KitchenProtectedRoute } from "./KitchenComponents/KitchenProtectedRoute";
 import { PaymentSuccessful } from "./Pages/PaymentSuccessful";
+import { useAuth } from "./Context/AuthContext";
+import { Notification } from "./Pages/Notification";
 
 
 // import { AuthUser } from "./Context/AuthUser";
@@ -26,6 +28,9 @@ import { PaymentSuccessful } from "./Pages/PaymentSuccessful";
 
 export const App=()=>{
   const {token}=useContext(StoreContext);
+  const{userDetails}=useAuth();
+
+  
     const router=createBrowserRouter([
       {
         path:'/',
@@ -50,6 +55,10 @@ export const App=()=>{
               <Cart/>
             </ProtectedRoute>
             
+          },
+          {
+              path:'/notification',
+              element:<Notification/>
           },
           {
             path:'payment',
@@ -77,8 +86,8 @@ export const App=()=>{
             
           },
           {
-            path:'kitchen/Signup',
-            element:<KitchenSignup/>
+            path:'kitchen/Signup',  
+            element:userDetails.role==='kitchen'? <Navigate to={'/kitchen/dashboard'}/>:<KitchenSignup/>
           },
           {
             path:'*',

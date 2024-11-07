@@ -1,0 +1,25 @@
+.cookingOrder_con{
+    width: 20vw;
+    height: 14vh;
+    background-color: #fffd78;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:  4vw 1vw;
+    border-radius: 2vh;
+}
+
+.value{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & p{
+        font-size: 3vh;
+        font-weight: 700;
+    }
+}

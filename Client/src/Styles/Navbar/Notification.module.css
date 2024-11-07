@@ -1,0 +1,13 @@
+.noti_main_container{
+    margin-top: 15vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.noti_inner_container{
+    border: 2px solid red;
+    width: 70%;
+    height: 50vh;
+    background-color: gray;
+}

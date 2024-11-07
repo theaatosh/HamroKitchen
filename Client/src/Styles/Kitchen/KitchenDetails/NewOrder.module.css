@@ -1,0 +1,29 @@
+.newOrder_con{
+    width: 20vw;
+    height: 14vh;
+    background-color:rgba(0, 0, 0, 0.863);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:  4vw 1vw;
+    border-radius: 2vh;
+    color: #fff;
+
+}
+
+
+.value{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & p{
+        color: black;
+        font-size: 3vh;
+        font-weight: 700;
+    }
+}

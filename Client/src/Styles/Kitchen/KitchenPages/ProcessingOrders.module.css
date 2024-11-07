@@ -1,9 +1,9 @@
 li{
     list-style: none;
 }
-.main_order_container{
+.processing_order_con{
     margin: 2vh 3vw;
-    height: 45vh;
+    height: 30vh;
 
     & h2{
         padding: 0vh 1vw;
@@ -11,7 +11,7 @@ li{
 }
 .inner_container{
     overflow-y: scroll;
-    height:33vh;
+    height:25vh;
 }
 ::-webkit-scrollbar {
     width: 10px;
@@ -34,7 +34,7 @@ li{
 .topic{
     background-color: #e0e0e0;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr ;
+    grid-template-columns: 1fr 1fr 1fr 2fr 1fr ;
     padding: 2vh 3vw;
     border-radius: 2vh 2vh 0 0;
 }
@@ -44,7 +44,7 @@ li{
 .order_card{
     
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr  ;
+    grid-template-columns: 1fr 1fr 1fr 2fr 1fr  ;
     align-items: center;
     padding: 2vh 3vw;
 }
@@ -58,29 +58,8 @@ display: flex;
 align-items: center;
 justify-content: center;
 height: 30vh;   
-    margin: 3vh 15vw 0 15vw;
+    margin: 10vh 15vw;
     color: tomato;
 }
 
-.btns{
-    display: flex;
-    gap: 2vh;
-}
-.accept{
-    width: 8vw;
-    padding: 1vh 2vw;
-    background-color: #008000;
-    color: #fff;
-    border: none;
-    border-radius: 1vh;
-    cursor: pointer;
-}
-.reject{
-    width: 8vw;
-    padding: 1vh 2vw;
-    background-color: rgb(205, 50, 50);
-    color: #fff;
-    border: none;
-    border-radius: 1vh;
-    cursor: pointer;
-}
+
