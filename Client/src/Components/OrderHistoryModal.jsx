@@ -1,11 +1,9 @@
 import { useRef } from 'react';
 import styles from '../Styles/Modal/OrderHistory.module.css';
 import { IoMdClose } from "react-icons/io";
-export const OrderHistoryModal = ({setShowModal,handleCloseModal,curOrder}) => {
+export const OrderHistoryModal = ({setShowModal,handleCloseModal,curOrder,fetchOrders,token}) => {
 
 const modalOrderRef=useRef(null);
-
-console.log(curOrder);
 
 const handleModal=(e)=>{
     
@@ -15,6 +13,12 @@ const handleModal=(e)=>{
 
 
 }
+
+
+
+const handleTrackOrder =async () => {
+   await fetchOrders(); 
+  };
   return (
     <div className={styles.main_container} ref={modalOrderRef} onClick={(e)=>handleModal(e)}>
 
@@ -28,7 +32,7 @@ const handleModal=(e)=>{
             <div className={styles.details}>
                 <div className={styles.detail}>
                     <p className={styles.upper_title}>Order Id</p>
-                    <p >{curOrder.orderId}</p>
+                    <p >{curOrder._id}</p>
                 </div>
                 <div className={styles.detail}>
                     <p className={styles.upper_title}>Order Date</p>
@@ -53,7 +57,7 @@ const handleModal=(e)=>{
                 <div className={styles.detail}>
                     <p className={styles.upper_title}>Order Status</p>
                     <p className={` 
-              ${curOrder.status==="completed" ? styles.statusCompleted:styles.orderStatus} `}>{curOrder.status}</p>
+              ${curOrder.status==="completed" ? styles.statusCompleted:styles.orderStatuss} `}>{curOrder.orderStatus}</p>
                 </div>
             </div>
             <div className={styles.item_details}>
@@ -61,14 +65,16 @@ const handleModal=(e)=>{
                 <p>Items</p>
                 <p>quantity</p>
                 <p>price</p>
+                <p>Total price</p>
                 </div>
                 <hr />
-                {curOrder.foodItems.map((curItem,idx)=>{
+                {curOrder.orderedItem.map((curItem,idx)=>{
                     return(
                     <div key={idx} className={styles.item}>
-                            <p>{curItem.itemName}</p>
+                            <p>{curItem.name}</p>
                             <p>{curItem.quantity}</p>
                             <p>{curItem.price}</p>
+                            <p>{curItem.total}</p>
                     </div>
 
                     )
@@ -77,7 +83,7 @@ const handleModal=(e)=>{
             </div>
                     
                     <div className={styles.track_order}>
-                    <button className={styles.trackOrder_btn}>Track Order</button>
+                    <button onClick={handleTrackOrder} className={styles.trackOrder_btn} >Track Order</button>
 
                     </div>
         </div>

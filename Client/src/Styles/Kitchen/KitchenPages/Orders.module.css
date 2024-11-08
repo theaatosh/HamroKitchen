@@ -47,6 +47,11 @@ li{
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr  ;
     align-items: center;
     padding: 2vh 3vw;
+
+    & h3{
+        font-size: 2vh;
+        font-weight: 500;
+    }
 }
 .orderStatus{
     padding: 1.5vh 2vw;
@@ -61,7 +66,11 @@ height: 30vh;
     margin: 3vh 15vw 0 15vw;
     color: tomato;
 }
-
+.no_orders{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .btns{
     display: flex;
     gap: 2vh;
