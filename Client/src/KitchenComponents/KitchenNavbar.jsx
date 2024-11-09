@@ -3,6 +3,7 @@ import { useAuth } from '../Context/AuthContext';
 
 export const KitchenNavbar=()=>{
     const{isKitchenOnline,handleToggle}=useAuth();
+    
     return (
         <>
             <div className={styles.navbar}>

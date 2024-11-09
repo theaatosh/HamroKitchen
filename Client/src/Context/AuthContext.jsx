@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { StoreContext } from "./StoreContext";
 import {jwtDecode} from 'jwt-decode';
+import axios from "axios";
 
  const AuthContext=createContext();
  export const useAuth=()=>useContext(AuthContext);
@@ -22,12 +23,21 @@ export const AuthContextProvider=({children})=>{
        setIsKitchenOnline((prevState) =>{
          const newState=!prevState; 
          localStorage.setItem("OnlineStatus",newState);
-         
-
-        return newState;
+         updateKitchenStatus(newState);
+         return newState;
        })
-        
-    };
+   };
+   const updateKitchenStatus=async(newState)=>{
+    try{
+      const res=await axios.post()
+
+    }
+    catch(err){
+      console.log(err);
+      
+    }
+   }
+
   const userCredentials=(token)=>{
     try{
       const decodedToken=jwtDecode(token);

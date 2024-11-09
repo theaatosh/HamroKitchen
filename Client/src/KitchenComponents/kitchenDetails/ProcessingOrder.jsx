@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from '../../Styles/Kitchen/KitchenPages/ProcessingOrders.module.css';
 export const ProcessingOrder = ({processingOrders}) => {
+  
   return (
    <div className={styles.processing_order_con}>
     <h2>Processing Order</h2>

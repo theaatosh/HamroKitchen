@@ -73,7 +73,18 @@ export const Orders=()=>{
         }
       }
     }, [token]);
-      
+    useEffect(() => {
+      if (token) {
+        updateKitchenStatus();
+      } else {
+      const savedToken = localStorage.getItem("token");
+        if (savedToken) {
+        setToken(savedToken);
+        } else {
+          toast.error("No token found");
+        }
+      }
+    }, [token]);
     return(
       <>
         <div className={styles.main_order_container}>
