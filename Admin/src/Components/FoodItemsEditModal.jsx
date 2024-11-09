@@ -29,10 +29,9 @@ export const FoodItemsEditModal = ({details,setEditMode}) => {
   return (
     <div className={styles.main_container}>
         <div className={styles.inner_container}>
-        <form className={styles.manageFood_form} onSubmit={handleSaveChanges}>
+        <form className={styles.editFood_form} onSubmit={handleSaveChanges}>
                 
                 {/* adding product name  */}
-                <button></button>
             <div className={styles.add_product_name}>
                 <p>Food Name</p>
                 <input type="text" name="name" placeholder='Product Name' value={data.name} onChange={handleOnChange}required />

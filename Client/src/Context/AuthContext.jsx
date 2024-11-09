@@ -57,7 +57,7 @@ export const AuthContextProvider=({children})=>{
       }
     }, [token]);
 
-
+//information extracted from jwt
   const userCredentials=(token)=>{
     try{
       const decodedToken=jwtDecode(token);
@@ -95,15 +95,40 @@ export const AuthContextProvider=({children})=>{
     setCartItems({});
     setIsUserMenuOpen(false);
  };
-const authValue={
-        isLoggedIn,
-        login,
-        logout,
-        userCredentials,
-        userDetails,
-        isKitchenOnline,setIsKitchenOnline,handleToggle
-    }
 
+
+//profile page ko lagi
+const [profileData, setProfileData] = useState({});
+
+const getProfileData = async () => {
+    try {
+        const res = await axios.get('http://localhost:5010/api/customer/customerProfile', {
+            headers: { 'Authorization': `Bearer ${token}` },
+        });
+        setProfileData(res.data);
+    } catch (err) {
+        console.log(err.message);
+    }
+};
+
+
+useEffect(() => {
+    if (token) {
+        getProfileData();
+    } else {
+        const savedToken = localStorage.getItem('token');
+        setToken(savedToken);
+    }
+}, [token]);
+
+const authValue={
+  isLoggedIn,
+  login,
+  logout,
+  userCredentials,
+  userDetails,
+  isKitchenOnline,setIsKitchenOnline,handleToggle,profileData,setProfileData
+}
   return(
     <AuthContext.Provider value={authValue}>
         {children}

@@ -1,4 +1,4 @@
-.main_container{
+/* .main_container{
     position: fixed;
     width: 100%;
     height: 100%;
@@ -13,4 +13,118 @@
 .inner_container{
     background-color: white;
     width: 40%;
+    height: 50vh;
+    border-radius: 2vh;
+  
+}
+.editFood_form{
+    border: 2px solid red;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+} */
+
+/* Main container styles */
+/* Main container styles */
+.main_container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* Modal background overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Inner modal container */
+.inner_container {
+    background-color: #fff;
+    width: 90%;
+    max-width: 500px;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow-y: auto;
+}
+
+/* Form styles */
+.editFood_form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Field group styles */
+.add_product_name,
+.product_description,
+.add_category_price {
+    margin-bottom: 1.5rem;
+}
+
+.add_product_name p,
+.product_description p,
+.add_category p,
+.add_price p {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+/* Input styles */
+input[type="text"],
+input[type="number"],
+textarea,
+select {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 0.9rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+textarea:focus,
+select:focus {
+    border-color: #4a90e2;
+}
+
+/* Category and Price container */
+.add_category_price {
+    display: flex;
+    gap: 1rem;
+}
+
+.add_category,
+.add_price {
+    flex: 1;
+}
+
+/* Textarea styles */
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Button styles */
+.add_btn {
+    padding: 0.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    background-color: #4a90e2;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add_btn:hover {
+    background-color: #357abd;
 }

@@ -36,9 +36,11 @@ export const ManageFoodItems = () => {
 
       const handleEdit=(curElem)=>{
         setEditMode(curElem);
-        
       }
       
+      const handleDelete=()=>{
+
+      }
   return (
     <>
      <div className={styles.main_container}>
@@ -52,8 +54,8 @@ export const ManageFoodItems = () => {
                                 <p>Description</p>
                                 <p>Price</p>
                                 <p>Category</p>
-                                <p>Edit</p>
-                                <p>Delete</p>
+                                <p>Edit/Delete</p>
+                                
                             </div>
                             <hr /><hr />
 
@@ -66,8 +68,8 @@ export const ManageFoodItems = () => {
                         ) : (
                             foodDetails.map((curElem,index)=>{
                             return(
-    
-                                <div className={styles.manageFoodItems_detail} key={curElem.id || index}>
+                                <React.Fragment  key={curElem.id || index}>
+                                <div className={styles.manageFoodItems_detail}>
                                 <p>{index+1}</p>
                                 <p>{curElem.productName}</p>
                                 <p>{curElem.productDescription}</p>
@@ -76,17 +78,16 @@ export const ManageFoodItems = () => {
 
                               
                                 <div className={styles.edit_del_con}>
-                                <FaEdit onClick={()=>handleEdit(curElem)}/>
-                                <MdDelete />
+                                <FaEdit onClick={()=>handleEdit(curElem)} className={styles.edit_icon}/>
+                                <MdDelete onClick={()=>handleDelete(curElem)} className={styles.delete_icon}/>
                                 </div>
                             </div>
-                            
+                            <hr />
+                            </React.Fragment>
                             
                             )
-                        
-                        }
-                      
-                    )
+                         }
+                      )
                             
                         )}
                         </div>

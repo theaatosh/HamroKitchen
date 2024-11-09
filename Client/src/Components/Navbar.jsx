@@ -12,17 +12,17 @@ import { HiMiniBellAlert } from "react-icons/hi2";
 
 export const Navbar = () => {
   const { scrollToAbout, scrollToFooter,scrollToDisplayFood, cartItems } = useContext(StoreContext);
-  const{isLoggedIn,logout,userDetails}=useAuth();
+  const{isLoggedIn,logout,userDetails,profileData,setProfileData}=useAuth();
   const [activeMenu, setActiveMenu] = useState("Home");
   const[isUserMenuOpen,setIsUserMenuOpen]=useState(false);
   const[isNotificationOpen,setIsNotificationOpen]=useState(false);
-
+  const [profileOpen,setProfileOpen]=useState(false);
   const[isVisible,setIsVisible]=useState(true);
   const[lastScrollY,setLastScrollY]=useState(0);
   
   const toggleUserMenu=()=>{
     setIsUserMenuOpen((prevState)=>!prevState);
-
+    setProfileOpen(false)
   }
 
   const toggleNotificationMenu=()=>{
@@ -56,6 +56,7 @@ export const Navbar = () => {
       const handleClickOutside = (event) => {
         if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
           setIsUserMenuOpen(false);
+          setProfileOpen(false)
         }
 
         if(notiMenuRef.current&& !notiMenuRef.current.contains(event.target)){
@@ -80,6 +81,10 @@ export const Navbar = () => {
   
   const notiMenuRef=useRef(null);
   
+    //for profile toggle
+    const handleProfileOpen=()=>{
+      setProfileOpen((preval)=>!preval);
+    }
   return (
     <div className={`${styles.navbar} ${isVisible?styles.visible:styles.hidden}` }>
       {/* for logo  */}
@@ -172,7 +177,24 @@ export const Navbar = () => {
              {/* click garda khulne div ho  */}
             {isUserMenuOpen&&(
               <div className={styles.user_menu} >
-                <Link to={`/profile/${userDetails.userName}`}><p className={styles.user_menu_p}>My Profile</p></Link><hr />
+                <p className={styles.user_menu_p} onClick={handleProfileOpen}>Profile</p><hr />
+                {profileOpen&& 
+                <div className={styles.profile_container}>
+                    <div className={styles.profile_inner}>
+                    <div className={styles.profile_header}>
+                    <img src="/Images/KitchenUser.png" alt="Profile" className={styles.profile_image} />
+                    <h2 className={styles.username}>{profileData.userName || 'User Name'}</h2>
+                    <p className={styles.role}>{profileData.email || 'Customer'}</p>
+                </div><hr />
+                    <div className={styles.edit_profile}>
+                     <Link to={`/profile/${profileData.userName}`}>
+                     <p>Edit Profile</p>
+                     </Link> 
+                      </div>          
+
+                    </div>
+                </div> }
+                {/* <Link to={`/profile/${userDetails.userName}`}><p className={styles.user_menu_p}>My Profile</p></Link><hr /> */}
                 <Link to='/myorders'><p className={styles.user_menu_p}>My Orders</p></Link><hr />
                 {userDetails.role==='kitchen'?(
                   <>

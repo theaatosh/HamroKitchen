@@ -147,9 +147,46 @@
         color: white;
     }
 }
+.profile_container{
+    background-color: #fff;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20vw;
+    height: 40vh;
+    border-radius: 2vh;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.profile_inner{
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+}
+.profile_header{
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.profile_image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+    padding: 0.2vh;
+    border: 3px solid #4a90e2;
+}
 
-
-
+.edit_profile{
+    text-align: center;
+    cursor: pointer;
+    & p{
+        width: 100%;
+        padding: 2vh 3vw;
+    }
+}
 @media (max-width:600px) {
     .navbar_menu{
         display:none;                 
