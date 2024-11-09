@@ -14,9 +14,19 @@ export const AuthContextProvider=({children})=>{
 
 
   //for kitchen Chef
-  const [isOnline, setIsOnline] = useState(true);
+  const savedIsOnline=localStorage.getItem("OnlineStatus")==="true";
+  console.log(savedIsOnline);
+  
+  const [isKitchenOnline, setIsKitchenOnline] = useState(savedIsOnline);
     const handleToggle = () => {
-        setIsOnline((prevState) => !prevState); // Toggle between true and false
+       setIsKitchenOnline((prevState) =>{
+         const newState=!prevState; 
+         localStorage.setItem("OnlineStatus",newState);
+         
+
+        return newState;
+       })
+        
     };
   const userCredentials=(token)=>{
     try{
@@ -61,7 +71,7 @@ const authValue={
         logout,
         userCredentials,
         userDetails,
-        isOnline,setIsOnline,handleToggle
+        isKitchenOnline,setIsKitchenOnline,handleToggle
     }
 
   return(

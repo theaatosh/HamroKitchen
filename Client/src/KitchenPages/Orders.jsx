@@ -1,99 +1,108 @@
-import { useContext, useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import styles from '../Styles/Kitchen/KitchenPages/Orders.module.css';
 import axios from "axios";
-import {  toast} from 'react-toastify';
+import {  toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from "../Context/AuthContext";
 import { ProcessingOrder } from "../KitchenComponents/kitchenDetails/ProcessingOrder";
 import { StoreContext } from "../Context/StoreContext";
 export const Orders=()=>{
-  const{isOnline}=useAuth();
-  // const {token,setToken}=useContext(StoreContext);
-    const [orders, setOrders] = useState([
-      ]);
+  const{isKitchenOnline}=useAuth();
+  const {token,setToken}=useContext(StoreContext);
+    const [customerOrders, setCustomerOrders] = useState([]);
+    const [processingOrders, setProcessingOrders] = useState([]);
 
-      const fetchCustomerOrders=async(token)=>{
+      const fetchCustomerOrders=async()=>{
         try{
-          const res=await axios.get('http://localhost:5010/api/kitchen/showOrder',{headers:{'Authorization':`Bearer ${token}`}});
-          // setOrders(response.data);
-          console.log(res.data);
-
-      }catch(error){
+         const res=await axios.get('http://localhost:5010/api/kitchen/showOrder',{headers:{'Authorization':`Bearer ${token}`}});
+          setCustomerOrders(res.data);
+          
+          }catch(error){
           console.log(error);
-         toast.error(error);
+         toast.error(error.message);
           
       }
       }
-      const fetchProcessingOrders=async(token)=>{
+  
+      {customerOrders.length>0 && console.log(customerOrders);
+      }
+      const fetchProcessingOrders=async()=>{
         try{
-          // console.log(token);
           const res=await axios.get('http://localhost:5010/api/kitchen/processingOrder',{headers:{'Authorization':`Bearer ${token}`}});
-          // setOrders(response.data);
-          console.log(res.data);
+          setProcessingOrders(res.data);
+          
 
       }catch(error){
           console.log(error);
-         toast.error(error);
+         toast.error(error.message);
           
       }
       }
       const statusHandlerAcc=async(orderId)=>{
           try{
             const response=await axios.post('http://localhost:5010/api/kitchen/acceptOrder',{orderId},{headers:{'Authorization':`Bearer ${token}`}})
-            console.log(orderId);
             
+            fetchCustomerOrders(); 
           }
           catch(error)
           {
-            toast.error(error);
+            toast.error(error.message);
           }
       }
 
       const statusHandlerRej=async(orderId)=>{
         try{
           const response=await axios.post('http://localhost:5010/api/kitchen/rejectOrder',{orderId},{headers:{'Authorization':`Bearer ${token}`}})
-          console.log(orderId);
-          
+          fetchCustomerOrders();
         }
         catch(error)
         {
-          toast.error(error);
+          toast.error(error.message);
         }
     }
-      useEffect(()=>{
-        const token=localStorage.getItem("token");
-        fetchProcessingOrders(token);
-        fetchCustomerOrders(token);
-      },[])
+    useEffect(() => {
+      if (token) {
+        fetchCustomerOrders();
+        fetchProcessingOrders();
+      } else {
+      const savedToken = localStorage.getItem("token");
+        if (savedToken) {
+        setToken(savedToken);
+        } else {
+          toast.error("No token found");
+        }
+      }
+    }, [token]);
       
     return(
       <>
         <div className={styles.main_order_container}>
-            {!isOnline?(<h2 className={styles.offline_order}>You are offline.<br/>You will not get any order request</h2>):(
+          <ToastContainer/>
+            {!isKitchenOnline?(<h2 className={styles.offline_order}>You are currently offline.<br/> Please go online to receive orders.</h2>):(
               <>
-            <h2>Order Request</h2>
+            <h2>New Order Request</h2>
               <div className={styles.topic}>
-              <p>S.N</p>
+              <p>Order Id</p>
               <p>Customer Name</p>
               <p>Food Items</p>
-              <p>Scheduled for</p>
+              <p>Contact No</p>
             </div>
             <div className={styles.inner_container}>
             <div className={styles.order_list}>
-                {orders.map((order)=>(
-                  order.status==='pending'&&
-                  <>
-                      <div className={styles.order_card} key={order._id}>
+                {customerOrders.length>0 ? (customerOrders.map((order)=>(
+                  order.orderStatus==='assignedToCook'&&
+                  <React.Fragment key={order._id}>
+                      <div className={styles.order_card} >
                         <h3>#{order._id}</h3>
-                        <p>{order.customer.name}</p>
+                        <p>{order.deliveryInfo.firstName}</p>
                         <ul>
-                            {order.items.map((item,index)=>(
+                            {order.orderedItem.map((item,index)=>(
                               <li key={index}>
-                                    {item.foodItem.name}-{item.quantity}
+                                    {item.name}-{item.quantity}
                                 </li>
                             ))}
                         </ul>
-                        <p>{order.scheduledTime}</p>
+                        <p>{order.deliveryInfo.phoneNumber}</p>
                         <div className={styles.btns}>
                         <button className={styles.accept} onClick={()=>statusHandlerAcc(order._id)}>Accept</button>
                         <button className={styles.reject} onClick={()=>statusHandlerRej(order._id)}>Reject</button>
@@ -105,8 +114,12 @@ export const Orders=()=>{
                     
                  </div>
                  <hr />
-                 </>     
+                 </React.Fragment>     
                 )
+                )):(
+                  <div className={styles.no_orders}>
+                    <h2>No new order request !!</h2>
+                    </div>
                 )}
             </div>
               
@@ -116,7 +129,7 @@ export const Orders=()=>{
             
         </div>
 
-            <ProcessingOrder orders={orders}/>
+            <ProcessingOrder processingOrders={processingOrders}/>
 </>
 
     )

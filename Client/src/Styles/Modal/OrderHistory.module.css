@@ -44,21 +44,14 @@
     margin-top: 0vh;
     padding: 0vh 2.5vw;
 }
-.orderStatus{
-    width: 7vw;
-    padding: 0.5vh 1vw;
-    background-color: tomato;
-    color: white;
-    border-radius: 2vh;
-    text-align: center;
+.orderStatuss{
+    color: tomato !important;
+    font-weight: 600;
 }
 .statusCompleted{
-    text-align: center;
-    width: 7vw;
-    padding: 0.5vh 1vw;
-    background-color: #009150;
-    color: white !important;
-    border-radius: 2vh;
+   color: green;
+   font-weight: 600;
+
 }
 
 .inner_container .detail{
@@ -83,7 +76,7 @@
 
 .item_details .title{
     display: grid;
-    grid-template-columns: 2.5fr 2fr 0.5fr;
+    grid-template-columns: 2.5fr 2fr 1fr 1fr;
     padding: 1.5vh 2.2vw;
    align-items: center;
    background-color: #d3d3d3;
@@ -96,7 +89,7 @@
 }
 .item_details .item{
     display: grid;
-    grid-template-columns: 2.5fr 2fr 0.5fr;
+    grid-template-columns: 2.5fr 2fr 1fr 1fr;
     padding: 0.5vh 2.2vw;
    align-items: center;
 

@@ -2,7 +2,7 @@ import styles from '../Styles/Kitchen/KitchenNavbar.module.css'
 import { useAuth } from '../Context/AuthContext';
 
 export const KitchenNavbar=()=>{
-    const{isOnline,handleToggle}=useAuth();
+    const{isKitchenOnline,handleToggle}=useAuth();
     return (
         <>
             <div className={styles.navbar}>
@@ -11,9 +11,9 @@ export const KitchenNavbar=()=>{
                 </div>
             
            
-            <div className={styles.online_offline_con} style={{backgroundColor: isOnline? 'green':'red'}} onClick={handleToggle}>
-                <div className={`${styles.toggle_btn} ${isOnline?styles.online :styles.offline}`} >
-                    <span>{isOnline?'Online':'Offline'}</span>
+            <div className={styles.online_offline_con} style={{backgroundColor: isKitchenOnline? 'green':'red'}} onClick={handleToggle}>
+                <div className={`${styles.toggle_btn} ${isKitchenOnline?styles.online :styles.offline}`} >
+                    <span>{isKitchenOnline?'Online':'Offline'}</span>
                     </div>
             </div>
            

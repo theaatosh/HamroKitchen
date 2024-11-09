@@ -1,25 +1,23 @@
-import { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styles from '../Styles/MyOrders/MyOrders.module.css';
 import { StoreContext } from '../Context/StoreContext';
-import { FaChevronDown, FaChevronUp } from "react-icons/fa"; 
 import axios from 'axios';
 import { OrderHistoryModal } from '../Components/OrderHistoryModal';
 export const MyOrders=()=>{
 
-    const[expandedIndex,setExpandedIndex]=useState(null);
     const[data,setData]=useState([
       ]);
-    const{token}=useContext(StoreContext);
+    const{token,setToken}=useContext(StoreContext);
     
       // const handleContainerToggle=(index)=>{
       //   setExpandedIndex(expandedIndex===index?null:index);
       //   console.log(index);
         
       // }
-    const fetchOrders=async(token)=>{
+    const fetchOrders=async()=>{
         try{
+          
             const response=await axios.get('http://localhost:5010/api/customer/myOrder',{headers:{'Authorization':`Bearer ${token}`}});
-            console.log(response.data);
             setData(response.data);
 
 
@@ -30,7 +28,15 @@ export const MyOrders=()=>{
     }
     useEffect(()=>{
         if(token){
-            fetchOrders(token);
+            fetchOrders();
+        }
+        else{
+          const savedToken=localStorage.getItem('token');
+          if(savedToken)
+          {
+            setToken(savedToken);
+          }
+          
         }
     },[token])
 
@@ -57,23 +63,23 @@ export const MyOrders=()=>{
             <p>Order Status</p>
             <p>Total Price</p>
             
-          </div>
+          </div>  
           <hr />
           <div>
            {data.map((order,index)=>{
           
             return(
-              <>
+              <React.Fragment key={order._id}>
             <div key={index} className={styles.order_content}>
-              <p>{order.orderId}</p>
+              <p>{order._id}</p>
               <p>{order.placedDate}</p>
               <p className={` 
-              ${order.status==="completed" ? styles.statusCompleted:styles.orderStatus} `}>{order.status}</p>
+              ${order.orderStatus==="completed" ? styles.statusCompleted:styles.orderStatus} `}>{order.orderStatus}</p>
               <p>Rs.{order.totalAmount}</p>
               <button className={styles.viewDetails_btn} onClick={()=>handleshowModal(order)}>View Details</button>
             </div>
             <hr />
-            </>
+            </React.Fragment>
             )
 
            })}
@@ -82,6 +88,8 @@ export const MyOrders=()=>{
             setShowModal={setShowModal}
             handleCloseModal={handleCloseModal}
             curOrder={selectedOrder}
+            fetchOrders={fetchOrders}
+            token={token}
           />
         )}
             
