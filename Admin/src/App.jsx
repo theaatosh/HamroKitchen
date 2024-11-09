@@ -5,6 +5,7 @@ import { Dashboard } from './Pages/Dashboard';
 import { AddItems } from './Pages/AddItems';
 import { ManageKitchen } from './Pages/ManageKitchen';
 import { Settings } from './Pages/Settings';
+import { ManageFoodItems } from './Pages/ManageFoodItems';
  export const App=()=>{
 
   const router=createBrowserRouter([
@@ -23,6 +24,10 @@ import { Settings } from './Pages/Settings';
         {
             path:'/manageKitchen',
             element:<ManageKitchen/>
+        },
+        {
+            path:'/manageFoodItems',
+            element:<ManageFoodItems/>
         },
         {
             path:'/settings',

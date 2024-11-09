@@ -1,5 +1,5 @@
 const order=require('../models/orderModel');
-
+const user=require('../models/index')
 const myOrder=async(req,res)=>{
     const {userId}=req.user;
     try{
@@ -12,9 +12,12 @@ const myOrder=async(req,res)=>{
 }
 
 const customerProfile=async(req,res)=>{
-    const {userID}=req.body;
+    const {userId}=req.user;
+    
     try{
        const found= await user.findById(userId);
+       console.log(found);
+       
        if(found){
         res.json(found);
        }else{

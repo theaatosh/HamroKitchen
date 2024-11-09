@@ -5,6 +5,7 @@ import { IoIosAddCircle } from "react-icons/io";
 import { FaKitchenSet } from "react-icons/fa6";
 import { IoMenu } from "react-icons/io5";
 import { MdDashboard } from "react-icons/md";
+import { IoFastFoodSharp } from "react-icons/io5";
 import { useState } from 'react';
 const routeArray=[
     {
@@ -21,6 +22,11 @@ const routeArray=[
         path:'/manageKitchen',
         name:"Manage Kitchen",
         icon:<FaKitchenSet className={styles.icon}/>
+    },
+    {
+        path:'/manageFoodItems',
+        name:"Manage Food Items ",
+        icon:<IoFastFoodSharp  className={styles.icon}/>
     },
     {
         path:'/settings',
