@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { StoreContext } from "./StoreContext";
 import {jwtDecode} from 'jwt-decode';
+import axios from 'axios';
 
  const AuthContext=createContext();
  export const useAuth=()=>useContext(AuthContext);
@@ -15,7 +16,7 @@ export const AuthContextProvider=({children})=>{
 
   //for kitchen Chef
   const savedIsOnline=localStorage.getItem("OnlineStatus")==="true";
-  console.log(savedIsOnline);
+  // console.log(savedIsOnline);
   
   const [isKitchenOnline, setIsKitchenOnline] = useState(savedIsOnline);
     const handleToggle = () => {
@@ -23,11 +24,40 @@ export const AuthContextProvider=({children})=>{
          const newState=!prevState; 
          localStorage.setItem("OnlineStatus",newState);
          
+         updateKitchenStatus(newState);
 
         return newState;
        })
         
     };
+    const updateKitchenStatus=async(newState)=>{
+      try{
+        const res=await axios.post("http://localhost:5010/api/kitchen/getKitchenOnline", {newState},{headers:{'Authorization':`Bearer ${token}`}})
+        console.log(res.data);
+  
+      }
+      catch(err){
+        console.log(err.message);
+  
+      }
+     }
+
+     useEffect(() => {
+      if (token) {
+        updateKitchenStatus(isKitchenOnline);
+      } else {
+      const savedToken = localStorage.getItem("token");
+        if (savedToken) {
+        setToken(savedToken);
+        } else {
+          console.log("no token found");
+          
+          // toast.error("No token found");
+        }
+      }
+    }, [token]);
+
+
   const userCredentials=(token)=>{
     try{
       const decodedToken=jwtDecode(token);

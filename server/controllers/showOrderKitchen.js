@@ -79,8 +79,17 @@ const processingOrder=async(req,res)=>{
 }
 
 const getKitchenOnline=async(req,res)=>{
-    const {status}=req.body;
+
+    // const status=req.body.newState;
+    var status=null;
+    if(req.body.newState){
+         status="online"
+    }
+    else{
+        status="offline"
+    }
     const {userId}=req.user;
+    // console.log(userId , status);
     try{
         const kitchen=await user.findByIdAndUpdate(userId,{
             $set:{
