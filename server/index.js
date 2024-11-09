@@ -148,4 +148,7 @@ app.use('/api/kitchen/',showOrder);
 const myOrder=require('./routes/customerMyOrderRoute.js');
 app.use('/api/customer/',myOrder)
 
+const editItem=require('./routes/adminEditItemRoute.js');
+app.use('/api/editItem',editItem);
+
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
