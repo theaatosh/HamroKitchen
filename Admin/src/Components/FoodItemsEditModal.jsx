@@ -1,8 +1,9 @@
 import React from 'react'
 import styles from '../Styles/FoodItemsEditModal.module.css';
 import { useState } from 'react';
+import axios from 'axios';
 export const FoodItemsEditModal = ({details,setEditMode}) => {
-    console.log(details);
+    // console.log(details);
     
     const{productName,productDescription,productPrice,productCategory,_id}=details;
     const[data,setData]=useState({
@@ -19,11 +20,12 @@ export const FoodItemsEditModal = ({details,setEditMode}) => {
             ...prevData,[name]:value
         }))
     }
-    const handleSaveChanges=(e)=>{
+    const handleSaveChanges=async(e)=>{
         e.preventDefault();
         console.log(data);
-        
+        const response = await axios.post('http://localhost:5010/api/editItem',data);
         setEditMode(null)
+        console.log(response.data.message);
 
     }
   return (
