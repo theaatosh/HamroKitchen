@@ -146,6 +146,6 @@ const showOrder=require('./routes/showOrderRoute.js');
 app.use('/api/kitchen/',showOrder);
 
 const myOrder=require('./routes/customerMyOrderRoute.js');
-app.use('/api/customer/myOrder',myOrder)
+app.use('/api/customer/',myOrder)
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
