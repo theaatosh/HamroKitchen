@@ -44,6 +44,10 @@ const userSchema=mongoose.Schema({
         type:Number,
         default:5,
     },
+    cookStatus:{
+        type:String,
+        Default:"offline",
+    }
 });
 
 const user=mongoose.model("Users", userSchema );

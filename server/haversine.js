@@ -3,8 +3,8 @@ const mongoose=require('mongoose');
 const { connectToMongoDB } = require("./connections/index");
 require('dotenv').config();
 
-function haversine(lat1,lon1, lat2,lon2){
 
+function haversine(lat1,lon1, lat2,lon2){
     let lat=(lat1-lat2)*Math.PI/180;
     let lon=(lon1-lon2)*Math.PI/180;
     
