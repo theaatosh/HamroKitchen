@@ -27,7 +27,6 @@ export const FoodItemsEditModal = ({details,setEditMode,refreshFoodItems}) => {
         setEditMode(null);
         refreshFoodItems();
         console.log(response.data.message);
-
     }
   return (
     <div className={styles.main_container}>
