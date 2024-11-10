@@ -4,14 +4,15 @@ const availableCook=require('./haversine');
 const loadBalancer=require('./loadBalancing');
 const orders=require('./models/orderModel');
 
-const mongo = process.env.URI;
-    connectToMongoDB(mongo)
-    .then(() => console.log("MongoDB Connected"))
-    .catch(err => console.error(err));
+// const mongo = process.env.URI;
+//     connectToMongoDB(mongo)
+//     .then(() => console.log("MongoDB Connected"))
+//     .catch(err => console.error(err));
 
 
 const assignCookOrder=async (order)=>{
         try{
+            console.log("assignig orders to cook");
             const orderId=(order._id).toString();
             
             // const customerLocation= await orders.find({_id:orderId},{_id:0,deliveryInfo:1})
@@ -21,7 +22,9 @@ const assignCookOrder=async (order)=>{
             //trying new so cmt line 22
             //  const cook=await availableCook(customerLocation);
             const cooks=await availableCook(customerLocation, orderId);
+            console.log("cooks found"+cooks);
             const cook= await loadBalancer(cooks);
+            console.log("cook with least active orders found");
             //  console.log('here');
             // console.log(cook);
            if(cook) {
@@ -32,7 +35,7 @@ const assignCookOrder=async (order)=>{
                     orderStatus:'assignedToCook',
                 }
                     });
-                    console.log("vayo");
+                    console.log(`Order assigned to cook ${ await cook.kitchens._id}`);
                 }
                 
         }catch(err){
@@ -43,6 +46,7 @@ const assignCookOrder=async (order)=>{
 
 
 const fetchOrders=async()=>{
+    console.log("checking orders")
     const order=await orders.find({orderStatus:"processedWithPayment",
         paymentStatus:"paid",
     },{ scheduledTime:1,deliveryInfo:1});
@@ -60,6 +64,6 @@ const fetchOrders=async()=>{
     console.log("no order");
 }
 }
-fetchOrders();
+module.exports=fetchOrders;
 
  

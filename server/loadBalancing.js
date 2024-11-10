@@ -3,6 +3,7 @@ const user=require('./models/index');
 async function findKitchenWithLeastNumOfOrder(nearestKitchenArray){
     let kitchenName = null;
     let lowestScore = 10000;
+    console.log(nearestKitchenArray.length);
     for(let i=0;i<nearestKitchenArray.length; i++){
         const cookId=nearestKitchenArray[i].kitchens._id;
         const cook= await user.findById(cookId);
