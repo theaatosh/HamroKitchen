@@ -130,15 +130,4 @@ export const App=()=>{
   )
 }
 
-    {/* <Navbar/>
-    <Routes>
-        <Route path="/" element={<Home/>}></Route>
-        <Route path="/cart" element={<Cart/>}></Route>
-        <Route path="/placeOrder" element={<PlaceOrder/>}></Route>
-        <Route path="/login" element={<LoginPage/>}></Route>
-        <Route path="/signup" element={<SignUpPage/>}></Route>
-        </Routes>
-    <Footer/> */}
-
-
   

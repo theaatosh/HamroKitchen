@@ -120,7 +120,6 @@ export const StoreContextProvider = (props) => {
 // add to cart here
   
      if(token){
-      console.log("hi"); 
       await axios.post("http://localhost:5010/cart/add",{itemId},{headers: {'Authorization': `Bearer ${token}`}});
       loadCartData(localStorage.getItem("token"));
      }

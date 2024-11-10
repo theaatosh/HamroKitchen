@@ -9,9 +9,11 @@ import axios from 'axios';
 
 export const AuthContextProvider=({children})=>{
 
+
+  const[showModal,setShowModal]=useState(false);//for  food preferences modal 
   const [isLoggedIn,setIsLoggedIn]=useState(false);
   const[userDetails,setUserDetails]=useState({userName:'',role:''});
-  const {setCartItems,token,setToken}=useContext(StoreContext);
+  const {token,setToken}=useContext(StoreContext);
 
 
   //for kitchen Chef
@@ -33,7 +35,6 @@ export const AuthContextProvider=({children})=>{
     const updateKitchenStatus=async(newState)=>{
       try{
         const res=await axios.post("http://localhost:5010/api/kitchen/getKitchenOnline", {newState},{headers:{'Authorization':`Bearer ${token}`}})
-        console.log(res.data);
   
       }
       catch(err){
@@ -66,7 +67,7 @@ export const AuthContextProvider=({children})=>{
       
     }
     catch(error){
-      console.log(error);
+      console.log(error.message);
       
     }
   }
@@ -88,14 +89,7 @@ export const AuthContextProvider=({children})=>{
     }
   },[token])
   
-  const logout=(setIsUserMenuOpen)=>{
-    setIsLoggedIn(false);
-    localStorage.removeItem('token');
-    setToken(null);
-    setCartItems({});
-    setIsUserMenuOpen(false);
- };
-
+  
 
 //profile page ko lagi
 const [profileData, setProfileData] = useState({});
@@ -124,10 +118,9 @@ useEffect(() => {
 const authValue={
   isLoggedIn,
   login,
-  logout,
   userCredentials,
   userDetails,
-  isKitchenOnline,setIsKitchenOnline,handleToggle,profileData,setProfileData
+  isKitchenOnline,setIsKitchenOnline,handleToggle,profileData,setProfileData,setShowModal,showModal,setIsLoggedIn
 }
   return(
     <AuthContext.Provider value={authValue}>

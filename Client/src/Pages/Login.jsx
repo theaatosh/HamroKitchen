@@ -12,7 +12,7 @@ import {  toast } from 'react-toastify';
 export const LoginPage=()=>{
 
   const navigate=useNavigate();
-  const{login,userCredentials}=useAuth();
+  const{login,userCredentials,setShowModal}=useAuth();
   const{setToken}=useContext(StoreContext);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -51,7 +51,6 @@ export const LoginPage=()=>{
         try{
           setIsLoading(true);
           const result =await axios.post('http://localhost:5010/login',formData);
-          console.log(result.data.message);
           
           if(result.status===200)
             {
@@ -63,6 +62,7 @@ export const LoginPage=()=>{
              localStorage.setItem('token', token); 
               setToken(token);
 
+              setShowModal(true);
               //token bata decode gareko user details
               userCredentials(token);
               
