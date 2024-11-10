@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const editItem=require("../controllers/adminEditItem");
+const {editItem,deleteItem}=require("../controllers/adminEditItem");
 
-router.post('/',  editItem );
+router.post('/edit',  editItem );
+router.post('/delete',  deleteItem );
 
 module.exports=router;

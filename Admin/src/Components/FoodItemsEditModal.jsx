@@ -23,10 +23,9 @@ export const FoodItemsEditModal = ({details,setEditMode}) => {
     const handleSaveChanges=async(e)=>{
         e.preventDefault();
         console.log(data);
-        const response = await axios.post('http://localhost:5010/api/editItem',data);
+        const response = await axios.post('http://localhost:5010/api/editItem/edit',data);
         setEditMode(null)
         console.log(response.data.message);
-
     }
   return (
     <div className={styles.main_container}>

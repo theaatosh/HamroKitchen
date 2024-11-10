@@ -20,7 +20,7 @@ const assignCookOrder=async (order)=>{
             // console.log(customerLocation.lat);
             //trying new so cmt line 22
             //  const cook=await availableCook(customerLocation);
-            const cooks=await availableCook(customerLocation);
+            const cooks=await availableCook(customerLocation, orderId);
             const cook= await loadBalancer(cooks);
             //  console.log('here');
             // console.log(cook);
@@ -52,7 +52,7 @@ const fetchOrders=async()=>{
            const currentDate = new Date();
            const scheduledTime = new Date(order[i].scheduledTime);
            if(scheduledTime<=currentDate){
-            console.log("here at scheduled");
+            // console.log("here at scheduled");
             assignCookOrder(order[i]);
         }
     }

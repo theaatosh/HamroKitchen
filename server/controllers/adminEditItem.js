@@ -23,4 +23,22 @@ const editItem=async(req,res)=>{
         res.json(err.message);
     }
 }
-module.exports=editItem;
+
+const deleteItem=async(req,res)=>{
+    const id=req.body._id;
+    console.log(id);
+    try{
+        const deleted=await foodItemDetails.findByIdAndDelete(id)
+        if(deleted){
+            res.json({message:"Deleted successfully"});
+            console.log("deleted");
+        }else{
+            res.json({message:"can't find item"});
+        }
+    }catch(err){
+        console.log(err);
+        res.json({message:"server error", error:err.message});
+    }
+}
+
+module.exports={editItem,deleteItem};

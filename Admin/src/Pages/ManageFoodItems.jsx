@@ -38,7 +38,10 @@ export const ManageFoodItems = () => {
         setEditMode(curElem);
       }
       
-      const handleDelete=()=>{
+      const handleDelete=async(curElem)=>{
+        const response = await axios.post('http://localhost:5010/api/editItem/delete',curElem);
+        console.log(response.data.message);
+        fetchFoodItems();
 
       }
   return (
