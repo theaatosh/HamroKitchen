@@ -9,7 +9,6 @@ export const PlaceOrder=()=>{
     const {getTotalCartAmount,cartData,selectedDateTime,deliveryInfo,setDeliveryInfo,token}=useContext(StoreContext);
     const navigate=useNavigate();
 
-console.log(deliveryInfo);
 
       const[error,setError]=useState({});
       const validate=()=>{
@@ -121,9 +120,7 @@ console.log(deliveryInfo);
           }
           else{
             try{
-              console.log(token);
               axios.post("http://localhost:5010/api/scheduleOrder", {cartData,deliveryInfo},{headers:{'Authorization': `Bearer ${token}`}})
-              console.log(cartData);
             }catch(err){
               console.log(err);
             }

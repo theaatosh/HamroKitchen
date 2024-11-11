@@ -1,7 +1,7 @@
 import styles from "../Styles/Navbar/Navbar.module.css";
 import { FaCartShopping } from "react-icons/fa6";
 import { useContext, useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { StoreContext } from "../Context/StoreContext";
 import { useAuth } from "../Context/AuthContext";
 import { FaUser } from "react-icons/fa";
@@ -11,15 +11,27 @@ import { HiMiniBellAlert } from "react-icons/hi2";
 
 
 export const Navbar = () => {
-  const { scrollToAbout, scrollToFooter,scrollToDisplayFood, cartItems } = useContext(StoreContext);
-  const{isLoggedIn,logout,userDetails,profileData,setProfileData}=useAuth();
+  const { scrollToAbout, scrollToFooter,scrollToDisplayFood, cartItems, setCartItems,setToken } = useContext(StoreContext);
+  const{isLoggedIn,userDetails,profileData, setIsLoggedIn}=useAuth();
   const [activeMenu, setActiveMenu] = useState("Home");
   const[isUserMenuOpen,setIsUserMenuOpen]=useState(false);
   const[isNotificationOpen,setIsNotificationOpen]=useState(false);
   const [profileOpen,setProfileOpen]=useState(false);
   const[isVisible,setIsVisible]=useState(true);
   const[lastScrollY,setLastScrollY]=useState(0);
-  
+  const navigate=useNavigate();
+
+//logout garne function
+const logout=()=>{
+  setIsLoggedIn(false);
+  localStorage.removeItem('token');
+  setToken(null);
+  setCartItems({});
+  setIsUserMenuOpen(false);
+  navigate('/');
+};
+
+
   const toggleUserMenu=()=>{
     setIsUserMenuOpen((prevState)=>!prevState);
     setProfileOpen(false)
@@ -208,7 +220,7 @@ export const Navbar = () => {
                     </>
                     )
                   }
-                <p onClick={()=>logout(setIsUserMenuOpen)} className={styles.user_menu_p}>Logout</p>
+                <p onClick={logout} className={styles.user_menu_p}>Logout</p>
               </div>
             )}
             </div>

@@ -5,18 +5,16 @@ import { AboutUs } from '../Components/AboutUs';
 import { FoodOptionModal } from '../Components/FoodOptionModal';
 import { useContext, useEffect, useState } from 'react';
 import { StoreContext } from '../Context/StoreContext';
+import { useAuth } from '../Context/AuthContext';
 
 
 export const Home = () => {
-  const{token}=useContext(StoreContext);
-  const[showModal,setShowModal]=useState(false);
+  const{showModal,setShowModal}=useAuth();
+  
   const handleOnClose=()=>{
     setShowModal(false);
   }
-  useEffect(()=>{
-    setShowModal(true);
-    
-  },[token])
+  
     return (
    <>
     {showModal&&<FoodOptionModal onClose={handleOnClose} />}

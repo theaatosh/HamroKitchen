@@ -60,6 +60,10 @@
     & .cart_icon{
     font-size: 4.5vh;
     cursor: pointer;
+
+    &:hover{
+        color:tomato;
+    }
     }
 }
 .cartItemsCount{
@@ -79,6 +83,9 @@
    
     font-size: 4vh;
     cursor: pointer;
+    &:hover{
+        color:tomato;
+    }
 
 }
 .user_menu {
@@ -112,6 +119,9 @@
 .notification_icon{
     font-size: 5vh;
     cursor: pointer;
+    &:hover{
+        color:tomato
+    }
 
 }
 /* notification menu  */
@@ -182,6 +192,12 @@
 .edit_profile{
     text-align: center;
     cursor: pointer;
+    color: tomato;
+    font-size: 2.5vh;
+    
+    &:hover{
+        color:navy;
+    }
     & p{
         width: 100%;
         padding: 2vh 3vw;

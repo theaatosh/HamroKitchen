@@ -9,22 +9,27 @@
 
     export const ManageKitchen=()=>{
         const[kitchenDetails,setKitchenDetails]=useState([]);
-        
+        const[isLoading,setIsLoading]=useState(true);
         const manageKitchen=async()=>{
             try{
                 const pendingcurElem=await axios.get('http://localhost:5010/api/manageKitchen');
+                setIsLoading(true);
                     setKitchenDetails(pendingcurElem.data);
+                    
                 }
                 catch(err)
                 {
-                    console.error("error fetching data",err)
+                    console.error("error fetching data",err);
+                    toast.error(err.message);
+                }
+                finally{
+                    setIsLoading(false);
                 }
             }
         
         useEffect(()=>{
                 manageKitchen();
         },[])
-        kitchenDetails.length>0&&console.log(kitchenDetails);
         
         //handle Kitchen Approve Function
         const handleKitchenApprove=async(curElem)=>{
@@ -89,9 +94,9 @@
                             
                             {/* Mapping through curElem */}
                             <div className={styles.detail_container}>
-                            {kitchenDetails.length===0? (
+                            {isLoading?(
                             <p>Loading curElem details...</p>
-                        ) : (
+                        ) : kitchenDetails.length>0 ?(  
                             kitchenDetails.map((curElem,index)=>{
                             return(
                             
@@ -130,7 +135,7 @@
                         
                         })
                             
-                        )}
+                        ):(<p>No kitchen requests available.</p>)}
                         </div>
 
                         </div>

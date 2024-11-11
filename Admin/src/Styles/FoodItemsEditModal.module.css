@@ -59,27 +59,25 @@
 }
 
 /* Field group styles */
-.add_product_name,
-.product_description,
-.add_category_price {
+.edit_product_name,
+.edit_product_description,
+.edit_category_price {
     margin-bottom: 1.5rem;
 }
 
-.add_product_name p,
-.product_description p,
-.add_category p,
-.add_price p {
+.edit_product_name p,
+.edit_product_description p,
+.edit_category p,
+.edit_price p {
     font-size: 1rem;
     font-weight: 500;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.2rem;
 }
 
-/* Input styles */
-input[type="text"],
-input[type="number"],
-textarea,
-select {
-    width: 100%;
+
+.edit_product_name input,.edit_product_description textarea,.edit_category select,.edit_price input{
+    border: 2px solid red;
+    width: 100%; 
     padding: 0.75rem;
     font-size: 0.9rem;
     border: 1px solid #ccc;
@@ -87,22 +85,19 @@ select {
     outline: none;
     transition: border-color 0.3s;
 }
-
-input[type="text"]:focus,
-input[type="number"]:focus,
-textarea:focus,
-select:focus {
+.edit_product_name input:focus,.edit_product_description textarea:focus,.edit_category select:focus,.edit_price input:focus{
     border-color: #4a90e2;
 }
 
+
 /* Category and Price container */
-.add_category_price {
+.edit_category_price {
     display: flex;
     gap: 1rem;
 }
 
-.add_category,
-.add_price {
+.edit_category,
+.edit_price {
     flex: 1;
 }
 

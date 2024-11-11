@@ -13,11 +13,10 @@ export const ManageFoodItems = () => {
     const[isLoading,setIsLoading]=useState(false);
     const[editMode,setEditMode]=useState(null);
     const fetchFoodItems = async () => {
+      setIsLoading(true);
         try {
           const response = await axios.get('http://localhost:5010/topDishes');
-            setIsLoading(true);
               setFoodDetails(response.data); 
-              console.log(response.data);
               
               
               
@@ -29,10 +28,9 @@ export const ManageFoodItems = () => {
           }
       };
       useEffect(()=>{
-    fetchFoodItems();
+    fetchFoodItems(); 
     
-    
-      },[])
+    },[])
 
       const handleEdit=(curElem)=>{
         setEditMode(curElem);
@@ -98,7 +96,7 @@ export const ManageFoodItems = () => {
                         </div>
                     </div>
 
-                    {editMode && (<FoodItemsEditModal details={editMode} setEditMode={setEditMode}/>)}
+                    {editMode && (<FoodItemsEditModal details={editMode} setEditMode={setEditMode} refreshFoodItems={fetchFoodItems}/>)}
                 </div>
     </>
   )
