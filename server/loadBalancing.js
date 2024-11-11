@@ -11,7 +11,6 @@ async function findKitchenWithLeastNumOfOrder(nearestKitchenArray){
        if (cook.activeOrders >= cook.weighted) {
         continue;
         }
-
         const score=cook.activeOrders/cook.weighted;
         console.log(score);
         if (score < lowestScore) {
