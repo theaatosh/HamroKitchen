@@ -100,43 +100,76 @@
 //     )
 // }
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from '../Styles/Profile/CustomerProfile.module.css';
 import { useAuth } from '../Context/AuthContext';
 
 export const MyProfile = () => {
     const { profileData} = useAuth();
+    const [isEditing,setIsEditing]=useState(false);
 
-    
+    const [profileInfo,setProfileInfo]=useState({
+        userName:profileData?.userName||"",
+        email:profileData?.email||"",
+        phoneNumber:profileData?.phoneNumber||"",
+    })
+    const handleOnChange=(e)=>{
+        const {name,value}=e.target;
+        setProfileInfo((prev)=>({
+            ...prev,[name]:value
+        }))
+    }
+
+    const handleEditChange=(e)=>{
+        e.preventDefault();
+        setIsEditing((prev)=>!prev)
+    }
+    useEffect(()=>{
+            if(profileData){
+                setProfileInfo({userName:profileData.userName||"",
+                    email:profileData.email||"",
+                    phoneNumber:profileData.phoneNumber||""})
+            }
+    },[profileData])
+
+    const handleSaveChanges=()=>{
+            console.log(profileInfo);
+            
+        setIsEditing(false)
+    }
     return (
         <div className={styles.main_container}>
             <div className={styles.profile_card}>
                 <div className={styles.profile_header}>
-                    <img src="/path-to-default-profile-pic.jpg" alt="Profile" className={styles.profile_image} />
                     <h2 className={styles.username}>{profileData.userName || 'User Name'}</h2>
                     <p className={styles.role}>{profileData.role || 'Customer'}</p>
                 </div>
                 <form className={styles.profile_form}>
                     <div className={styles.field_wrapper}>
                         <label htmlFor="username">UserName:</label>
-                        <input type="text" id="username" value={profileData.userName} disabled />
+                        <input type="text" id="username" value={profileInfo.userName} name='userName' onChange={handleOnChange} disabled={!isEditing}/>
                     </div>
                     <div className={styles.field_wrapper}>
                         <label htmlFor="email">Email:</label>
-                        <input type="email" id="email" value={profileData.email} disabled />
+                        <input type="email" id="email" value={profileInfo.email} name='email' onChange={handleOnChange} disabled={!isEditing} />
                     </div>
                     <div className={styles.field_wrapper}>
                         <label htmlFor="phoneNumber">Phone Number:</label>
-                        <input type="tel" id="phoneNumber" value={profileData.phoneNumber} disabled />
+                        <input type="tel" id="phoneNumber" value={profileInfo.phoneNumber} name='email' onChange={handleOnChange} disabled={!isEditing}/>
                     </div>
                     {profileData.role==="kitchen"&& 
                     <div className={styles.field_wrapper}>
                     <label htmlFor="kitchenCapacity">Kitchen Capacity:</label>
-                    <input type="text" id="kitchenCapacity" value={profileData.weighted} disabled />
+                    <input type="text" id="kitchenCapacity" value={profileData.weighted} disabled/>
                 </div>
                     }
                     
+                <div className={styles.btns}>
+                    {isEditing ? (<button type='submit' className={styles.saveChanges_btn} onClick={handleSaveChanges}>Save Changes</button>) :( <button type='button' className={styles.edit_btn} onClick={handleEditChange}>Edit Profile</button>)}
+                </div>
                 </form>
+
+
             </div>
         </div>
     );

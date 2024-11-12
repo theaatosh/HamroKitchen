@@ -6,13 +6,19 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from "../Context/AuthContext";
 import { ProcessingOrder } from "../KitchenComponents/kitchenDetails/ProcessingOrder";
 import { StoreContext } from "../Context/StoreContext";
+import Loading from "../Components/Loading";
+import { CompletedFoodOrders } from "../KitchenComponents/CompletedFoodOrders";
 export const Orders=()=>{
   const{isKitchenOnline}=useAuth();
   const {token,setToken}=useContext(StoreContext);
     const [customerOrders, setCustomerOrders] = useState([]);
     const [processingOrders, setProcessingOrders] = useState([]);
+    const [completedFoodOrders, setCompletedFoodOrders] = useState([]);
+    const[isLoading,setIsLoading]=useState(false);
+    
 
       const fetchCustomerOrders=async()=>{
+        setIsLoading(true)
         try{
          const res=await axios.get('http://localhost:5010/api/kitchen/showOrder',{headers:{'Authorization':`Bearer ${token}`}});
           setCustomerOrders(res.data);
@@ -21,12 +27,14 @@ export const Orders=()=>{
           console.log(error);
          toast.error(error.message);
           
+      }finally{
+        setIsLoading(false);
       }
       }
   
-      {customerOrders.length>0 && console.log(customerOrders);
-      }
+      
       const fetchProcessingOrders=async()=>{
+        setIsLoading(true);
         try{
           const res=await axios.get('http://localhost:5010/api/kitchen/processingOrder',{headers:{'Authorization':`Bearer ${token}`}});
           setProcessingOrders(res.data);
@@ -37,12 +45,27 @@ export const Orders=()=>{
          toast.error(error.message);
           
       }
+      finally{
+        setIsLoading(false);
+      }
+      }
+      const fetchCompletedFoodOrders=async()=>{
+        setIsLoading(true);
+        try{
+          const res=await axios.get('url halne',{headers:{'Authorization':`Bearer${token}`}})
+        }
+        catch(err){
+          toast.error(err.message)
+        }finally{
+          setIsLoading(false);
+        }
       }
       const statusHandlerAcc=async(orderId)=>{
           try{
             const response=await axios.post('http://localhost:5010/api/kitchen/acceptOrder',{orderId},{headers:{'Authorization':`Bearer ${token}`}})
             
             fetchCustomerOrders(); 
+            fetchProcessingOrders();
           }
           catch(error)
           {
@@ -64,6 +87,7 @@ export const Orders=()=>{
       if (token) {
         fetchCustomerOrders();
         fetchProcessingOrders();
+        fetchCompletedFoodOrders();
       } else {
       const savedToken = localStorage.getItem("token");
         if (savedToken) {
@@ -81,18 +105,19 @@ export const Orders=()=>{
               <>
             <h2>New Order Request</h2>
               <div className={styles.topic}>
-              <p>Order Id</p>
+              <p>S.N</p>
               <p>Customer Name</p>
               <p>Food Items</p>
               <p>Contact No</p>
             </div>
             <div className={styles.inner_container}>
             <div className={styles.order_list}>
-                {customerOrders.length>0 ? (customerOrders.map((order)=>(
+              {isLoading&&<Loading/>}
+                {customerOrders.length>0 ? (customerOrders.map((order,index)=>(
                   order.orderStatus==='assignedToCook'&&
                   <React.Fragment key={order._id}>
                       <div className={styles.order_card} >
-                        <h3>#{order._id}</h3>
+                        <h3>#{index+1}</h3>
                         <p>{order.deliveryInfo.firstName}</p>
                         <ul>
                             {order.orderedItem.map((item,index)=>(
@@ -129,6 +154,8 @@ export const Orders=()=>{
         </div>
 
             <ProcessingOrder processingOrders={processingOrders}/>
+
+            <CompletedFoodOrders completedFoodOrders={completedFoodOrders}/>
 </>
 
     )

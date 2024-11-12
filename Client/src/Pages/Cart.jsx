@@ -28,6 +28,8 @@ export const Cart = () => {
 
   const handleProceedOrder = async () => {  
     //backend ma data pathauna ko lagi 
+    console.log(Object.keys(cartItems));
+    
     const itemsInCart=Object.keys(cartItems).map((id)=>{
       const item=foodItems.find((curItem)=>curItem._id===id);
       

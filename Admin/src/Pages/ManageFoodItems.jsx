@@ -7,6 +7,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { FoodItemsEditModal } from '../Components/FoodItemsEditModal';
+import Loading from '../../../Client/src/Components/Loading';
 export const ManageFoodItems = () => {
 
     const [foodDetails,setFoodDetails]=useState([]);
@@ -65,7 +66,7 @@ export const ManageFoodItems = () => {
                             {/* Mapping through curElem */}
                             <div className={styles.detail_container}>
                             {foodDetails.length===0? (
-                            <p>Loading curElem details...</p>
+                            <Loading/>
                         ) : (
                             foodDetails.map((curElem,index)=>{
                             return(
