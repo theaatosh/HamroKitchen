@@ -82,10 +82,10 @@ const handleTrackOrder =async () => {
 
             </div>
                     
-                    <div className={styles.track_order}>
+                    {/* <div className={styles.track_order}>
                     <button onClick={handleTrackOrder} className={styles.trackOrder_btn} >Track Order</button>
 
-                    </div>
+                    </div> */}
         </div>
     </div>
   )

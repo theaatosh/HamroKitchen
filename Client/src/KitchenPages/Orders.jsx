@@ -52,25 +52,22 @@ export const Orders=()=>{
       }
 
       // completed orders fetch garne
-      // const fetchCompletedFoodOrders=async()=>{
+      const fetchCompletedFoodOrders=async()=>{
       
-      //   try{
-      //     console.log("hello");
-          
-      //     const res=await axios.get('http://localhost:5010/api/kitchen/showCompletedOrder',{headers:{'Authorization':`Bearer${token}`}});
-      //     console.log(res);
+        try{
+          const res=await axios.get('http://localhost:5010/api/kitchen/showCompletedOrder',{headers:{'Authorization':`Bearer ${token}`}});
 
-      //     setCompletedFoodOrders(res.data)
-      //   }
-      //   catch(err){
-      //     toast.error(err.message)
-      //   }
-      // }
+          setCompletedFoodOrders(res.data)
+        }
+        catch(err){
+          toast.error(err.message)
+        }
+      }
 
 
       const statusHandlerAcc=async(orderId)=>{
           try{
-            const response=await axios.post('http://localhost:5010/api/kitchen/acceptOrder',{orderId},{headers:{'Authorization':`Bearer ${token}`}})
+            await axios.post('http://localhost:5010/api/kitchen/acceptOrder',{orderId},{headers:{'Authorization':`Bearer ${token}`}})
             
             fetchCustomerOrders(); 
             fetchProcessingOrders();
@@ -84,7 +81,7 @@ export const Orders=()=>{
 
       const statusHandlerRej=async(orderId)=>{
         try{
-          const response=await axios.post('http://localhost:5010/api/kitchen/rejectOrder',{orderId},{headers:{'Authorization':`Bearer ${token}`}})
+         await axios.post('http://localhost:5010/api/kitchen/rejectOrder',{orderId},{headers:{'Authorization':`Bearer ${token}`}})
           fetchCustomerOrders();
         }
         catch(error)
@@ -96,6 +93,8 @@ export const Orders=()=>{
       if (token) {
         fetchCustomerOrders();
         fetchProcessingOrders();
+        fetchCompletedFoodOrders();
+
       } else {
       const savedToken = localStorage.getItem("token");
         if (savedToken) {
@@ -117,6 +116,7 @@ export const Orders=()=>{
               <p>Customer Name</p>
               <p>Food Items</p>
               <p>Contact No</p>
+              <p>Action</p>
             </div>
             <div className={styles.inner_container}>
             <div className={styles.order_list}>
@@ -161,10 +161,13 @@ export const Orders=()=>{
             
         </div>
 
+            {/* processing order ko component  */}
             <ProcessingOrder processingOrders={processingOrders} processingOrdersLoading={processingOrdersLoading} 
             fetchCustomerOrders={fetchCustomerOrders}
-            fetchProcessingOrders={fetchProcessingOrders}/>
+            fetchProcessingOrders={fetchProcessingOrders}
+            fetchCompletedFoodOrders={fetchCompletedFoodOrders}/>
 
+            {/* completed order ko component  */}
             <CompletedFoodOrders completedFoodOrders={completedFoodOrders} 
         />
 </>

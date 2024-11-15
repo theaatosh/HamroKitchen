@@ -139,7 +139,7 @@ const completeOrder=async(req,res)=>{
 }
 
 const showCompletedOrder=async(req,res)=>{
-    try{
+     try{        
         const userId=req.user.userId;
         const orderss = await order.find({cookId:userId ,
             orderStatus:"completed",

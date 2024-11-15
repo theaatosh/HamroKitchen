@@ -4,7 +4,7 @@ import Loading from '../../Components/Loading';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { StoreContext } from '../../Context/StoreContext';
-export const ProcessingOrder = ({processingOrders,processingOrdersLoading,fetchCustomerOrders,fetchProcessingOrders}) => {
+export const ProcessingOrder = ({processingOrders,processingOrdersLoading,fetchCustomerOrders,fetchProcessingOrders,fetchCompletedFoodOrders}) => {
   const {token,setToken}=useContext(StoreContext);
  
   const handleCompleted=async(e,orderId)=>{
@@ -12,11 +12,12 @@ export const ProcessingOrder = ({processingOrders,processingOrdersLoading,fetchC
     {
     try{      
       
-      const response=await axios.post('http://localhost:5010//api/kitchen/completeOrder',{orderId},{headers:{'Authorization':`Bearer ${token}`}})
+      const response=await axios.post('http://localhost:5010/api/kitchen/completeOrder',{orderId},{headers:{'Authorization':`Bearer ${token}`}})
       console.log(response);
       
       fetchCustomerOrders(); 
       fetchProcessingOrders();
+      fetchCompletedFoodOrders();
     }
     catch(error)
     {
@@ -54,7 +55,7 @@ useEffect(() => {
             <div className={styles.inner_container}>
             <div className={styles.order_list}>
               {processingOrdersLoading&&<Loading/>}
-                {processingOrders.length>0 && processingOrders.map((order,index)=>(
+                {processingOrders.length>0 ? processingOrders.map((order,index)=>(
                   <React.Fragment key={order._id}>
                       <div className={styles.order_card} >
                         <h3>#{index+1}</h3>
@@ -77,7 +78,9 @@ useEffect(() => {
                  <hr />
                  </React.Fragment>     
                 )
-                )}
+                ):<div className={styles.no_orders}>
+                <h2>No processing orders !!</h2>
+                </div>}
             </div>
               
             </div>

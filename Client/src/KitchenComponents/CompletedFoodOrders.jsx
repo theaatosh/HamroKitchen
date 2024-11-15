@@ -1,12 +1,15 @@
-import React, { useContext, useEffect } from 'react'
+import React from 'react';
 import styles from '../Styles/Kitchen/KitchenPages/CompletedFoodOrders.module.css'
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import { StoreContext } from '../Context/StoreContext';
 export const CompletedFoodOrders = ({completedFoodOrders}) => {
 
-    console.log(completedFoodOrders);
     
+    const handleOutForDelivery=(e)=>{
+        if(e.target.value==="outfordelivery"){
+            console.log("Pathao ko ma gayo");
+            
+        }
+      
+    }
     return (
         <div className={styles.completed_order_con}>
          <h2>Completed Orders</h2>
@@ -34,7 +37,11 @@ export const CompletedFoodOrders = ({completedFoodOrders}) => {
                              </ul>
                              <p>{order.deliveryInfo.phoneNumber}</p>
                         
-                             
+                             <select onChange={(event)=>handleOutForDelivery(event,order._id)}
+                        className={styles.orderStatus}>
+                        <option value="completed">Completed</option>
+                        <option value="outfordelivery">Out for delivery</option>
+                      </select>
                       </div>
                       <hr />
                       </React.Fragment>     
