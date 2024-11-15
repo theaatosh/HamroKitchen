@@ -3,6 +3,7 @@ const { connectToMongoDB } = require("./connections/index");
 const availableCook=require('./haversine');
 const loadBalancer=require('./loadBalancing');
 const orders=require('./models/orderModel');
+const { parse } = require('date-fns');
 
 // const mongo = process.env.URI;
 //     connectToMongoDB(mongo)
@@ -24,11 +25,23 @@ const assignCookOrder=async (order)=>{
             const cooks=await availableCook(customerLocation, orderId);
             console.log("cooks found"+cooks);
             const cook= await loadBalancer(cooks);
-            console.log("cook with least active orders found");
+           
             //  console.log('here');
             // console.log(cook);
            if(cook) {
-            await orders.findByIdAndUpdate(orderId,{
+                console.log("cook with least active orders found");
+                const userId= await orders.findById(orderId,{_id:0,userId:1});
+
+            if(cook.kitchens._id.toString()===userId.userId){
+                await orders.findByIdAndUpdate(orderId,{
+                    $set:{
+                        orderStatus:"processedWithPayment",
+                        rejectedCookId:userId.userId,
+                    },
+                })
+                console.log("No  cook found ");
+            } else{
+                await orders.findByIdAndUpdate(orderId,{
                 $set:{
                     // cookId:cook[0].kitchens._id,
                     cookId:cook.kitchens._id,
@@ -36,11 +49,10 @@ const assignCookOrder=async (order)=>{
                 }
                     });
                     console.log(`Order assigned to cook ${ await cook.kitchens._id}`);
-                }
+                }}
                 
         }catch(err){
-            console.log(err);
-            
+            console.log(err); 
         }
     }  
 
@@ -51,12 +63,16 @@ const fetchOrders=async()=>{
         paymentStatus:"paid",
     },{ scheduledTime:1,deliveryInfo:1});
     if(order && order.length){
-    //    console.log(order.length);
+       console.log(order);
        for(let i=0;i<order.length;i++){
            const currentDate = new Date();
-           const scheduledTime = new Date(order[i].scheduledTime);
+           const dateFormat = "dd/MM/yyyy, HH:mm:ss";
+           const scheduledTime=parse(order[i].scheduledTime, dateFormat, new Date());
+        //    const scheduledTime = new Date(order[i].scheduledTime);
+        // console.log(currentDate)
+        // console.log(scheduledTime)
            if(scheduledTime<=currentDate){
-            // console.log("here at scheduled");
+            console.log("here at scheduled");
             assignCookOrder(order[i]);
         }
     }

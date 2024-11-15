@@ -2,8 +2,6 @@ const user= require("./models/index");
 const order=require("./models/orderModel");
 const mongoose=require('mongoose');
 const { connectToMongoDB } = require("./connections/index");
-const { rejectOrder } = require("./controllers/showOrderKitchen");
-const { type } = require("os");
 require('dotenv').config();
 
 
@@ -28,7 +26,7 @@ const findKitchen=async(customerLocation, orderId)=>{
 // .then(() => console.log("MongoDB Connected"))
 // .catch(err => console.error(err));
     try{
-        const kitchens= await user.find({role:"kitchen"});
+        const kitchens= await user.find({role:"kitchen" , cookStatus:"online"});
         const nearestKitchenArray=[];
         console.log(kitchens.length +"kitchens");
 
@@ -51,7 +49,7 @@ const findKitchen=async(customerLocation, orderId)=>{
     try{
         // const orderId=orderId;
         const rejectedCook= await order.findById(orderId,{_id:0,rejectedCookId:1});
-        console.log(typeof(rejectedCook));
+        // console.log(typeof(rejectedCook));
         
         
         if(rejectedCook.rejectedCookId ){

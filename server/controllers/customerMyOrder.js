@@ -16,7 +16,7 @@ const customerProfile=async(req,res)=>{
     
     try{
        const found= await user.findById(userId);
-       console.log(found);
+    //    console.log(found);
        
        if(found){
         res.json(found);

@@ -2,7 +2,7 @@ const order=require("../models/orderModel");
 const mongoose=require('mongoose');
 const scheduleOder=async (req,res)=>{
     const{userId}= req.user;
-    console.log("here");
+    // console.log("here");
     const{items,totalAmount,deliveryFee,scheduledTime}=req.body.cartData;
     const deliveryInfo=req.body.deliveryInfo;
     // const{fNAme,lNAme,email,phNumber,deliveryLocation}=req.body.deliveryInfo;

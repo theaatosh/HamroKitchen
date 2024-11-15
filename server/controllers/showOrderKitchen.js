@@ -3,8 +3,7 @@ const user= require('../models/index');
 const showOrder=async(req,res)=>{
    try{
     const userId=req.user.userId;
-    // console.log(userId);
-    const orders = await order.find({cookId:userId ,
+    const orders = await order.find({cookId:userId,
         orderStatus:"assignedToCook",
     });
     if(!orders || orders.length===0){
@@ -16,6 +15,7 @@ const showOrder=async(req,res)=>{
         res.json(err);
     }
 }
+
 const acceptOrder=async(req,res)=>{
     const {orderId}=req.body;
     const {userId}=req.user;
@@ -57,7 +57,6 @@ const rejectOrder=async(req,res)=>{
                 }
             })
             if(updatedRej){
-                console.log('madarchod');
                 res.json({message:"Done"});
             }
         }
@@ -114,4 +113,44 @@ const getKitchenOnline=async(req,res)=>{
         res.json({ message: "Server error" });
     }
 }
-module.exports={showOrder, acceptOrder, rejectOrder, processingOrder, getKitchenOnline};
+const completeOrder=async(req,res)=>{
+    const {orderId}=req.body;
+    const {userId}=req.user;
+   try{
+     const update= await order.findById(orderId);
+    if(update){
+        const updated=await order.findByIdAndUpdate(orderId,{
+            $set:{
+                orderStatus:"completed",
+            }
+        })
+        const decreaseActiveOrders= await user.findByIdAndUpdate(userId,{
+            $inc: {
+                activeOrders: -1,
+            }
+        })
+        if(updated && decreaseActiveOrders){
+            res.json({message:"completed"});
+        }
+    }
+}catch(err){
+    console.log(err);
+}
+}
+
+const showCompletedOrder=async(req,res)=>{
+    try{
+        const userId=req.user.userId;
+        const orderss = await order.find({cookId:userId ,
+            orderStatus:"completed",
+        });
+        if(!orderss || orderss.length===0){
+            return res.json({message:"No orders to show"});
+        }
+        res.json(orderss);
+        }catch(err){
+            console.log(err);
+            res.json(err);
+        }
+}
+module.exports={showOrder, acceptOrder, rejectOrder, processingOrder, getKitchenOnline, completeOrder, showCompletedOrder};
