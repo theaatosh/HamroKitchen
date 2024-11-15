@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from '../../Styles/Kitchen/KitchenPages/ProcessingOrders.module.css';
-export const ProcessingOrder = ({processingOrders}) => {
+import Loading from '../../Components/Loading';
+export const ProcessingOrder = ({processingOrders,processingOrdersLoading}) => {
+
   const statusHandler=(e,id)=>{
     console.log(e.target.value,id);
     
   }
+  
+  
   return (
    <div className={styles.processing_order_con}>
     <h2>Processing Order</h2>
@@ -18,6 +22,7 @@ export const ProcessingOrder = ({processingOrders}) => {
             </div>
             <div className={styles.inner_container}>
             <div className={styles.order_list}>
+              {processingOrdersLoading&&<Loading/>}
                 {processingOrders.length>0 && processingOrders.map((order,index)=>(
                   <React.Fragment key={order._id}>
                       <div className={styles.order_card} >

@@ -35,7 +35,6 @@ export const AuthContextProvider=({children})=>{
     const updateKitchenStatus=async(newState)=>{
       try{
         const res=await axios.post("http://localhost:5010/api/kitchen/getKitchenOnline", {newState},{headers:{'Authorization':`Bearer ${token}`}})
-  
       }
       catch(err){
         console.log(err.message);

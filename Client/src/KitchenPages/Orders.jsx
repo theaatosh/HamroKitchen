@@ -15,6 +15,7 @@ export const Orders=()=>{
     const [processingOrders, setProcessingOrders] = useState([]);
     const [completedFoodOrders, setCompletedFoodOrders] = useState([]);
     const[isLoading,setIsLoading]=useState(false);
+    const[processingOrdersLoading,setprocessingOrdersLoading]=useState(false);
     
 
       const fetchCustomerOrders=async()=>{
@@ -34,7 +35,7 @@ export const Orders=()=>{
   
       
       const fetchProcessingOrders=async()=>{
-        setIsLoading(true);
+       setprocessingOrdersLoading(true);
         try{
           const res=await axios.get('http://localhost:5010/api/kitchen/processingOrder',{headers:{'Authorization':`Bearer ${token}`}});
           setProcessingOrders(res.data);
@@ -46,18 +47,16 @@ export const Orders=()=>{
           
       }
       finally{
-        setIsLoading(false);
+        setprocessingOrdersLoading(false);
       }
       }
       const fetchCompletedFoodOrders=async()=>{
-        setIsLoading(true);
+      
         try{
           const res=await axios.get('url halne',{headers:{'Authorization':`Bearer${token}`}})
         }
         catch(err){
           toast.error(err.message)
-        }finally{
-          setIsLoading(false);
         }
       }
       const statusHandlerAcc=async(orderId)=>{
@@ -112,8 +111,8 @@ export const Orders=()=>{
             </div>
             <div className={styles.inner_container}>
             <div className={styles.order_list}>
-              {isLoading&&<Loading/>}
-                {customerOrders.length>0 ? (customerOrders.map((order,index)=>(
+              {isLoading?<Loading/>:(
+                customerOrders.length>0 ? (customerOrders.map((order,index)=>(
                   order.orderStatus==='assignedToCook'&&
                   <React.Fragment key={order._id}>
                       <div className={styles.order_card} >
@@ -144,7 +143,7 @@ export const Orders=()=>{
                   <div className={styles.no_orders}>
                     <h2>No new order request !!</h2>
                     </div>
-                )}
+                ))}
             </div>
               
             </div>
@@ -153,7 +152,7 @@ export const Orders=()=>{
             
         </div>
 
-            <ProcessingOrder processingOrders={processingOrders}/>
+            <ProcessingOrder processingOrders={processingOrders} processingOrdersLoading={processingOrdersLoading}/>
 
             <CompletedFoodOrders completedFoodOrders={completedFoodOrders}/>
 </>
