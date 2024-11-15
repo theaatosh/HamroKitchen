@@ -4,7 +4,8 @@ async function findKitchenWithLeastNumOfOrder(nearestKitchenArray){
     let kitchenName = null;
     let lowestScore = 10000;
     console.log(nearestKitchenArray.length);
-    for(let i=0;i<nearestKitchenArray.length; i++){
+    if(nearestKitchenArray.length>0){
+        for(let i=0;i<nearestKitchenArray.length; i++){
         const cookId=nearestKitchenArray[i].kitchens._id;
         const cook= await user.findById(cookId);
 
@@ -20,6 +21,9 @@ async function findKitchenWithLeastNumOfOrder(nearestKitchenArray){
     }
     // console.log(kitchenName);
     return kitchenName;
+    }else{
+        console.log("No kitchen is active")
+    }
 }
 
 module.exports=findKitchenWithLeastNumOfOrder;
