@@ -7,6 +7,7 @@ import axios from 'axios';
 import { useAuth } from '../Context/AuthContext';
 import { StoreContext } from '../Context/StoreContext';
 import {  toast } from 'react-toastify';
+import Loading from '../Components/Loading';
 
 
 export const LoginPage=()=>{
@@ -56,7 +57,7 @@ export const LoginPage=()=>{
             {
               if(result.data.message==="login sucessfully"){
                 toast.success(result.data.message,{
-                  autoClose:1000,
+                  autoClose:1500,
                 });
                 const token = result.data.token;
              localStorage.setItem('token', token); 
@@ -66,10 +67,7 @@ export const LoginPage=()=>{
               userCredentials(token);
               
               login();
-              setTimeout(() => {
-              navigate('/');
-            }, 3000);
-
+            
             }else if(result.data.message==="incorrect password"){
               toast.error(result.data.message,{autoClose:1500});
             }
@@ -167,7 +165,7 @@ export const LoginPage=()=>{
       </div>
 
         <div className={styles.login_btn}>
-      <button type="submit" className={styles.submit_button}>{isLoading ? 'Logging in...' : 'Login'}</button>
+      <button type="submit" className={styles.submit_button}>{isLoading ?<Loading/> : 'Login'}</button>
       </div>
     </form>
     <div className={styles.haveAccount}>

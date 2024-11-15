@@ -12,7 +12,7 @@ export const KitchenNavbar=()=>{
                 </div>
             
            
-            <div className={styles.online_offline_con} style={{backgroundColor: isKitchenOnline? 'green':'red'}} onClick={handleToggle}>
+            <div className={styles.online_offline_con}  onClick={handleToggle}>
                 <div className={`${styles.toggle_btn} ${isKitchenOnline?styles.online :styles.offline}`} >
                     <span>{isKitchenOnline?'Online':'Offline'}</span>
                     </div>

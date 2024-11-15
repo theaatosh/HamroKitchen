@@ -17,7 +17,9 @@ li{
 }
 
 .topic{
-    background-color: #e0e0e0;
+    /* background-color: #e0e0e0; */
+    background-color:#004953ee;
+    color: #f1f1f1;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr ;
     padding: 2vh 3vw;
@@ -28,7 +30,8 @@ li{
     }
 }
 .order_list{
-box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;}
+box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
 .order_card{
     
     display: grid;
@@ -37,7 +40,6 @@ box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;}
     padding: 2vh 3vw;
     &:hover{
         background-color: #f1f1f1;
-        transform: scale(1.002);
     }
 
     & h3{
@@ -48,6 +50,8 @@ box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;}
 
 .orderStatus{
     padding: 1.5vh 2vw;
+    border: 2px solid gray;
+    border-radius: 10px;
 }
 
 .offline_order{

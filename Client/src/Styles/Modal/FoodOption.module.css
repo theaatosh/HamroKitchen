@@ -98,3 +98,11 @@
     background-color: #ccc;
     cursor: not-allowed;
   }
+
+  @media (max-width:600px) {
+   .modal_container{
+        width: 90vw;
+       
+    
+    }
+  }

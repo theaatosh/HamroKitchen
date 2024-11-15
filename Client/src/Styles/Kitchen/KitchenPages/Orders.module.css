@@ -13,7 +13,9 @@ li{
 }
 
 .topic{
-    background-color: #e0e0e0;
+    /* background-color: #e0e0e0; */
+    background-color: #004953ee;
+    color: #fff;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr ;
     padding: 2vh 3vw;

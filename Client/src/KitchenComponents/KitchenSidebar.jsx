@@ -7,6 +7,7 @@ import { PiUserSwitchBold } from "react-icons/pi";
 import styles from '../Styles/Kitchen/KitchenSidebar.module.css';
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../Context/AuthContext";
 const routeArray=[
     {
         path:'/kitchen/dashboard',
@@ -32,11 +33,20 @@ const routeArray=[
 ]
 export const KitchenSidebar=()=>{
     const[isOpen,setIsOpen]=useState(false);
+
+    const {isKitchenOnline, setIsKitchenOnline,handleToggle,updateKitchenStatus}=useAuth();
     const handleMenuToggle=()=>{
 
         setIsOpen(!isOpen);
     }
     
+    const handleSwitchCustomer=()=>{
+       
+        const status=localStorage.getItem('OnlineStatus');
+        if(status){
+            handleToggle();
+        }
+    }
     return (
         <>
         <div className={isOpen? styles.sidebar:styles.mini_sidebar}>
@@ -45,8 +55,8 @@ export const KitchenSidebar=()=>{
                     {routeArray.map((curRoute,index)=>{ 
                         return(
                             
-                            <NavLink to={curRoute.path} className={({isActive})=>`${isOpen?styles.open_sidebar_option: styles.close_sidebar_option} ${isActive? styles.admin_active :""}`} key={index}>
-                            <div className={styles.icon}>{curRoute.icon}</div>
+                            <NavLink to={curRoute.path}  className={({isActive})=>`${isOpen?styles.open_sidebar_option: styles.close_sidebar_option} ${isActive? styles.admin_active :""}`} key={index} onClick={curRoute.name==='Switch to customer'?handleSwitchCustomer:undefined}>
+                            <div className={styles.icon} >{curRoute.icon}</div>
                             {isOpen&&<div className={styles.name}>{curRoute.name}</div>}
                         </NavLink>
                         );

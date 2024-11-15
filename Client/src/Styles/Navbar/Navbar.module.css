@@ -242,5 +242,11 @@
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     
       }
+
+      .profile_container{
+        width: 60vw;
+        height: 45vh;
+       
+    }
 }
 

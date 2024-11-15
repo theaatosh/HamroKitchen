@@ -9,6 +9,7 @@ import styles from '../Styles/Login_Signup/Signup.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {  toast } from 'react-toastify';
+import Loading from '../Components/Loading';
 
 export const SignUpPage=()=>{
   const navigate=useNavigate();
@@ -229,7 +230,7 @@ export const SignUpPage=()=>{
 
         {/* for signup button  */}
         <div className={styles.signup_btn}>
-      <button type="submit" className={styles.submit_button}>{isLoading ? 'Signing Up...' : 'SignUp'}</button>
+      <button type="submit" className={styles.submit_button}>{isLoading ? <Loading/>: 'SignUp'}</button>
       
       </div>
     </form>
