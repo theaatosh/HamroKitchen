@@ -18,6 +18,7 @@ const showOrder=async(req,res)=>{
 }
 const acceptOrder=async(req,res)=>{
     const {orderId}=req.body;
+    const {userId}=req.user;
    try{
      const update= await order.findById(orderId);
     if(update){
@@ -26,7 +27,12 @@ const acceptOrder=async(req,res)=>{
                 orderStatus:"processing",
             }
         })
-        if(updated){
+        const increaseActiveOrders= await user.findByIdAndUpdate(userId,{
+            $inc: {
+                activeOrders: 1,
+            }
+        })
+        if(updated && increaseActiveOrders){
             res.json({message:"Done"});
         }
     }
