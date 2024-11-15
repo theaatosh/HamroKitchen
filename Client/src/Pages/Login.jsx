@@ -61,7 +61,6 @@ export const LoginPage=()=>{
                 const token = result.data.token;
              localStorage.setItem('token', token); 
               setToken(token);
-
               setShowModal(true);
               //token bata decode gareko user details
               userCredentials(token);

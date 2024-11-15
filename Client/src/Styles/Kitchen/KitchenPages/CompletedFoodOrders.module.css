@@ -1,8 +1,8 @@
 li{
     list-style: none;
 }
-.processing_order_con{
-    margin: 6vh 3vw;
+.completed_order_con{
+    margin: 12vh 3vw;
     height: 30vh;
 
     & h2{
@@ -50,14 +50,6 @@ box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;}
     padding: 1.5vh 2vw;
 }
 
-.offline_order{
-    background-color: #e0e0e0;
-display: flex;
-align-items: center;
-justify-content: center;
-height: 30vh;   
-    margin: 10vh 15vw;
-    color: tomato;
-}
+
 
 

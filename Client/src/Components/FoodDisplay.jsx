@@ -2,6 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import styles from "../Styles/Home/FoodDisplay.module.css";
 import { StoreContext } from "../Context/StoreContext";
 import { FoodItemDisplay } from "./FoodItemDisplay";
+import Loading from "./Loading";
+
 
 export const FoodDisplay = () => {
   //from store context
@@ -40,7 +42,7 @@ export const FoodDisplay = () => {
         <div  className={styles.food_display_list}>
           
         {isLoading ? (
-            <p>Loading food items...</p> // Show loading indicator
+            <Loading/>// Show loading indicator
           ) : (
             filteredItem.map((curItem) => (
               <FoodItemDisplay

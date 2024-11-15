@@ -112,7 +112,10 @@ export const PlaceOrder=()=>{
        setError((prevErr)=>({...prevErr,[name]:""}))
       }
 
+
       const handleProceedToPayment=()=>{
+        console.log(cartData,deliveryInfo);
+        
           const validation=validate();
           if(Object.keys(validation).length>0)
           {
