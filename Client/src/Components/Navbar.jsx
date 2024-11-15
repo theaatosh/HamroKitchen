@@ -25,6 +25,9 @@ export const Navbar = () => {
 const logout=()=>{
   setIsLoggedIn(false);
   localStorage.removeItem('token');
+  localStorage.removeItem('OnlineStatus');
+  localStorage.removeItem('paymentDetails');
+  
   setToken(null);
   setCartItems({});
   setIsUserMenuOpen(false);

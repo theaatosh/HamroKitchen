@@ -17,14 +17,14 @@ export const Orders=()=>{
     const[isLoading,setIsLoading]=useState(false);
     const[processingOrdersLoading,setprocessingOrdersLoading]=useState(false);
     
-
+  //order request fetch garne
       const fetchCustomerOrders=async()=>{
         setIsLoading(true)
         try{
          const res=await axios.get('http://localhost:5010/api/kitchen/showOrder',{headers:{'Authorization':`Bearer ${token}`}});
           setCustomerOrders(res.data);
           
-          }catch(error){
+        }catch(error){
           console.log(error);
          toast.error(error.message);
           
@@ -33,7 +33,7 @@ export const Orders=()=>{
       }
       }
   
-      
+      //processing order fetch garne
       const fetchProcessingOrders=async()=>{
        setprocessingOrdersLoading(true);
         try{
@@ -50,15 +50,24 @@ export const Orders=()=>{
         setprocessingOrdersLoading(false);
       }
       }
-      const fetchCompletedFoodOrders=async()=>{
+
+      // completed orders fetch garne
+      // const fetchCompletedFoodOrders=async()=>{
       
-        try{
-          const res=await axios.get('url halne',{headers:{'Authorization':`Bearer${token}`}})
-        }
-        catch(err){
-          toast.error(err.message)
-        }
-      }
+      //   try{
+      //     console.log("hello");
+          
+      //     const res=await axios.get('http://localhost:5010/api/kitchen/showCompletedOrder',{headers:{'Authorization':`Bearer${token}`}});
+      //     console.log(res);
+
+      //     setCompletedFoodOrders(res.data)
+      //   }
+      //   catch(err){
+      //     toast.error(err.message)
+      //   }
+      // }
+
+
       const statusHandlerAcc=async(orderId)=>{
           try{
             const response=await axios.post('http://localhost:5010/api/kitchen/acceptOrder',{orderId},{headers:{'Authorization':`Bearer ${token}`}})
@@ -71,6 +80,7 @@ export const Orders=()=>{
             toast.error(error.message);
           }
       }
+
 
       const statusHandlerRej=async(orderId)=>{
         try{
@@ -86,7 +96,6 @@ export const Orders=()=>{
       if (token) {
         fetchCustomerOrders();
         fetchProcessingOrders();
-        fetchCompletedFoodOrders();
       } else {
       const savedToken = localStorage.getItem("token");
         if (savedToken) {
@@ -152,9 +161,12 @@ export const Orders=()=>{
             
         </div>
 
-            <ProcessingOrder processingOrders={processingOrders} processingOrdersLoading={processingOrdersLoading}/>
+            <ProcessingOrder processingOrders={processingOrders} processingOrdersLoading={processingOrdersLoading} 
+            fetchCustomerOrders={fetchCustomerOrders}
+            fetchProcessingOrders={fetchProcessingOrders}/>
 
-            <CompletedFoodOrders completedFoodOrders={completedFoodOrders}/>
+            <CompletedFoodOrders completedFoodOrders={completedFoodOrders} 
+        />
 </>
 
     )

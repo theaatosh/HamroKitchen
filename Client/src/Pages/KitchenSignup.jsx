@@ -67,14 +67,16 @@ export const KitchenSignup = () => {
       const result =await axios.post('http://localhost:5010/api/kitchenSignUp',formData, {headers:{'Authorization': `Bearer ${token}`}});
       console.log(result.data);
       
-      toast.success(result.data);
+      toast.success(result.data,{
+        autoClose:1500
+      });
     }
     catch(err)
     {
         if(err.response.status===400)
         {
           
-            toast.error(err.response.data);
+            toast.error(err.response.data,{autoClose:1500});
              
           
         }

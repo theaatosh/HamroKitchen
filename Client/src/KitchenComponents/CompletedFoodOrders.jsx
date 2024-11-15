@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import styles from '../Styles/Kitchen/KitchenPages/CompletedFoodOrders.module.css'
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { StoreContext } from '../Context/StoreContext';
 export const CompletedFoodOrders = ({completedFoodOrders}) => {
 
-
+    console.log(completedFoodOrders);
+    
     return (
         <div className={styles.completed_order_con}>
          <h2>Completed Orders</h2>

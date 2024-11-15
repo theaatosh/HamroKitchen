@@ -43,7 +43,7 @@
                         role: curElem.role
                     });
                     
-                    toast.success(approveResponse.data)
+                    toast.success(approveResponse.data,{autoClose:1500})
                     manageKitchen();
                     
             }
