@@ -18,7 +18,7 @@ async function findKitchenWithLeastNumOfOrder(nearestKitchenArray){
             kitchenName = nearestKitchenArray[i];
         }
     }
-    console.log(kitchenName);
+    // console.log(kitchenName);
     return kitchenName;
 }
 

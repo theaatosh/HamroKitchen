@@ -152,7 +152,7 @@ const editItem=require('./routes/adminEditItemRoute.js');
 app.use('/api/editItem',editItem);
 
 const fetchOrders=require('./placingOrder.js');
-// setInterval(fetchOrders, 60*1000);
+// setInterval(fetchOrders, 5*1000);
 
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
