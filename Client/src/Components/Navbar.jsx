@@ -26,7 +26,7 @@ const logout=()=>{
   setIsLoggedIn(false);
   localStorage.removeItem('token');
   localStorage.removeItem('OnlineStatus');
-  localStorage.removeItem('paymentDetails');
+  localStorage.removeItem('paymentDetails'); 
   
   setToken(null);
   setCartItems({});

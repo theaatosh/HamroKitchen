@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import styles from '../Styles/Modal/OrderHistory.module.css';
 import { IoMdClose } from "react-icons/io";
-export const OrderHistoryModal = ({setShowModal,handleCloseModal,curOrder,fetchOrders,token}) => {
+export const OrderHistoryModal = ({setShowModal,handleCloseModal,curOrder}) => {
 
 const modalOrderRef=useRef(null);
 
@@ -14,11 +14,6 @@ const handleModal=(e)=>{
 
 }
 
-
-
-const handleTrackOrder =async () => {
-   await fetchOrders(); 
-  };
   return (
     <div className={styles.main_container} ref={modalOrderRef} onClick={(e)=>handleModal(e)}>
 
@@ -36,7 +31,7 @@ const handleTrackOrder =async () => {
                 </div>
                 <div className={styles.detail}>
                     <p className={styles.upper_title}>Order Date</p>
-                    <p>{curOrder.placedDate}</p>
+                    <p>{curOrder.scheduledTime}</p>
                 </div>
                 <div className={styles.detail}>
                     <p className={styles.upper_title}>Order Price</p>
@@ -57,7 +52,7 @@ const handleTrackOrder =async () => {
                 <div className={styles.detail}>
                     <p className={styles.upper_title}>Order Status</p>
                     <p className={` 
-              ${curOrder.status==="completed" ? styles.statusCompleted:styles.orderStatuss} `}>{curOrder.orderStatus}</p>
+              ${curOrder.orderStatus==="completed" ? styles.statusCompleted :styles.orderStatus} `}>{curOrder.orderStatus}</p>
                 </div>
             </div>
             <div className={styles.item_details}>

@@ -75,11 +75,11 @@ export const MyOrders=()=>{
               <p>#{index+1}</p>
               <p>{order.scheduledTime}</p>
               <p className={` 
-              ${order.orderStatus==="completed" ? styles.statusCompleted:styles.orderStatus} `}>{order.orderStatus}</p>
+              ${order.orderStatus==="completed" ? styles.statusCompleted:styles.orderStatuss} `}>{order.orderStatus}</p>
               <p>Rs.{order.totalAmount}</p>
               <button className={styles.viewDetails_btn} onClick={()=>handleshowModal(order)}>View Details</button>
             </div>
-            <hr />
+           
             </React.Fragment>
             )
 
