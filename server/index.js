@@ -4,7 +4,7 @@ const axios = require('axios');
 
 const jwt=require('jsonwebtoken');
 const router=express.Router();
-const cors = require('cors'); // Import the cors middleware
+const cors = require('cors'); 
 const user = require("./models/index");
 const { connectToMongoDB } = require("./connections/index");
 const { serverSideValidation , checkEmail, registerUser, checkUserName, hashPassword,comparePasswords } = require("./controllers/index");

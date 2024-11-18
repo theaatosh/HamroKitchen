@@ -15,7 +15,6 @@ const showOrder=async(req,res)=>{
         res.json(err);
     }
 }
-
 const acceptOrder=async(req,res)=>{
     const {orderId}=req.body;
     const {userId}=req.user;
