@@ -28,13 +28,13 @@ const routeArray=[
         path:'/kitchen/settings',
         name:"Settings",
         icon:<IoSettings  className={styles.icon}/>
-    },
+    }
 
 ]
 export const KitchenSidebar=()=>{
     const[isOpen,setIsOpen]=useState(false);
 
-    const {isKitchenOnline, setIsKitchenOnline,handleToggle,updateKitchenStatus}=useAuth();
+    const {handleToggle}=useAuth();
     const handleMenuToggle=()=>{
 
         setIsOpen(!isOpen);

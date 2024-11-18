@@ -46,7 +46,7 @@ export const Cart = () => {
       items:itemsInCart,
       totalAmount:getTotalCartAmount()+(getTotalCartAmount()===0?0:50),
       deliveryFee:getTotalCartAmount()===0?0:50,
-      scheduledTime:selectedDateTime.toLocaleString(),
+      scheduledTime:selectedDateTime.toLocaleString()
     };
     // console.log(cartData);
     setCartData(orderData);

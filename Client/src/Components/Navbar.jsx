@@ -25,6 +25,9 @@ export const Navbar = () => {
 const logout=()=>{
   setIsLoggedIn(false);
   localStorage.removeItem('token');
+  localStorage.removeItem('OnlineStatus');
+  localStorage.removeItem('paymentDetails'); 
+  
   setToken(null);
   setCartItems({});
   setIsUserMenuOpen(false);
@@ -190,6 +193,7 @@ const logout=()=>{
             {isUserMenuOpen&&(
               <div className={styles.user_menu} >
                 <p className={styles.user_menu_p} onClick={handleProfileOpen}>Profile</p><hr />
+                
                 {profileOpen&& 
                 <div className={styles.profile_container}>
                     <div className={styles.profile_inner}>
@@ -206,6 +210,7 @@ const logout=()=>{
 
                     </div>
                 </div> }
+
                 {/* <Link to={`/profile/${userDetails.userName}`}><p className={styles.user_menu_p}>My Profile</p></Link><hr /> */}
                 <Link to='/myorders'><p className={styles.user_menu_p}>My Orders</p></Link><hr />
                 {userDetails.role==='kitchen'?(
