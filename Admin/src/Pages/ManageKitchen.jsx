@@ -1,4 +1,5 @@
     import styles from '../Styles/ManageKitchen.module.css';
+    import React from 'react';
     import axios from 'axios';
     import { useState } from 'react';
     import { useEffect } from 'react';
@@ -99,8 +100,8 @@
                         ) : kitchenDetails.length>0 ?(  
                             kitchenDetails.map((curElem,index)=>{
                             return(
-                            
-                                <div className={styles.manageKitchen_detail} key={curElem.id || index}>
+                            <React.Fragment key={curElem.id || index}>
+                                <div className={styles.manageKitchen_detail} >
                                 <p>{curElem.userName}</p>
                                 <p>{curElem.email}</p>
 
@@ -130,7 +131,8 @@
                                 />
                                 
                             </div>
-                            
+                            <hr />
+                            </React.Fragment>
                             )
                         
                         })

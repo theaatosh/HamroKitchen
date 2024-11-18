@@ -41,11 +41,7 @@ export const KitchenSidebar=()=>{
     }
     
     const handleSwitchCustomer=()=>{
-       
-        const status=localStorage.getItem('OnlineStatus');
-        if(status){
-            handleToggle();
-        }
+        localStorage.setItem('OnlineStatus',false);
     }
     return (
         <>
