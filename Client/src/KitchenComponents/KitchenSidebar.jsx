@@ -8,6 +8,7 @@ import styles from '../Styles/Kitchen/KitchenSidebar.module.css';
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
+
 const routeArray=[
     {
         path:'/kitchen/dashboard',
@@ -56,7 +57,7 @@ export const KitchenSidebar=()=>{
     return (
         <>
         <div className={isOpen? styles.sidebar:styles.mini_sidebar}>
-            <div className={styles.menu_icon}>{isOpen?(<GiCrossMark onClick={handleMenuToggle}/>):(<IoMenu onClick={handleMenuToggle}/>)}</div>
+            <div className={styles.menu_icon}>{isOpen?(<GiCrossMark className={styles.cross} onClick={handleMenuToggle}/>):(<IoMenu className={styles.normal_icon} onClick={handleMenuToggle}/>)}</div>
             <div className={styles.sidebar_options}>
                     {routeArray.map((curRoute,index)=>{ 
                         return(

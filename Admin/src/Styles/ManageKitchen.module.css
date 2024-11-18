@@ -19,7 +19,7 @@
     width: 100%;
     padding: 3vh 1.5vw;
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr 1fr 1fr 0.3fr 0.3fr;
+    grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 0.3fr 0.3fr;
 
 }
 .manageKitchen_title p{
@@ -49,7 +49,7 @@
     margin-top: 2vh;
     width: 100%;
     display: grid;
-    grid-template-columns:1fr 2fr 1fr 1fr 1fr 0.3fr 0.3fr;
+    grid-template-columns:1fr 1.5fr 1fr 1fr 1fr 0.3fr 0.3fr;
 }
 .manageKitchen_detail p{
     color: #413839;
