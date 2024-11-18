@@ -66,11 +66,11 @@ const fetchOrders=async()=>{
        console.log(order);
        for(let i=0;i<order.length;i++){
            const currentDate = new Date();
+           console.log(currentDate)
            const dateFormat = "dd/MM/yyyy, HH:mm:ss";
-           const scheduledTime=parse(order[i].scheduledTime, dateFormat, new Date());
-        //    const scheduledTime = new Date(order[i].scheduledTime);
-        // console.log(currentDate)
-        // console.log(scheduledTime)
+        //    const scheduledTime=parse(order[i].scheduledTime, dateFormat, new Date());
+           const scheduledTime = new Date(order[i].scheduledTime);
+           console.log(scheduledTime);
            if(scheduledTime<=currentDate){
             console.log("here at scheduled");
             assignCookOrder(order[i]);
