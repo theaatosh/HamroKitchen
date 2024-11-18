@@ -71,7 +71,7 @@ export const LoginPage=()=>{
             }else if(result.data.message==="incorrect password"){
               toast.error(result.data.message,{autoClose:1500});
             }
-            else if(result.data.message==="user doesnt exist please register first"){
+            else if(result.data.message==="user doesnt exist please register first"){              
               toast.error(result.data.message,{autoClose:1500});
             }
           }else{
