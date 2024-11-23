@@ -4,7 +4,7 @@ import { StoreContext } from '../Context/StoreContext';
 import { useContext, useEffect } from 'react';
 
 export const Payment=()=>{
-    const {cartData,deliveryInfo,setPaymentDetails}=useContext(StoreContext);
+    const {cartData,deliveryInfo,setPaymentDetails,getTotalCartAmount}=useContext(StoreContext);
     const handlePayment=async()=>{
 
         // const formData={"return_url": "http://localhost:5173/profile/test",
@@ -67,7 +67,7 @@ export const Payment=()=>{
               <h3>Order Summary</h3>
               <div className={styles.total_amt}>
               <p>Total Amount</p>
-                <p>Rs:450</p>
+                <p>Rs:Rs.{getTotalCartAmount() ? getTotalCartAmount() + 50 : "0"}</p>
               </div>
             </div>
 

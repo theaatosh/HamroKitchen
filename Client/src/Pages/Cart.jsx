@@ -7,6 +7,7 @@ import { CiCircleMinus } from "react-icons/ci";
 import { MdDeleteForever } from "react-icons/md";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"; // Import the CSS
+import axios from 'axios'
 
 export const Cart = () => {
   const {
@@ -19,7 +20,7 @@ export const Cart = () => {
     getTotalCartAmount,
     selectedDateTime,setSelectedDateTime,
     setCartData,
-  
+  token
   } = useContext(StoreContext); 
   const navigate = useNavigate();
   const isCartEmpty = Object.keys(cartItems).filter(key=>cartItems[key]).length === 0;
@@ -60,12 +61,16 @@ export const Cart = () => {
     
   };
   // for removing item without decrement
-  const handleremoveFromCart = (id) => {
-    setCartItems((prevItems) => {
-      const updatedCart = { ...prevItems };
-      delete updatedCart[id];
-      return updatedCart;
-    });
+  const handleremoveFromCart =async (itemId) => {
+    console.log(token);
+    
+    // setCartItems((prevItems) => {
+    //   const updatedCart = { ...prevItems };
+    //   delete updatedCart[id];
+    //   return updatedCart;
+    // });
+    await axios.post("http://localhost:5010/cart/delete",{itemId},{headers: {'Authorization': `Bearer ${token}`}});
+    
   };
 
 

@@ -1,7 +1,7 @@
 const foodItemDetails=require('../models/adminAddItem');
 
 const editItem=async(req,res)=>{
-    // console.log(req.body);
+    console.log(req.body);
     const {name, description, price, category,id}=req.body;
     try{
         const edited= await foodItemDetails.findByIdAndUpdate(id,{
@@ -41,4 +41,4 @@ const deleteItem=async(req,res)=>{
     }
 }
 
-module.exports={editItem,deleteItem};
+module.exports={editItem,deleteItem};   
