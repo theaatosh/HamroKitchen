@@ -1,0 +1,13 @@
+.admin_dashboard_container{
+    height: 88vh;
+    width: 83vw;
+    
+}
+.admin_inner_container{
+    display: flex;
+    gap: 13vh;
+    margin: 4vh;
+    padding: 2vh;
+    background-color: #EDEAE0;
+    border-radius: 2vh;
+}

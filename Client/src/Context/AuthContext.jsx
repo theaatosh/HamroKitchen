@@ -120,6 +120,7 @@ const authValue={
   userCredentials,
   userDetails,
   isKitchenOnline,setIsKitchenOnline,handleToggle,profileData,setProfileData,setShowModal,showModal,setIsLoggedIn
+  ,updateKitchenStatus
 }
   return(
     <AuthContext.Provider value={authValue}>
