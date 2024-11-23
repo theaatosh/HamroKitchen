@@ -23,11 +23,11 @@ const assignCookOrder=async (order)=>{
             //trying new so cmt line 22
             //  const cook=await availableCook(customerLocation);
             const cooks=await availableCook(customerLocation, orderId);
-            console.log("cooks found"+cooks);
+            console.log("cooks found");
             const cook= await loadBalancer(cooks);
            
             //  console.log('here');
-            // console.log(cook);
+            console.log(cook);
            if(cook) {
                 console.log("cook with least active orders found");
                 const userId= await orders.findById(orderId,{_id:0,userId:1});
@@ -68,8 +68,8 @@ const fetchOrders=async()=>{
            const currentDate = new Date();
            console.log(currentDate)
            const dateFormat = "dd/MM/yyyy, HH:mm:ss";
-        //    const scheduledTime=parse(order[i].scheduledTime, dateFormat, new Date());
-           const scheduledTime = new Date(order[i].scheduledTime);
+           const scheduledTime=parse(order[i].scheduledTime, dateFormat, currentDate);
+        //    const scheduledTime = new Date(order[i].scheduledTime);
            console.log(scheduledTime);
            if(scheduledTime<=currentDate){
             console.log("here at scheduled");

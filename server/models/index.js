@@ -47,6 +47,10 @@ const userSchema=mongoose.Schema({
     cookStatus:{
         type:String,
         Default:"offline",
+    },
+    recData:{
+        type:Object,
+        default:{},
     }
 });
 
