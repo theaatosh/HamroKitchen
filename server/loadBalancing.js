@@ -13,7 +13,7 @@ async function findKitchenWithLeastNumOfOrder(nearestKitchenArray){
         continue;
         }
         const score=cook.activeOrders/cook.weighted;
-        console.log(score);
+        // console.log(score);
         if (score < lowestScore) {
             lowestScore = score;
             kitchenName = nearestKitchenArray[i];
