@@ -1,0 +1,14 @@
+.rider_container{
+    width: 100%;
+    display: flex;
+}
+.inner_container{
+    width: 100%;
+}
+
+.outlet_container{
+    width: 100%;
+    height: 88vh;
+    overflow-y: scroll;
+  
+}

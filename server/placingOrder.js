@@ -67,9 +67,9 @@ const fetchOrders=async()=>{
        for(let i=0;i<order.length;i++){
            const currentDate = new Date();
            console.log(currentDate)
-           const dateFormat = "dd/MM/yyyy, HH:mm:ss";
-           const scheduledTime=parse(order[i].scheduledTime, dateFormat, currentDate);
-        //    const scheduledTime = new Date(order[i].scheduledTime);
+        //    const dateFormat = "dd/MM/yyyy, HH:mm:ss";
+        //    const scheduledTime=parse(order[i].scheduledTime, dateFormat, currentDate);
+           const scheduledTime = new Date(order[i].scheduledTime);
            console.log(scheduledTime);
            if(scheduledTime<=currentDate){
             console.log("here at scheduled");

@@ -18,7 +18,6 @@
 
 
 .inner{
-  height: 100%;
   width: 90%;
   margin: auto;
   display: flex;
@@ -27,6 +26,8 @@
   align-items: center;
   background-color: white;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  margin-bottom: 5vh;
+  padding-bottom: 3vh;
 }
 .heading_signup {
   font-family: "Times New Roman", Times, serif;

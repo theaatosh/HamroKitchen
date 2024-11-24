@@ -1,5 +1,7 @@
 const order=require('../models/orderModel');
 const user=require('../models/index');
+const foodItem=require('../models/adminAddItem')
+const mongoose=require('mongoose');
 const dashboard=async(req,res)=>{
     try{
         let amount=0;
@@ -9,12 +11,16 @@ const dashboard=async(req,res)=>{
                 amount+=orders[i].totalAmount;
             }
         }
-        const totalOrders= await order.countDocumnets();
-        const totalOrdersCompleted= await order.countDocumnets({orderStatus:"completed"})
-        const totalPendingOrders=await order.countDocumnets({orderStatus:"processing"})
-        const totalUsers= await user.countDocumnets();
-        const totalCustomer= await user.countDocumnets({role:"customer"});
-        const totalKitchen= await user.countDocumnets({role:"kitchen"});
+        const totalOrders= await order.countDocuments();
+        const totalOrdersCompleted= await order.countDocuments({orderStatus:"completed"})
+        const totalPendingOrders=await order.countDocuments({orderStatus:"processing"})
+        const totalAssignedOrders=await order.countDocuments({orderStatus:"assignedToCook"})
+        const totalUsers= await user.countDocuments();
+        const totalCustomer= await user.countDocuments({role:"customer"});
+        const totalKitchen= await user.countDocuments({role:"kitchen"});
+
+        const totalFoodItems= await foodItem.countDocuments();
+
 
         res.status(200).json({
             totalAmount:amount,
@@ -24,6 +30,8 @@ const dashboard=async(req,res)=>{
             totalKitchen:totalKitchen,
             totalOrdersCompleted:totalOrdersCompleted,
             totalPendingOrders:totalPendingOrders,
+            totalAssignedOrders:totalAssignedOrders,
+            totalFoodItems:totalFoodItems
         })
     }catch(err){
         console.log(err);
