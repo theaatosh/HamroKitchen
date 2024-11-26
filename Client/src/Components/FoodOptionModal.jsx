@@ -1,6 +1,8 @@
-import { useRef, useState } from 'react'
+import { useContext, useRef, useState } from 'react'
 import styles from '../Styles/Modal/FoodOption.module.css'
 import { RxCross2 } from "react-icons/rx";
+import axios from 'axios';
+import { StoreContext } from '../Context/StoreContext';
 export const FoodOptionModal = ({onClose}) => {
     
 
@@ -11,6 +13,7 @@ export const FoodOptionModal = ({onClose}) => {
     dietType:"",
   })
 
+  const{token}=useContext(StoreContext);
 const handleOnChange=(e)=>{
 const{value,name}=e.target;
 setSelectedType((preVal)=>({
@@ -28,8 +31,15 @@ setSelectedType((preVal)=>({
     }
     const isSubmitDisabled = !selectedType.foodType || !selectedType.spiceLevel || !selectedType.dietType;    
   
-    const handleSubmit=()=>{
-console.log(selectedType);
+    const handleSubmit=async()=>{
+      try{
+        console.log(token);
+        
+        const response=await axios.post('http://localhost:5010/api/recFood',selectedType,{headers: {'Authorization': `Bearer ${token}`}});
+      }catch(error){
+        console.log(error);
+        
+      }
 
       
       onClose();

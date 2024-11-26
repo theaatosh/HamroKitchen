@@ -1,6 +1,6 @@
 import React from 'react'
-import styles from '../../Styles/Dashboard/TotalNoOfKitchens.module.css'
-export const TotalNoOfKitchens = ({quantity,topic}) => {
+import styles from '../../Styles/Dashboard/OrderDetails.module.css'
+export const OrderDetails = ({quantity,topic}) => {
   
   return (
     <div className={styles.main_con}>

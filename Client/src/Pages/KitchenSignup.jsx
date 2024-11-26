@@ -1,40 +1,61 @@
 import styles from '../Styles/Login_Signup/KitchenSignup.module.css';
 import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from 'react-leaflet';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
-
+import 'react-toastify/dist/ReactToastify.css';
+import { StoreContext } from '../Context/StoreContext';
 
 
 export const KitchenSignup = () => {
+  
+  const {foodItems}=useContext(StoreContext);
   const token= localStorage.getItem('token');
 // console.log(token);
   const [formData, setFormData] = useState({
-    category: {},
+    selectedItems: {},
     location: { lat: null, lng: null }, // stores latitude and longitude
   });
   
-  console.log(formData);
   
-  const handleCategoryItemChange = (e, category) => {
+  //data lai category ko basis ma combine garera store gareko
+  const groupedData=foodItems.reduce((acc,item)=>{
+    const category=item.productCategory;
+      if(!acc[category]){
+       acc[category]={
+        categoryName:category,
+        foodItems:[],
+       }
+      }
+        acc[category].foodItems.push(item);
+        return acc;
+  },{})
+  const foodData=Object.keys(groupedData).map((category)=>({
+    category:category,
+    foodItems:groupedData[category].foodItems
+  }))
+
+console.log(formData);
+
+
+//harek check ra uncheck ma call hunxa
+  const handleCategoryItemChange = (e, id) => {
     const { value, checked } = e.target;
     setFormData((prevData) => {
-      const updatedCategory = { ...prevData.category };
-      if (!updatedCategory[category]) {
-        updatedCategory[category] = [];
+      const updatedCategory = { ...prevData.selectedItems};
+      if (!updatedCategory[value]) {
+        updatedCategory[value]="";
       }
 
       if (checked) {
-        updatedCategory[category] = [...updatedCategory[category], value];
+        updatedCategory[value] = id;
       } else {
-        updatedCategory[category] = updatedCategory[category].filter(
-          (item) => item !== value
-        );
+       delete updatedCategory[value] ;
       }
 
-      return { ...prevData, category: updatedCategory };
+      return { ...prevData, selectedItems: updatedCategory };
     });
+
   };
 
   // Function to handle location update on map click
@@ -61,9 +82,7 @@ export const KitchenSignup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    try{
-      // console.log(formData);
-      
+    try{      
       const result =await axios.post('http://localhost:5010/api/kitchenSignUp',formData, {headers:{'Authorization': `Bearer ${token}`}});
       console.log(result.data);
       
@@ -166,234 +185,26 @@ export const KitchenSignup = () => {
 
                   {/* Momo Category */}
                   <div className={styles.food_select_container}>
-                    <div className={styles.common_food_select}>
-                      <h3>Momo</h3>
-                      <label>
-                        <input
-                          type="checkbox"
-                          value="veg momo"
-                          onChange={(e) => handleCategoryItemChange(e, 'momo')}
-                        />
-                        Veg Momo
-                      </label>
-                      <label>
-                        <input
-                          type="checkbox"
-                          value="chicken momo"
-                          onChange={(e) => handleCategoryItemChange(e, 'momo')}
-                        />
-                        Chicken Momo
-                      </label>
+                    {foodData.map((category,index)=>{
+                      
+                    return(
+                      <div className={styles.common_food_select} key={index}>
+                      <h3>{category.category}</h3>
+                        {category.foodItems.map((item)=>{       
+                              return(
+                                <label key={item._id}>
+                                 <input
+                                   type="checkbox"
+                                   value={item.productName}
+                                   onChange={(e) => handleCategoryItemChange(e, item._id)}
+                                 />
+                                 {item.productName}
+                               </label>)
+                        })}
+                     
                     </div>
-
-                    {/* Chowmein Category */}
-                    <div className={styles.common_food_select}>
-                      <h3>Chowmein</h3>
-                      <label>
-                        <input
-                          type="checkbox"
-                          value="veg chowmein"
-                          onChange={(e) => handleCategoryItemChange(e, 'chowmein')}
-                        />
-                        Veg Chowmein
-                      </label>
-                      <label>
-                        <input
-                          type="checkbox"
-                          value="chicken chowmein"
-                          onChange={(e) => handleCategoryItemChange(e, 'chowmein')}
-                        />
-                        Chicken Chowmein
-                      </label>
-                    </div>
-
-                    {/* Rolls Category */}
-                    <div className={styles.common_food_select}>
-                      <h3>Rolls</h3>
-                      <label>
-                        <input
-                          type="checkbox"
-                          value="chicken roll"
-                          onChange={(e) => handleCategoryItemChange(e, 'rolls')}
-                        />
-                        Chicken Roll
-                      </label>
-                      <label>
-                        <input
-                          type="checkbox"
-                          value="veg roll"
-                          onChange={(e) => handleCategoryItemChange(e, 'rolls')}
-                        />
-                        Veg Roll
-                      </label>
-                    </div>
-                    
-                    {/* sandwich category */}
-                    <div className={styles.common_food_select}>
-                      <h3>Sandwich</h3>
-                      <label>
-                        <input
-                          type="checkbox"
-                          value="chicken sandwich"
-                          onChange={(e) => handleCategoryItemChange(e, 'sandwich')}
-                        />
-                        Chicken sandwich
-                      </label>
-                      <label>
-                        <input
-                          type="checkbox"
-                          value="veg sandwich"
-                          onChange={(e) => handleCategoryItemChange(e, 'sandwich')}
-                        />
-                        Veg sandwich
-                      </label>
-                    </div>
-
-                    {/* cakecategory */}
-                    <div className={styles.common_food_select}>
-                      <h3>Cake</h3>
-                      <label>
-                        <input
-                          type="checkbox"
-                          value="Chocolate cake"
-                          onChange={(e) => handleCategoryItemChange(e, 'cake')}
-                        />
-                        Chocolate Cake
-                      </label>
-                      <label>
-                        <input
-                          type="checkbox"
-                          value="Red velvet Cake"
-                          onChange={(e) => handleCategoryItemChange(e, 'cake')}
-                        />
-                        Red velvet Cake
-                      </label>
-                    </div>
-                    {/* Fry rice category */}
-                    <div className={styles.common_food_select}>
-                      <h3>Fry rice</h3>
-                      <label>
-                        <input
-                          type="checkbox"
-                          value="chicken fry rice"
-                          onChange={(e) => handleCategoryItemChange(e, 'fry rice')}
-                        />
-                        Chicken Fry Rice
-                      </label>
-                      <label>
-                        <input
-                          type="checkbox"
-                          value="veg fry rice"
-                          onChange={(e) => handleCategoryItemChange(e, 'fry rice')}
-                        />
-                        Veg Fry Rice
-                      </label>
-                    </div>
-
-                    {/* pasta category */}
-                    <div className={styles.common_food_select}>
-                      <h3>Pasta</h3>
-                      <label>
-                        <input
-                          type="checkbox"
-                          value="chicken pasta"
-                          onChange={(e) => handleCategoryItemChange(e, 'pasta')}
-                        />
-                        Chicken Pasta
-                      </label>
-                      <label>
-                        <input
-                          type="checkbox"
-                          value="veg pasta"
-                          onChange={(e) => handleCategoryItemChange(e, 'pasta')}
-                        />
-                        Veg Pasta
-                      </label>
-                    </div>
-
-                    {/* sausage category */}
-                    <div className={styles.common_food_select}>
-                      <h3>Sausage</h3>
-                      <label>
-                        <input
-                          type="checkbox"
-                          value="chicken sausage"
-                          onChange={(e) => handleCategoryItemChange(e, 'sausage')}
-                        />
-                        Chicken Sausage
-                      </label>
-                      <label>
-                        <input
-                          type="checkbox"
-                          value="veg sausage"
-                          onChange={(e) => handleCategoryItemChange(e, 'sandwich')}
-                        />
-                        Veg Sausage
-                      </label>
-                    </div>
-
-                    {/* Burger category */}
-                    <div className={styles.common_food_select}>
-                      <h3>Burger</h3>
-                      <label>
-                        <input
-                          type="checkbox"
-                          value="chicken burger"
-                          onChange={(e) => handleCategoryItemChange(e, 'burger')}
-                        />
-                        Chicken Burger
-                      </label>
-                      <label>
-                        <input
-                          type="checkbox"
-                          value="veg burger"
-                          onChange={(e) => handleCategoryItemChange(e, 'burger')}
-                        />
-                        Veg Burger
-                      </label>
-                    </div>
-
-                    {/* Pizza category */}
-                    <div className={styles.common_food_select}>
-                      <h3>Pizza</h3>
-                      <label>
-                        <input
-                          type="checkbox"
-                          value="chicken pizza"
-                          onChange={(e) => handleCategoryItemChange(e, 'pizza')}
-                        />
-                        Chicken Pizza
-                      </label>
-                      <label>
-                        <input
-                          type="checkbox"
-                          value="veg pizza"
-                          onChange={(e) => handleCategoryItemChange(e, 'pizza')}
-                        />
-                        Veg Pizza
-                      </label>
-                    </div>
-
-                    {/* Sekuwa category */}
-                    <div className={styles.common_food_select}>
-                      <h3>Sekuwa</h3>
-                      <label>
-                        <input
-                          type="checkbox"
-                          value="chicken sekuwa"
-                          onChange={(e) => handleCategoryItemChange(e, 'sekuwa')}
-                        />
-                        Chicken sekuwa
-                      </label>
-                      <label>
-                        <input
-                          type="checkbox"
-                          value="veg sekuwa"
-                          onChange={(e) => handleCategoryItemChange(e, 'sekuwa')}
-                        />
-                        Veg sekuwa
-                      </label>
-                    </div>
+                    )})}
+                 
 
                   </div>
                 </div>

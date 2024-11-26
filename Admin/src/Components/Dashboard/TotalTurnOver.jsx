@@ -1,6 +1,6 @@
 import React from 'react'
-import styles from '../../Styles/Dashboard/TotalNoOfKitchens.module.css'
-export const TotalNoOfKitchens = ({quantity,topic}) => {
+import styles from '../../Styles/Dashboard/TotalTurnOver.module.css'
+export const TotalTurnOver = ({quantity,topic}) => {
   
   return (
     <div className={styles.main_con}>

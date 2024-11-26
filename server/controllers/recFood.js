@@ -13,7 +13,7 @@ const recFood=async(req,res)=>{
             }
         })
         if(update){
-            res.status(200).json({message:"saved"});
+             res.status(200).json({message:"saved"});
         }else{
             res.status(404).json({message:"user not found"});
         }
@@ -23,3 +23,4 @@ const recFood=async(req,res)=>{
         res.status(500).json({ message: "Internal server error"+err });
     }
 }
+module.exports=recFood;

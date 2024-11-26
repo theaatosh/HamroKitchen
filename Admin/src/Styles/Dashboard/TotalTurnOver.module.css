@@ -1,12 +1,12 @@
 .main_con {
-    width: 18vw;
-    height: 16vh;
+    width: 100%;
+    height: 12vh;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1vw;
     border-radius: 12px; 
-    padding: 2vh 1vw;
+    padding: 2vh 2vw;
     background: linear-gradient(135deg, #6a11cb, #2575fc); 
     box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -19,9 +19,9 @@
 }
 
 .value {
-    width: 3vw;
-    height: 3vw;
-    border-radius: 50%;
+    width: 6vw;
+    height: 6vh;
+    border-radius: 5vh;
     display: flex;
     align-items: center;
     justify-content: center;
