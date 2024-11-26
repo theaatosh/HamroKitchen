@@ -32,8 +32,11 @@ const orderSchema=mongoose.Schema({
     paymentDetails:{
         type:Object,
     },
-    cookId:{
-        type:String
+    orderCookIDDetails:{
+        type:Array,
+    },
+    remaingOrderItemId:{
+        type:Array,
     },
     rejectedCookId:{
         type:String,

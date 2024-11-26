@@ -3,13 +3,32 @@ const user= require('../models/index');
 const showOrder=async(req,res)=>{
    try{
     const userId=req.user.userId;
-    const orders = await order.find({cookId:userId,
+    const orders = await order.find({
         orderStatus:"assignedToCook",
     });
-    if(!orders || orders.length===0){
+    const orderCookIDDetails=orders[0].orderCookIDDetails;
+    const arr=[]
+    for(k=0;k<orders.length;k++){
+        for(i=0;i<orderCookIDDetails.length;i++){
+        if(orderCookIDDetails[i].kitchenId===userId){
+            for(j=-0;j<orders.length;j++){
+                if(orderCookIDDetails[i].orderItemId===orders[0].orderedItem[j].id){
+                    arr.push({
+                        orderItemId:orderCookIDDetails[i].orderItemId,
+                        orderItemName:orders[0].orderedItem[j].name,
+                        quantity:orders[0].orderedItem[j].quantity,
+                    })
+                }
+            }
+           
+        }
+    }
+}
+    // console.log(arr);
+    if(!arr || arr.length===0){
         return res.json({message:"no orders found for this kitchen"});
     }
-    res.json(orders);
+    res.json(arr);
     }catch(err){
         console.log(err);
         res.json(err);

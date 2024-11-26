@@ -32,7 +32,6 @@ const userSchema=mongoose.Schema({
     },
     cookFoodItem:{
         type:Object,
-        of: [String],
         default:{
         }
     },

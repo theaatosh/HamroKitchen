@@ -2,7 +2,8 @@ require('dotenv').config();
 const availableCook=require('./haversine');
 const loadBalancer=require('./loadBalancing');
 const orders=require('./models/orderModel');
-const { parse } = require('date-fns');
+const user=require("./models/index");
+const { parse , format } = require('date-fns');
 
 
 const assignCookOrder=async (order)=>{
@@ -16,32 +17,75 @@ const assignCookOrder=async (order)=>{
                 console.log("cook with least active orders found");
                 const userId= await orders.findById(orderId,{_id:0,userId:1});
                 const orderItems= await orders.findById(orderId,{_id:0,orderedItem:1});
-                console.log(orderItems.orderedItem[0].id);
+                const orderItem=orderItems.orderedItem;
+                const orderSperationToKitchen=[];
+                const assignedOrderItemIds = new Set();
                 for(i=0;i<cook.length;i++){
-
                     if(cook[i].kitchenDetails.kitchenID.toString()===userId.userId){
-            // if(cook.kitchens._id.toString()===userId.userId){
-                await orders.findByIdAndUpdate(orderId,{
-                    $set:{
-                        orderStatus:"processedWithPayment",
-                        rejectedCookId:userId.userId,
-                    },
-                })
-                console.log("No  cook found ");
-            } else{
-               
-                // console.log("here at last");
-                // await orders.findByIdAndUpdate(orderId,{
-                // $set:{
-                //     // cookId:cook[0].kitchens._id,
-                //     cookId:cook.kitchens._id,
-                //     orderStatus:'assignedToCook',
-                //     }
-                //     });
-                    // console.log(`Order assigned to cook ${ await cook.kitchens._id}`);
+                        console.log("skiping");
+                        continue;
+                    }
+                const cookId=cook[i].kitchenDetails.kitchenID.toString();
+                const cookFoodItem= await user.findById(cookId,{_id:0,cookFoodItem:1})
+                const cookFoodItemArray= Object.keys(cookFoodItem.cookFoodItem);
+                // console.log(cookFoodItem.cookFoodItem[cookFoodItemArray[0]]);
+                for(k=0;k<orderItem.length;k++){
+                    console.log(assignedOrderItemIds);
+                    if (assignedOrderItemIds.has(orderItem[k].id)) {
+                        console.log("skip item");
+                        continue;
+                    }
+
+
+                    for(j=0;j<cookFoodItemArray.length;j++){
+                        // console.log("1")
+                        // console.log(orderItem[k].id)
+                        // console.log(cookFoodItem[cookFoodItemArray[j]]);
+                        // console.log("1")
+                        
+                        if(orderItem[k].id===cookFoodItem.cookFoodItem[cookFoodItemArray[j]]){
+                            console.log("here");
+                            orderSperationToKitchen.push({
+                                orderItemId: orderItem[k].id,
+                                kitchenId:cookId
+                            });
+                            console.log("hi");
+                            assignedOrderItemIds.add(orderItem[k].id);
+                            break;
+                        } 
+                    }
+                }
+                
+                if (orderSperationToKitchen.length === orderItem.length) {
+                    console.log("All order items have been assigned.");
+                    break;
                 }
               }
+              if(orderItem.length===orderSperationToKitchen.length){
+                try{await orders.findByIdAndUpdate(orderId,{
+                    $set:{
+                            orderCookIDDetails:orderSperationToKitchen,
+                            orderStatus:'assignedToCook',
+                        }
+              });}  catch(err){
+                console.log(err);
+              }
+            }else{
+                const orderItemIdMaking = orderSperationToKitchen.map(item => item.orderItemId);
+                const remaingOrderItemId= orderItem.filter(item => !orderItemIdMaking.includes(item))
+                if(remaingOrderItemId.length==orderItem.length){
+                    console.log("No kitchen can fulfill any of the order items.");
+                }else{
+                await orders.findByIdAndUpdate(orderId,{
+                    $set:{
+                            orderCookIDDetails:orderSperationToKitchen,
+                            remaingOrderItemId:remaingOrderItemId,
+                            orderStatus:'assignedToCook',
+                        }
+              });
             }
+          }
+        }
                 
         }catch(err){
             console.log(err); 
@@ -57,11 +101,12 @@ const fetchOrders=async()=>{
     if(order && order.length){
        console.log(order);
        for(let i=0;i<order.length;i++){
-           const currentDate = new Date();
+           const dateFormat = "dd/MM/yyyy, HH:mm:ss";
+           const currentDate=new Date();
+        //    const currentDate = format(new Date(), dateFormat);
            console.log(currentDate)
-        //    const dateFormat = "dd/MM/yyyy, HH:mm:ss";
-        //    const scheduledTime=parse(order[i].scheduledTime, dateFormat, currentDate);
-           const scheduledTime = new Date(order[i].scheduledTime);
+           const scheduledTime=await parse(order[i].scheduledTime, dateFormat, new Date());
+        //    const scheduledTime = new Date(order[i].scheduledTime);
            console.log(scheduledTime);
            if(scheduledTime<=currentDate){
             console.log("here at scheduled");
