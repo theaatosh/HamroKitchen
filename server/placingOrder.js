@@ -80,7 +80,7 @@ const assignCookOrder=async (order)=>{
                     $set:{
                             orderCookIDDetails:orderSperationToKitchen,
                             remaingOrderItemId:remaingOrderItemId,
-                            orderStatus:'assignedToCook',
+                            orderStatus:'assignedToCookPartially',
                         }
               });
             }
