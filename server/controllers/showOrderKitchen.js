@@ -14,9 +14,10 @@ const showOrder=async(req,res)=>{
             for(j=-0;j<orders.length;j++){
                 if(orderCookIDDetails[i].orderItemId===orders[0].orderedItem[j].id){
                     arr.push({
+                        orderDetais:await order.findById(orders[k]._id) ,
                         orderItemId:orderCookIDDetails[i].orderItemId,
-                        orderItemName:orders[0].orderedItem[j].name,
-                        quantity:orders[0].orderedItem[j].quantity,
+                        orderItemName:orders[k].orderedItem[j].name,
+                        quantity:orders[k].orderedItem[j].quantity,
                     })
                 }
             }
@@ -28,7 +29,9 @@ const showOrder=async(req,res)=>{
     if(!arr || arr.length===0){
         return res.json({message:"no orders found for this kitchen"});
     }
-    res.json(arr);
+    console.log(arr)
+    res.json(arr ) ;
+    
     }catch(err){
         console.log(err);
         res.json(err);
