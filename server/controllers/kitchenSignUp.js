@@ -4,7 +4,9 @@ const user = require("../models/index");
 
 
 const kitchenSignUp=async (req,res)=>{
-    const {category,location }=req.body;
+    // console.log(req.body);
+    const {selectedItems,location }=req.body;
+    console.log(selectedItems);
     try{
         const userDetails= await user.findById(req.user.userId);
         // console.log(userDetails);
@@ -16,9 +18,10 @@ const kitchenSignUp=async (req,res)=>{
                 const updatedUser=await user.findByIdAndUpdate(req.user.userId,{ 
                     role:"pending",
                 cookLocation:location,
-                cookFoodItem:category,
+                cookFoodItem:selectedItems,
             });
-            if(updatedUser){res.status(200).send("registered as Kitchen");}
+            if(updatedUser){console.log("done");
+                res.status(200).send("registered as Kitchen");}
            }
              else if(userStatus==="kitchen"){
                 res.status(400).send("already registered as cook");

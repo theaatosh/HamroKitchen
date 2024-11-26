@@ -110,13 +110,13 @@
                                 {/* Displaying Food Items */}
                                 <p>
                                     {curElem.cookFoodItem &&
-                                    
-                                        Object.keys(curElem.cookFoodItem).map((item,index,array) => (    
-                                            <span key={index}>
-                                                {item}
-                                                {index < array.length - 1 && ","}
-                                            </span>
-                                        ))}
+                                       Object.keys(curElem.cookFoodItem).map((item,index , array) => (
+                                        <span key={index}>
+                                            {item}
+                                            {index < array.length - 1 && ","}
+                                        </span>
+                                    ))
+                                        }
                                 </p>
 
                                 {/* Displaying Location */}
