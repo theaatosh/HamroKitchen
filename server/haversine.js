@@ -21,14 +21,10 @@ function haversine(lat1,lon1, lat2,lon2){
 }
 
 const findKitchen=async(customerLocation, orderId)=>{
-    // const mongo = process.env.URI;
-//     connectToMongoDB(mongo)
-// .then(() => console.log("MongoDB Connected"))
-// .catch(err => console.error(err));
     try{
         const kitchens= await user.find({role:"kitchen" , cookStatus:"online"});
         const nearestKitchenArray=[];
-        console.log(kitchens.length +"kitchens");
+        // console.log(kitchens.length +"kitchens");
 
         for (let i = 0; i < kitchens.length; i++) {
             // customerLocation=await customerLocation
@@ -36,16 +32,17 @@ const findKitchen=async(customerLocation, orderId)=>{
             // console.log(i);
             const distance = haversine(customerLocation.lat,customerLocation.lng, kitchens[i].cookLocation.lat, kitchens[i].cookLocation.lng);
             const kitchenInfo ={
-                kitchens:kitchens[i],
+                // kitchens:kitchens[i],
+                kitchenID:kitchens[i]._id,
                 distance:distance
              };
             nearestKitchenArray.push(kitchenInfo);
         }
         nearestKitchenArray.sort((a, b) => a.distance - b.distance);
-        console.log(nearestKitchenArray.length);
+        // console.log("here"+nearestKitchenArray[0].kitchenID);
         let filteredKitchens=[];
          filteredKitchens=nearestKitchenArray;
-        console.log(filteredKitchens.length + "filteredKitchens")
+        // console.log(filteredKitchens.length + "filteredKitchens")
     try{
         // const orderId=orderId;
         const rejectedCook= await order.findById(orderId,{_id:0,rejectedCookId:1});
@@ -56,10 +53,10 @@ const findKitchen=async(customerLocation, orderId)=>{
              filteredKitchens = nearestKitchenArray.filter(
                 (kitchenInfo) => !rejectedCook.rejectedCookId.includes(kitchenInfo.kitchens._id.toString())
               );
-              console.log(filteredKitchens);
+            //   console.log("here"+filteredKitchens[0].kitchenID);
             return  filteredKitchens;
         }else{
-            // console.log(filteredKitchens);
+            // console.log("filteredKitchens"+filteredKitchens[0].kitchenID);
             return  filteredKitchens;
         }
     }catch(err){
