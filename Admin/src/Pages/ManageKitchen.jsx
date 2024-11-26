@@ -30,6 +30,8 @@
         
         useEffect(()=>{
                 manageKitchen();
+                console.log(kitchenDetails);
+                
         },[])
         
         //handle Kitchen Approve Function
@@ -108,9 +110,11 @@
                                 {/* Displaying Food Items */}
                                 <p>
                                     {curElem.cookFoodItem &&
-                                        Object.entries(curElem.cookFoodItem).map(([category, items]) => (    
-                                            <span key={category}>
-                                                <strong>{category}:</strong> {items.join(", ")}<br />
+                                    
+                                        Object.keys(curElem.cookFoodItem).map((item,index,array) => (    
+                                            <span key={index}>
+                                                {item}
+                                                {index < array.length - 1 && ","}
                                             </span>
                                         ))}
                                 </p>
