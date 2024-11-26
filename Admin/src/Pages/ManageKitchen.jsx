@@ -30,6 +30,8 @@
         
         useEffect(()=>{
                 manageKitchen();
+                console.log(kitchenDetails);
+                
         },[])
         
         //handle Kitchen Approve Function
