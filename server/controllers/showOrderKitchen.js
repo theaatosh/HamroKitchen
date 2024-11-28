@@ -3,9 +3,12 @@ const user= require('../models/index');
 const showOrder=async(req,res)=>{
    try{
     const userId=req.user.userId;
+    // const orders = await order.find({
+    //     orderStatus:"assignedToCook",
+    // });
     const orders = await order.find({
-        orderStatus:"assignedToCook",
-    });
+        orderStatus: { $in: ["assignedToCook", "assignedToCookPartially"] }
+      });
     const orderCookIDDetails=orders[0].orderCookIDDetails;
     const arr=[]
     for(k=0;k<orders.length;k++){
@@ -66,21 +69,59 @@ const rejectOrder=async(req,res)=>{
     const {orderId}=req.body;
     const {userId}=req.user;
     try{
-        const updateRej= await order.findById(orderId);
-        if(updateRej){
+        const order= await order.findById(orderId);
+        const kitchenIds = order.orderCookIDDetails.map(item => item.kitchenId);
+        const allSameKitchen = kitchenIds.every(id => id === kitchenIds[0]);
+        if(allSameKitchen){
+            const updatedRej=await order.findByIdAndUpdate(orderId,{
+                        $set:{
+                            orderStatus:"processedWithPayment",
+                        },
+                        $push:{
+                            rejectedCookId:userId,
+                        },
+                        $unset:{
+                            orderCookIDDetails:"", 
+                        }
+                    })
+                    if(updatedRej){
+                                res.json({message:"Done"});
+                            }
+                    
+        }else{
+            const itemToMove = order.orderCookIDDetails.find(item => item.kitchenId.toString() === userId.toString());
             const updatedRej=await order.findByIdAndUpdate(orderId,{
                 $set:{
-                    orderStatus:"processedWithPayment",
+                    orderStatus:"assignedToCookPartially",
+                },
+                $push:{
                     rejectedCookId:userId,
                 },
-                $unset:{
-                   cookId:"", 
-                }
+                $pull: {
+                    orderCookIDDetails: { kitchenId: userId }
+                  },
+                  $push:{
+                    remaingOrderItemId:itemToMove
+                  }
             })
             if(updatedRej){
                 res.json({message:"Done"});
             }
         }
+        // if(updateRej){
+        //     const updatedRej=await order.findByIdAndUpdate(orderId,{
+        //         $set:{
+        //             orderStatus:"assignedToCookPartially",
+        //             rejectedCookId:userId,
+        //         },
+        //         $unset:{
+        //            cookId:"", 
+        //         }
+        //     })
+        //     if(updatedRej){
+        //         res.json({message:"Done"});
+        //     }
+        // }
 
     }catch(err){
         console.log(err);

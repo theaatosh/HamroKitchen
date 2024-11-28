@@ -49,16 +49,28 @@ const findKitchen=async(customerLocation, orderId)=>{
         // console.log(typeof(rejectedCook));
         
         
-        if(rejectedCook.rejectedCookId ){
-             filteredKitchens = nearestKitchenArray.filter(
-                (kitchenInfo) => !rejectedCook.rejectedCookId.includes(kitchenInfo.kitchens._id.toString())
-              );
-            //   console.log("here"+filteredKitchens[0].kitchenID);
-            return  filteredKitchens;
-        }else{
-            // console.log("filteredKitchens"+filteredKitchens[0].kitchenID);
-            return  filteredKitchens;
+        // if(rejectedCook.rejectedCookId ){
+        //      filteredKitchens = nearestKitchenArray.filter(
+        //         (kitchenInfo) => !rejectedCook.rejectedCookId.includes(kitchenInfo.kitchens._id.toString())
+        //       );
+        //     //   console.log("here"+filteredKitchens[0].kitchenID);
+        //     return  filteredKitchens;
+        // }else{
+        //     // console.log("filteredKitchens"+filteredKitchens[0].kitchenID);
+        //     return  filteredKitchens;
+        // }
+        if (rejectedCook && rejectedCook.length > 0) {
+            for (let rj = 0; rj < rejectedCook.length; rj++) {
+                const rejectedCookId = rejectedCook[rj].rejectedCookId;
+                if (rejectedCookId) {
+                    filteredKitchens = filteredKitchens.filter(kitchenInfo => 
+                        !rejectedCookId.includes(kitchenInfo.kitchens._id.toString())
+                    );
+                }
+            }
         }
+        return filteredKitchens;
+
     }catch(err){
         console.log("couldnt find order"+err);
     }
