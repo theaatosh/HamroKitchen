@@ -3,9 +3,6 @@ const user= require('../models/index');
 const showOrder=async(req,res)=>{
    try{
     const userId=req.user.userId;
-    // const orders = await order.find({
-    //     orderStatus:"assignedToCook",
-    // });
     const orders = await order.find({
         orderStatus: { $in: ["assignedToCook", "assignedToCookPartially"] }
       });
@@ -16,8 +13,8 @@ const showOrder=async(req,res)=>{
 
         for(i=0;i<orderCookIDDetails.length;i++){
         if(orderCookIDDetails[i].kitchenId===userId){
-            for(j=-0;j<orders.length;j++){
-                if(orderCookIDDetails[i].orderItemId===order.orderedItem[j].id){
+            for(j=0;j<order.orderedItem.length;j++){
+                if(orderCookIDDetails[i].orderItemId.toString()===order.orderedItem[j].id.toString()){
                     arr.push({
                         orderDetails:order,
                         orderItemId:orderCookIDDetails[i].orderItemId,
