@@ -39,7 +39,7 @@ const orderSchema=mongoose.Schema({
         type:Array,
     },
     rejectedCookId:{
-        type:String,
+        type:Array,
     },
 
 });
