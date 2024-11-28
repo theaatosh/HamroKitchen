@@ -14,7 +14,7 @@ const showOrder=async(req,res)=>{
             for(j=-0;j<orders.length;j++){
                 if(orderCookIDDetails[i].orderItemId===orders[0].orderedItem[j].id){
                     arr.push({
-                        orderDetais:await order.findById(orders[k]._id) ,
+                        orderDetails:await order.findById(orders[k]._id) ,
                         orderItemId:orderCookIDDetails[i].orderItemId,
                         orderItemName:orders[k].orderedItem[j].name,
                         quantity:orders[k].orderedItem[j].quantity,
