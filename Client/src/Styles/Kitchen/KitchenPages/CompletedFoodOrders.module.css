@@ -12,7 +12,6 @@ li{
 .inner_container{
     overflow-y: scroll;
     overflow-x: hidden;
-    height:25vh;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
@@ -30,7 +29,8 @@ li{
     }
 }
 .order_list{
-box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;}
+box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
 .order_card{
     
     display: grid;
@@ -55,6 +55,13 @@ box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;}
     }
 
 
-
+    .no_orders{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: gray;
+        min-height: 100px;
+    }
+    
 
 

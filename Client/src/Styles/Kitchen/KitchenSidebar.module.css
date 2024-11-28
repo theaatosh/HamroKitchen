@@ -89,9 +89,15 @@
     margin-bottom: 2rem;
     transition: color 0.3s ease;
 }
+.normal_icon{
+    &:hover{
+        color: #00BFA6;
+    }
+}
 
-.menu_icon:hover {
+.cross:hover{
     color:red;
+
 }
 
 .sidebar_options {

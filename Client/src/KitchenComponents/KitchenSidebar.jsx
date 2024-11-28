@@ -8,6 +8,7 @@ import styles from '../Styles/Kitchen/KitchenSidebar.module.css';
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
+
 const routeArray=[
     {
         path:'/kitchen/dashboard',
@@ -34,19 +35,29 @@ const routeArray=[
 export const KitchenSidebar=()=>{
     const[isOpen,setIsOpen]=useState(false);
 
-    const {handleToggle}=useAuth();
+    const {setIsKitchenOnline,updateKitchenStatus}=useAuth();
     const handleMenuToggle=()=>{
 
         setIsOpen(!isOpen);
     }
     
     const handleSwitchCustomer=()=>{
-        localStorage.setItem('OnlineStatus',false);
+       const status= localStorage.getItem('OnlineStatus');
+       if(status||!status){
+        setIsKitchenOnline(()=>{
+            const newState=false;
+            localStorage.setItem('OnlineStatus',newState);
+            updateKitchenStatus(newState);
+
+            return newState;
+        })
+       }
     }
+    
     return (
         <>
         <div className={isOpen? styles.sidebar:styles.mini_sidebar}>
-            <div className={styles.menu_icon}>{isOpen?(<GiCrossMark onClick={handleMenuToggle}/>):(<IoMenu onClick={handleMenuToggle}/>)}</div>
+            <div className={styles.menu_icon}>{isOpen?(<GiCrossMark className={styles.cross} onClick={handleMenuToggle}/>):(<IoMenu className={styles.normal_icon} onClick={handleMenuToggle}/>)}</div>
             <div className={styles.sidebar_options}>
                     {routeArray.map((curRoute,index)=>{ 
                         return(

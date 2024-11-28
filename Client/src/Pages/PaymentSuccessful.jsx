@@ -37,11 +37,6 @@ export const PaymentSuccessful = () => {
             text: 'Your order has been placed successfully.',
             icon: 'success',
             confirmButtonText: 'OK',
-        }).then((result)=>{
-            if(result.isConfirmed){
-                navigate('/');
-
-            }
         })
     }
     const handleNavigate=()=>{

@@ -6,6 +6,7 @@ import { FoodOptionModal } from '../Components/FoodOptionModal';
 import { useContext, useEffect, useState } from 'react';
 import { StoreContext } from '../Context/StoreContext';
 import { useAuth } from '../Context/AuthContext';
+import { RecomendedFood } from '../Components/RecomendedFood';
 
 
 export const Home = () => {
@@ -20,6 +21,7 @@ export const Home = () => {
     {showModal&&<FoodOptionModal onClose={handleOnClose} />}
     <Landing/>
     <ExploreMenu/>
+    <RecomendedFood/>
     <FoodDisplay/>
     <AboutUs />
    </>

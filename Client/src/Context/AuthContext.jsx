@@ -57,6 +57,24 @@ export const AuthContextProvider=({children})=>{
       }
     }, [token]);
 
+    //for rider online offline ko lagi
+    const savedRiderIsOnline=localStorage.getItem("riderOnlineStatus")==="true";
+    const [isRiderOnline, setIsRiderOnline] = useState(savedIsOnline);
+
+    const handleRiderToggle = () => {
+      setIsRiderOnline((prevState) =>{
+        const newState=!prevState; 
+        localStorage.setItem("riderOnlineStatus",newState);
+        
+        updateKRiderStatus(newState);
+
+       return newState;
+      })
+       
+   };
+    
+
+
 //information extracted from jwt
   const userCredentials=(token)=>{
     try{
@@ -120,6 +138,7 @@ const authValue={
   userCredentials,
   userDetails,
   isKitchenOnline,setIsKitchenOnline,handleToggle,profileData,setProfileData,setShowModal,showModal,setIsLoggedIn
+  ,updateKitchenStatus
 }
   return(
     <AuthContext.Provider value={authValue}>

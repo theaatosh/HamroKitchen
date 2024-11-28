@@ -21,14 +21,10 @@ function haversine(lat1,lon1, lat2,lon2){
 }
 
 const findKitchen=async(customerLocation, orderId)=>{
-    // const mongo = process.env.URI;
-//     connectToMongoDB(mongo)
-// .then(() => console.log("MongoDB Connected"))
-// .catch(err => console.error(err));
     try{
         const kitchens= await user.find({role:"kitchen" , cookStatus:"online"});
         const nearestKitchenArray=[];
-        console.log(kitchens.length +"kitchens");
+        // console.log(kitchens.length +"kitchens");
 
         for (let i = 0; i < kitchens.length; i++) {
             // customerLocation=await customerLocation
@@ -36,32 +32,53 @@ const findKitchen=async(customerLocation, orderId)=>{
             // console.log(i);
             const distance = haversine(customerLocation.lat,customerLocation.lng, kitchens[i].cookLocation.lat, kitchens[i].cookLocation.lng);
             const kitchenInfo ={
-                kitchens:kitchens[i],
+                // kitchens:kitchens[i],
+                kitchenID:kitchens[i]._id,
                 distance:distance
              };
             nearestKitchenArray.push(kitchenInfo);
         }
         nearestKitchenArray.sort((a, b) => a.distance - b.distance);
-        console.log(nearestKitchenArray.length);
+        // console.log("here"+nearestKitchenArray[0].kitchenID);
         let filteredKitchens=[];
          filteredKitchens=nearestKitchenArray;
-        console.log(filteredKitchens.length + "filteredKitchens")
+        // console.log(filteredKitchens.length + "filteredKitchens")
     try{
         // const orderId=orderId;
         const rejectedCook= await order.findById(orderId,{_id:0,rejectedCookId:1});
         // console.log(typeof(rejectedCook));
-        
-        
-        if(rejectedCook.rejectedCookId ){
-             filteredKitchens = nearestKitchenArray.filter(
-                (kitchenInfo) => !rejectedCook.rejectedCookId.includes(kitchenInfo.kitchens._id.toString())
-              );
-              console.log(filteredKitchens);
-            return  filteredKitchens;
-        }else{
-            // console.log(filteredKitchens);
-            return  filteredKitchens;
+        // if(rejectedCook.rejectedCookId ){
+        //      filteredKitchens = nearestKitchenArray.filter(
+        //         (kitchenInfo) => !rejectedCook.rejectedCookId.includes(kitchenInfo.kitchens._id.toString())
+        //       );
+        //     //   console.log("here"+filteredKitchens[0].kitchenID);
+        //     return  filteredKitchens;
+        // }else{
+        //     // console.log("filteredKitchens"+filteredKitchens[0].kitchenID);
+        //     return  filteredKitchens;
+        // }
+        if (rejectedCook && rejectedCook.length > 0) {
+            for (let rj = 0; rj < rejectedCook.length; rj++) {
+                const rejectedCookId = rejectedCook[rj].rejectedCookId;
+                if (rejectedCookId) {
+                    filteredKitchens = filteredKitchens.filter(kitchenInfo => 
+                        !rejectedCookId.includes(kitchenInfo.kitchens._id.toString())
+                    );
+                }
+            }
         }
+        // const filteredKitchensDislessthan2000=[];
+        // for(let df=0;df<filteredKitchens.length;df++){
+        //     if(filteredKitchens[df].distance<2000){
+        //         filteredKitchensDislessthan2000.push(filteredKitchens[df]);
+        //     }
+        // }
+        const filteredKitchensDislessthan2000 = filteredKitchens.filter(kitchen => kitchen.distance < 2000);
+        const filteredKitchensDisGreaterEqual2000 = filteredKitchens.filter(
+            kitchen => kitchen.distance >= 2000
+        );
+        return filteredKitchensDislessthan2000;
+
     }catch(err){
         console.log("couldnt find order"+err);
     }

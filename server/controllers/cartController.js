@@ -60,5 +60,22 @@ const getCart=async (req,res)=>{
     }
 }
 
+const deleteCart=async (req,res)=>{
+    try{
+        let userData= await user.findById(req.user.userId);
+        let cartData= await userData.cart;
+       
+         if (cartData[req.body.itemId]){
+            await user.findByIdAndUpdate(req.user.userId, {
+            
+            $unset: { [`cart.${req.body.itemId}`]:0}  // Remove the item from the cart
+            });
+        
+        }
 
-module.exports={addToCart, removeFromCart, getCart} ;
+    }catch(err){
+        console.log(err);
+    }
+}
+
+module.exports={addToCart, removeFromCart, getCart, deleteCart} ;

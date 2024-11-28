@@ -11,7 +11,7 @@ export const Navbar=()=>{
                 <img src="./Images/NavbarLogo.png" alt="logo" />
                 </div>
             
-            <h1>Super Admin</h1>
+            <h1>Admin</h1>
             <div className={styles.user_logo_con}>
             <FaUserCircle className={styles.user_logo}/>
             </div>

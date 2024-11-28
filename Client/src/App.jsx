@@ -21,6 +21,8 @@ import { KitchenProtectedRoute } from "./KitchenComponents/KitchenProtectedRoute
 import { PaymentSuccessful } from "./Pages/PaymentSuccessful";
 import { useAuth } from "./Context/AuthContext";
 import { Notification } from "./Pages/Notification";
+import { RiderLayout } from "./RiderComponents/RiderLayout";
+import { RiderDashboard } from "./RiderPages/RiderDashboard";
 
 
 // import { AuthUser } from "./Context/AuthUser";
@@ -90,6 +92,10 @@ export const App=()=>{
             element:userDetails.role==='kitchen'? <Navigate to={'/kitchen/dashboard'}/>:<KitchenSignup/>
           },
           {
+            path:'rider/Signup',  
+            element:userDetails.role==='rider'? <Navigate to={'/rider/dashboard'}/>:<KitchenSignup/>
+          },
+          {
             path:'*',
             element:<NotFound/>
           }
@@ -116,6 +122,14 @@ export const App=()=>{
             element:<KitchenSettings/>
           }
         ]
+      },
+      {
+        path:'/rider',
+        element:<RiderLayout/>,
+        children:[{
+          path:'dashboard',
+          element:<RiderDashboard/>
+        }]
       }
       
 

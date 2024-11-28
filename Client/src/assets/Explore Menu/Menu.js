@@ -62,22 +62,6 @@ export const foodItems=[
     price:" 200",
     description:"This is Veg Sandwich ",
     category:"Sandwich"
-  },
-  {
-    id:9,
-    name:"Chocolate Cake",
-    image:'/Images/FoodItems/chocoCake.jpg',
-    price:" 200",
-    description:"This is Chocolate Cake ",
-    category:"Cake"
-  },
-  {
-    id:10,
-    name:"Red velvet Cake",
-    image:'/Images/FoodItems/redVelvet.jpg',
-    price:" 200",
-    description:"This is Red velvet Cake ",
-    category:"Cake"
   }
 ]
 export const MenuList=[
@@ -107,42 +91,36 @@ export const MenuList=[
       },
     {
       "id": 5,
-      "categoryName": "Cake",
-      "url": "/Images/Menu/Cake.jpg",
-      "description": "This is image 5"
-    },
-    {
-      "id": 6,
       "categoryName": "Fry Rice",
       "url":"/Images/Menu/FryRice.jpg",
       "description": "This is image 6"
     },
     {
-      "id": 7,
+      "id": 6,
       "categoryName": "Pasta",
       "url":"/Images/Menu/Pasta.jpg",
       "description": "This is image 7"
     },
     {
-        "id": 8,
+        "id": 7,
         "categoryName": "Sausage",
         "url":"/Images/Menu/Sausage.jpg",
         "description": "This is image 8"
       },
     {
-      "id": 9,
+      "id": 8,
       "categoryName": "Burger",
       "url":"/Images/Menu/Burger.jpg",
       "description": "This is image 9"
     },
     {
-      "id": 10,
+      "id": 9,
       "categoryName": "Pizza",
       "url":"/Images/Menu/Pizza.jpg",
       "description": "This is image 10"
     },
     {
-        "id": 11,
+        "id": 10,
         "categoryName": "Sekuwa",
         "url":"/Images/Menu/Sekuwa.jpg",
         "description": "This is image 11"
