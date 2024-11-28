@@ -1,4 +1,5 @@
 const mongoose=require("mongoose");
+const { type } = require("os");
 
 const orderSchema=mongoose.Schema({
     userId:{type:String},
@@ -41,6 +42,12 @@ const orderSchema=mongoose.Schema({
     rejectedCookId:{
         type:Array,
     },
+    partiallyCompletedOrderID:{
+        type:Array,
+    },
+    partiallyAcceptedOrderID:{
+        type:Array,
+    }
 
 });
 const order=mongoose.model("Orders", orderSchema );

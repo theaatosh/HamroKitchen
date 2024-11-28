@@ -44,22 +44,59 @@ const acceptOrder=async(req,res)=>{
     const {orderId}=req.body;
     const {userId}=req.user;
    try{
-     const update= await order.findById(orderId);
-    if(update){
-        const updated=await order.findByIdAndUpdate(orderId,{
-            $set:{
-                orderStatus:"processing",
+     const order= await order.findById(orderId);
+     const kitchenIds = order.orderCookIDDetails.map(item => item.kitchenId);
+     const allSameKitchen = kitchenIds.every(id => id === kitchenIds[0]);
+        if(allSameKitchen){
+            const updated=await order.findByIdAndUpdate(orderId,{
+                        $set:{
+                            orderStatus:"processing",
+                        }
+                    })
+                    const increaseActiveOrders= await user.findByIdAndUpdate(userId,{
+                        $inc: {
+                            activeOrders: 1,
+                        }
+                    })
+                    if(updated && increaseActiveOrders){
+                        res.json({message:"Done"});
+                    }
+        }else{
+            const itemToMove = order.orderCookIDDetails.find(item => item.kitchenId.toString() === userId.toString());
+            const updated=await order.findByIdAndUpdate(orderId,{
+                $set:{
+                    orderStatus:"processingPartially",
+                   
+                },
+                $push:{
+                    partiallyAcceptedOrderID:itemToMove,
+                }
+            })
+            const increaseActiveOrders= await user.findByIdAndUpdate(userId,{
+                $inc: {
+                    activeOrders: 1,
+                }
+            })
+            if(updated && increaseActiveOrders){
+                res.json({message:"Done"});
             }
-        })
-        const increaseActiveOrders= await user.findByIdAndUpdate(userId,{
-            $inc: {
-                activeOrders: 1,
-            }
-        })
-        if(updated && increaseActiveOrders){
-            res.json({message:"Done"});
         }
-    }
+    // if(update){
+    //     const updated=await order.findByIdAndUpdate(orderId,{
+    //         $set:{
+    //             orderStatus:"processing",
+    //         }
+    //     })
+    //     const increaseActiveOrders= await user.findByIdAndUpdate(userId,{
+    //         $inc: {
+    //             activeOrders: 1,
+    //         }
+    //     })
+    //     if(updated && increaseActiveOrders){
+    //         res.json({message:"Done"});
+    //     }
+    // }
+
 }catch(err){
     console.log(err);
 }
@@ -132,8 +169,12 @@ const processingOrder=async(req,res)=>{
     try{
         // console.log("here");
         const userId=req.user.userId;
-        const orderss = await order.find({cookId:userId ,
-            orderStatus:"processing",
+        // const orderss = await order.find({cookId:userId ,
+        //     orderStatus:"processing",
+        // });
+        const orderss = await order.find({
+            cookId: userId,
+            orderStatus: { $in: ["processing", "processingPartially"] }
         });
         if(!orderss || orderss.length===0){
             return res.json({message:"All order completed"});
@@ -179,22 +220,59 @@ const completeOrder=async(req,res)=>{
     const {orderId}=req.body;
     const {userId}=req.user;
    try{
-     const update= await order.findById(orderId);
-    if(update){
-        const updated=await order.findByIdAndUpdate(orderId,{
+     const order= await order.findById(orderId);
+     if(!order){
+        res.status(404).json({message:"no order found"});
+     }
+     const kitchenIds = order.orderCookIDDetails.map(item => item.kitchenId);
+     const allSameKitchen = kitchenIds.every(id => id === kitchenIds[0]);
+
+     let updated, decreaseActiveOrders;
+     if(allSameKitchen){
+         updated=await order.findByIdAndUpdate(orderId,{
+                    $set:{
+                        orderStatus:"completed",
+                    }
+                })
+                 decreaseActiveOrders= await user.findByIdAndUpdate(userId,{
+                    $inc: {
+                        activeOrders: -1,
+                    }
+                })
+     }else{
+        const itemToMove = order.orderCookIDDetails.find(item => item.kitchenId.toString() === userId.toString());
+         updated=await order.findByIdAndUpdate(orderId,{
             $set:{
-                orderStatus:"completed",
+                orderStatus:"completedPartially",
+            },
+            $push:{
+                partiallyAcceptedOrderID:itemToMove,
             }
+            
         })
-        const decreaseActiveOrders= await user.findByIdAndUpdate(userId,{
+         decreaseActiveOrders= await user.findByIdAndUpdate(userId,{
             $inc: {
                 activeOrders: -1,
             }
         })
-        if(updated && decreaseActiveOrders){
-            res.json({message:"completed"});
-        }
-    }
+     }
+     const updatedOrderData = await order.findById(orderId);
+
+     const allItemsCompleted = updatedOrderData.orderCookIDDetails.every(item =>
+         updatedOrderData.partiallyAcceptedOrderID.some(
+             completedItem => completedItem.itemId.toString() === item.itemId.toString()
+         )
+     );
+     if(allItemsCompleted){
+        await order.findByIdAndUpdate(orderId, {
+            $set: { orderStatus: "completed" }
+        });
+     }
+     if(updated && decreaseActiveOrders){
+        res.json({message:"completed"});
+     }else{
+        res.json({message:"Failed to complete order"});
+     }
 }catch(err){
     console.log(err);
 }
@@ -204,7 +282,7 @@ const showCompletedOrder=async(req,res)=>{
      try{        
         const userId=req.user.userId;
         const orderss = await order.find({cookId:userId ,
-            orderStatus:"completed",
+            orderStatus:{$in: ["completed", "completedPartially"]},
         });
         if(!orderss || orderss.length===0){
             return res.json({message:"No orders to show"});

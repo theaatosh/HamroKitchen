@@ -47,8 +47,6 @@ const findKitchen=async(customerLocation, orderId)=>{
         // const orderId=orderId;
         const rejectedCook= await order.findById(orderId,{_id:0,rejectedCookId:1});
         // console.log(typeof(rejectedCook));
-        
-        
         // if(rejectedCook.rejectedCookId ){
         //      filteredKitchens = nearestKitchenArray.filter(
         //         (kitchenInfo) => !rejectedCook.rejectedCookId.includes(kitchenInfo.kitchens._id.toString())
@@ -69,7 +67,17 @@ const findKitchen=async(customerLocation, orderId)=>{
                 }
             }
         }
-        return filteredKitchens;
+        // const filteredKitchensDislessthan2000=[];
+        // for(let df=0;df<filteredKitchens.length;df++){
+        //     if(filteredKitchens[df].distance<2000){
+        //         filteredKitchensDislessthan2000.push(filteredKitchens[df]);
+        //     }
+        // }
+        const filteredKitchensDislessthan2000 = filteredKitchens.filter(kitchen => kitchen.distance < 2000);
+        const filteredKitchensDisGreaterEqual2000 = filteredKitchens.filter(
+            kitchen => kitchen.distance >= 2000
+        );
+        return filteredKitchensDislessthan2000;
 
     }catch(err){
         console.log("couldnt find order"+err);
