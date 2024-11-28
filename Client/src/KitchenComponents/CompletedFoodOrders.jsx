@@ -23,7 +23,7 @@ export const CompletedFoodOrders = ({completedFoodOrders}) => {
                  </div>
                  <div className={styles.inner_container}>
                  <div className={styles.order_list}>
-                     {completedFoodOrders.length>0 && completedFoodOrders.map((order,index)=>(
+                     {completedFoodOrders.length>0 ? completedFoodOrders.map((order,index)=>(
                        <React.Fragment key={order._id}>
                            <div className={styles.order_card} >
                              <h3>#{index+1}</h3>
@@ -46,7 +46,9 @@ export const CompletedFoodOrders = ({completedFoodOrders}) => {
                       <hr />
                       </React.Fragment>     
                      )
-                     )}
+                     ):<div className={styles.no_orders}>
+                     <h2>No completed orders !!</h2>
+                     </div>}
                  </div>
                    
                  </div>

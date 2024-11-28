@@ -124,7 +124,7 @@ export const Orders=()=>{
             <div className={styles.order_list}>
               {isLoading?<Loading/>:(
                 customerOrders.length>0 ? (customerOrders.map((order,index)=>(
-                  order.orderDetails.orderStatus==='assignedToCook'&&
+                  (order.orderDetails.orderStatus==='assignedToCook' || order.orderDetails.orderStatus==="assignedToCookPartially")&&
                   <React.Fragment key={order.orderDetails._id}>
                       <div className={styles.order_card} >
                         <h3>#{index+1}</h3>
