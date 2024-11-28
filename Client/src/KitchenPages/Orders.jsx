@@ -124,22 +124,19 @@ export const Orders=()=>{
             <div className={styles.order_list}>
               {isLoading?<Loading/>:(
                 customerOrders.length>0 ? (customerOrders.map((order,index)=>(
-                  order.orderStatus==='assignedToCook'&&
-                  <React.Fragment key={order._id}>
+                  order.orderDetails.orderStatus==='assignedToCook'&&
+                  <React.Fragment key={order.orderDetails._id}>
                       <div className={styles.order_card} >
                         <h3>#{index+1}</h3>
-                        <p>{order.deliveryInfo.firstName}</p>
+                        <p>{order.orderDetails.deliveryInfo.firstName}</p>
                         <ul>
-                            {order.orderedItem.map((item,index)=>(
-                              <li key={index}>
-                                    {item.name}-{item.quantity}
-                                </li>
-                            ))}
+                           {order.orderItemName}-{order.quantity}
+                           
                         </ul>
-                        <p>{order.deliveryInfo.phoneNumber}</p>
+                        <p>{order.orderDetails.deliveryInfo.phoneNumber}</p>
                         <div className={styles.btns}>
-                        <button className={styles.accept} onClick={()=>statusHandlerAcc(order._id)}>Accept</button>
-                        <button className={styles.reject} onClick={()=>statusHandlerRej(order._id)}>Reject</button>
+                        <button className={styles.accept} onClick={()=>statusHandlerAcc(order.orderDetails._id)}>Accept</button>
+                        <button className={styles.reject} onClick={()=>statusHandlerRej(order.orderDetails._id)}>Reject</button>
 
                         </div>
                       {/* <select onChange={(event)=>statusHandler(event,order._id)} */}
