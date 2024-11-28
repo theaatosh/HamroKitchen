@@ -24,6 +24,11 @@ const routeArray=[
         icon:<FaKitchenSet className={styles.icon}/>
     },
     {
+        path:'/manageKitchen',
+        name:"Manage Kitchen",
+        icon:<FaKitchenSet className={styles.icon}/>
+    },
+    {
         path:'/manageFoodItems',
         name:"Manage Food Items ",
         icon:<IoFastFoodSharp  className={styles.icon}/>

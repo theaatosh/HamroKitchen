@@ -26,6 +26,10 @@ import { ManageFoodItems } from './Pages/ManageFoodItems';
             element:<ManageKitchen/>
         },
         {
+            path:'/userDetails',
+            element:<ManageKitchen/>
+        },
+        {
             path:'/manageFoodItems',
             element:<ManageFoodItems/>
         },
