@@ -9,31 +9,32 @@ const showOrder=async(req,res)=>{
     const orders = await order.find({
         orderStatus: { $in: ["assignedToCook", "assignedToCookPartially"] }
       });
-    const orderCookIDDetails=orders[0].orderCookIDDetails;
     const arr=[]
     for(k=0;k<orders.length;k++){
+        const order = orders[k];
+        const orderCookIDDetails = order.orderCookIDDetails;
+
         for(i=0;i<orderCookIDDetails.length;i++){
         if(orderCookIDDetails[i].kitchenId===userId){
             for(j=-0;j<orders.length;j++){
-                if(orderCookIDDetails[i].orderItemId===orders[0].orderedItem[j].id){
+                if(orderCookIDDetails[i].orderItemId===order.orderedItem[j].id){
                     arr.push({
-                        orderDetails:await order.findById(orders[k]._id) ,
+                        orderDetails:order,
                         orderItemId:orderCookIDDetails[i].orderItemId,
-                        orderItemName:orders[k].orderedItem[j].name,
-                        quantity:orders[k].orderedItem[j].quantity,
+                        orderItemName:order.orderedItem[j].name,
+                        quantity:order.orderedItem[j].quantity,
                     })
                 }
             }
-           
         }
     }
 }
     // console.log(arr);
     if(!arr || arr.length===0){
         return res.json({message:"no orders found for this kitchen"});
+    }else{
+        res.json(arr ) ;
     }
-    console.log(arr)
-    res.json(arr ) ;
     
     }catch(err){
         console.log(err);
