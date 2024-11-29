@@ -77,6 +77,20 @@ const acceptOrder=async(req,res)=>{
                     activeOrders: 1,
                 }
             })
+            const updatedOrder = await order.findById(orderId);
+
+            const allItemsAccepted = updatedOrder.orderedItem.every(item =>
+                updatedOrder.partiallyAcceptedOrderID.some(
+                    partial => partial.orderItemId.toString() === item.id.toString()
+                )
+            );
+            if (allItemsAccepted) {
+                await order.findByIdAndUpdate(orderId, {
+                    $set: { orderStatus: "processing" },
+                    $unset: { partiallyAcceptedOrderID: "" } // Optional: remove partiallyAcceptedOrderID
+                });
+            }
+        
             if(updated && increaseActiveOrders){
                 res.json({message:"Done"});
             }
@@ -322,7 +336,8 @@ const showCompletedOrder=async(req,res)=>{
                 orderStatus: order.orderStatus,
                 orderItems: orderItems
             });
-        }        
+        }
+        
         res.json(result);
 
         }catch(err){
