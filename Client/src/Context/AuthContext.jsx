@@ -58,20 +58,20 @@ export const AuthContextProvider=({children})=>{
     }, [token]);
 
     //for rider online offline ko lagi
-    const savedRiderIsOnline=localStorage.getItem("riderOnlineStatus")==="true";
-    const [isRiderOnline, setIsRiderOnline] = useState(savedIsOnline);
+  //   const savedRiderIsOnline=localStorage.getItem("riderOnlineStatus")==="true";
+  //   const [isRiderOnline, setIsRiderOnline] = useState(savedIsOnline);
 
-    const handleRiderToggle = () => {
-      setIsRiderOnline((prevState) =>{
-        const newState=!prevState; 
-        localStorage.setItem("riderOnlineStatus",newState);
+  //   const handleRiderToggle = () => {
+  //     setIsRiderOnline((prevState) =>{
+  //       const newState=!prevState; 
+  //       localStorage.setItem("riderOnlineStatus",newState);
         
-        updateKRiderStatus(newState);
+  //       updateKRiderStatus(newState);
 
-       return newState;
-      })
+  //      return newState;
+  //     })
        
-   };
+  //  };
     
 
 
