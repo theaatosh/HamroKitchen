@@ -44,7 +44,9 @@ const acceptOrder=async(req,res)=>{
     const {userId}=req.user;
    try{
      const orders= await order.findById(orderId);
-     const kitchenIds = orders.orderCookIdDetails.map(item => item.kitchenId);
+     console.log(orders);
+     
+     const kitchenIds = orders.orderCookIDDetails.map(item => item.kitchenId);
      const allSameKitchen = kitchenIds.every(id => id === kitchenIds[0]);
         if(allSameKitchen){
             const updated=await order.findByIdAndUpdate(orderId,{
@@ -290,9 +292,9 @@ const showCompletedOrder=async(req,res)=>{
             orderStatus:{$in: ["completed", "completedPartially"]},
             "orderCookIDDetails.kitchenId": userId,
         });
-        if(!orderss || orderss.length===0){
-            return res.json({message:"No orders to show"});
-        }
+        // if(!orderss || orderss.length===0){
+        //     return res.json({message:"No orders to show"});
+        // }
 
         const result = [];
 
@@ -320,8 +322,9 @@ const showCompletedOrder=async(req,res)=>{
                 orderStatus: order.orderStatus,
                 orderItems: orderItems
             });
-        }
+        }        
         res.json(result);
+
         }catch(err){
             console.log(err);
             res.json(err);

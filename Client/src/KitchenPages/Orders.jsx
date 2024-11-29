@@ -24,6 +24,8 @@ export const Orders=()=>{
          const res=await axios.get('http://localhost:5010/api/kitchen/showOrder',{headers:{'Authorization':`Bearer ${token}`}});
           setCustomerOrders(res.data);
           console.log(res.data);
+          console.log(res.data[0].orderDetails.deliveryInfo.firstName);
+          
           
           
         }catch(error){
@@ -59,7 +61,9 @@ export const Orders=()=>{
         try{
           const res=await axios.get('http://localhost:5010/api/kitchen/showCompletedOrder',{headers:{'Authorization':`Bearer ${token}`}});
 
-          setCompletedFoodOrders(res.data)
+          setCompletedFoodOrders(res.data);
+          console.log(res.data);
+          
         }
         catch(err){
           toast.error(err.message)
@@ -123,8 +127,8 @@ export const Orders=()=>{
             <div className={styles.inner_container}>
             <div className={styles.order_list}>
               {isLoading?<Loading/>:(
+                
                 customerOrders.length>0 ? (customerOrders.map((order,index)=>(
-                  (order.orderDetails.orderStatus==='assignedToCook' || order.orderDetails.orderStatus==="assignedToCookPartially")&&
                   <React.Fragment key={order.orderDetails._id}>
                       <div className={styles.order_card} >
                         <h3>#{index+1}</h3>
@@ -161,14 +165,14 @@ export const Orders=()=>{
         </div>
 
             {/* processing order ko component  */}
-            <ProcessingOrder processingOrders={processingOrders} processingOrdersLoading={processingOrdersLoading} 
+            {/* <ProcessingOrder processingOrders={processingOrders} processingOrdersLoading={processingOrdersLoading} 
             fetchCustomerOrders={fetchCustomerOrders}
             fetchProcessingOrders={fetchProcessingOrders}
-            fetchCompletedFoodOrders={fetchCompletedFoodOrders}/>
+            fetchCompletedFoodOrders={fetchCompletedFoodOrders}/> */}
 
             {/* completed order ko component  */}
-            <CompletedFoodOrders completedFoodOrders={completedFoodOrders} 
-        />
+            {/* <CompletedFoodOrders completedFoodOrders={completedFoodOrders} 
+        /> */}
 </>
 
     )

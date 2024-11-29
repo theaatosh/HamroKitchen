@@ -2,6 +2,7 @@ import React from 'react';
 import styles from '../Styles/Kitchen/KitchenPages/CompletedFoodOrders.module.css'
 export const CompletedFoodOrders = ({completedFoodOrders}) => {
 
+    console.log(completedFoodOrders);
     
     const handleOutForDelivery=(e)=>{
         if(e.target.value==="outfordelivery"){
@@ -27,7 +28,7 @@ export const CompletedFoodOrders = ({completedFoodOrders}) => {
                        <React.Fragment key={order._id}>
                            <div className={styles.order_card} >
                              <h3>#{index+1}</h3>
-                             <p>{`${order.deliveryInfo.firstName} ${order.deliveryInfo.lastName}`}</p>
+                             <p>{`${order.orderDetails.deliveryInfo.firstName} ${order.orderDetails.deliveryInfo.lastName}`}</p>
                              <ul>
                                  {order.orderedItem.map((item,index)=>(
                                    <li key={index}>
