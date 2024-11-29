@@ -37,4 +37,5 @@ const runPythonFunction = async (foodtype, spice, diet) => {
     }
 };
 
-runPythonFunction('fastfood', 'medium', 'veg');
+// runPythonFunction('fastfood', 'medium', 'veg');
+module.exports=runPythonFunction;

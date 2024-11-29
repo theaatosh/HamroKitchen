@@ -2,7 +2,7 @@ const foodItemDetails=require('../models/adminAddItem');
 
 const editItem=async(req,res)=>{
     console.log(req.body);
-    const {name, description, price, category,id}=req.body;
+    const {name, description, price, category, id}=req.body;
     try{
         const edited= await foodItemDetails.findByIdAndUpdate(id,{
             $set:{
