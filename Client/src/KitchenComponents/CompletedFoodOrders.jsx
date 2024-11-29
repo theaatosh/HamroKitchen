@@ -2,7 +2,6 @@ import React from 'react';
 import styles from '../Styles/Kitchen/KitchenPages/CompletedFoodOrders.module.css'
 export const CompletedFoodOrders = ({completedFoodOrders}) => {
 
-    console.log(completedFoodOrders);
     
     const handleOutForDelivery=(e)=>{
         if(e.target.value==="outfordelivery"){
@@ -25,20 +24,20 @@ export const CompletedFoodOrders = ({completedFoodOrders}) => {
                  <div className={styles.inner_container}>
                  <div className={styles.order_list}>
                      {completedFoodOrders.length>0 ? completedFoodOrders.map((order,index)=>(
-                       <React.Fragment key={order._id}>
+                       <React.Fragment key={order.orderDetails._id}>
                            <div className={styles.order_card} >
                              <h3>#{index+1}</h3>
                              <p>{`${order.orderDetails.deliveryInfo.firstName} ${order.orderDetails.deliveryInfo.lastName}`}</p>
                              <ul>
-                                 {order.orderedItem.map((item,index)=>(
+                                 {order.orderItems.map((item,index)=>(
                                    <li key={index}>
-                                         {item.name}-{item.quantity}
+                                         {item.orderItemName}-{item.quantity}
                                      </li>
                                  ))}
                              </ul>
-                             <p>{order.deliveryInfo.phoneNumber}</p>
+                             <p>{order.orderDetails.deliveryInfo.phoneNumber}</p>
                         
-                             <select onChange={(event)=>handleOutForDelivery(event,order._id)}
+                             <select onChange={(event)=>handleOutForDelivery(event,order.orderDetails._id)}
                         className={styles.orderStatus}>
                         <option value="completed">Completed</option>
                         <option value="outfordelivery">Out for delivery</option>

@@ -235,13 +235,14 @@ const getKitchenOnline=async(req,res)=>{
 const completeOrder=async(req,res)=>{
     const {orderId}=req.body;
     const {userId}=req.user;
+    
    try{
-     const order= await order.findById(orderId);
-     if(!order){
+     const orders= await order.findById(orderId);
+     if(!orders){
         res.status(404).json({message:"no order found"});
      }
 
-     const kitchenIds = order.orderCookIDDetails.map(item => item.kitchenId.toString());
+     const kitchenIds = orders.orderCookIDDetails.map(item => item.kitchenId.toString());
      const allSameKitchen = kitchenIds.every(id => id === kitchenIds[0]);
 
      let updated, decreaseActiveOrders;
@@ -257,7 +258,8 @@ const completeOrder=async(req,res)=>{
                     }
                 })
      }else{
-        const itemToMove = order.orderCookIdDetails.find(item => item.kitchenId.toString() === userId.toString());
+        
+        const itemToMove = orders.orderCookIDDetails.find(item => item.kitchenId.toString() === userId.toString());
         if (!itemToMove) {
             return res.status(400).json({ message: "No item to complete for this kitchen" });
         }
@@ -315,7 +317,7 @@ const showCompletedOrder=async(req,res)=>{
         for(let i=0;i<orderss.length;i++){
             const order = orderss[i];
             const orderItems = [];
-            for(let j=0;j<order.orderCookIdDetails.length;j++){
+            for(let j=0;j<order.orderCookIDDetails.length;j++){
                 const orderCookDetail = order.orderCookIDDetails[j];
 
                 if (orderCookDetail.kitchenId.toString() === userId.toString()){
@@ -332,7 +334,7 @@ const showCompletedOrder=async(req,res)=>{
                 }
             }
               result.push({
-                orderId: order._id,
+                orderDetails: order,
                 orderStatus: order.orderStatus,
                 orderItems: orderItems
             });

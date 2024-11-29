@@ -23,8 +23,6 @@ export const Orders=()=>{
         try{
          const res=await axios.get('http://localhost:5010/api/kitchen/showOrder',{headers:{'Authorization':`Bearer ${token}`}});
           setCustomerOrders(res.data);
-          console.log(res.data);
-          console.log(res.data[0].orderDetails.deliveryInfo.firstName);
           
           
           
@@ -62,7 +60,6 @@ export const Orders=()=>{
           const res=await axios.get('http://localhost:5010/api/kitchen/showCompletedOrder',{headers:{'Authorization':`Bearer ${token}`}});
 
           setCompletedFoodOrders(res.data);
-          console.log(res.data);
           
         }
         catch(err){
@@ -165,14 +162,14 @@ export const Orders=()=>{
         </div>
 
             {/* processing order ko component  */}
-            {/* <ProcessingOrder processingOrders={processingOrders} processingOrdersLoading={processingOrdersLoading} 
+            <ProcessingOrder processingOrders={processingOrders} processingOrdersLoading={processingOrdersLoading} 
             fetchCustomerOrders={fetchCustomerOrders}
             fetchProcessingOrders={fetchProcessingOrders}
-            fetchCompletedFoodOrders={fetchCompletedFoodOrders}/> */}
+            fetchCompletedFoodOrders={fetchCompletedFoodOrders}/>
 
             {/* completed order ko component  */}
-            {/* <CompletedFoodOrders completedFoodOrders={completedFoodOrders} 
-        /> */}
+            <CompletedFoodOrders completedFoodOrders={completedFoodOrders} 
+        />
 </>
 
     )

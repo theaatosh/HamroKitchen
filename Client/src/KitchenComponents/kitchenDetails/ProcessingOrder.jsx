@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { StoreContext } from '../../Context/StoreContext';
 export const ProcessingOrder = ({processingOrders,processingOrdersLoading,fetchCustomerOrders,fetchProcessingOrders,fetchCompletedFoodOrders}) => {
   const {token,setToken}=useContext(StoreContext);
+  
  
   const handleCompleted=async(e,orderId)=>{
     if(e.target.value==='completed')
@@ -56,19 +57,19 @@ useEffect(() => {
             <div className={styles.order_list}>
               {processingOrdersLoading&&<Loading/>}
                 {processingOrders.length>0 ? processingOrders.map((order,index)=>(
-                  <React.Fragment key={order._id}>
+                  <React.Fragment key={order.orderDetails._id}>
                       <div className={styles.order_card} >
                         <h3>#{index+1}</h3>
-                        <p>{`${order.deliveryInfo.firstName} ${order.deliveryInfo.lastName}`}</p>
+                        <p>{`${order.orderDetails.deliveryInfo.firstName} ${order.orderDetails.deliveryInfo.lastName}`}</p>
                         <ul>
-                            {order.orderedItem.map((item,index)=>(
+                            {order.orderItems.map((item,index)=>(
                               <li key={index}>
-                                    {item.name}-{item.quantity}
+                                    {item.orderItemName}-{item.quantity}
                                 </li>
                             ))}
                         </ul>
-                        <p>{order.deliveryInfo.phoneNumber}</p>
-                      <select onChange={(event)=>handleCompleted(event,order._id)}
+                        <p>{order.orderDetails.deliveryInfo.phoneNumber}</p>
+                      <select onChange={(event)=>handleCompleted(event,order.orderDetails._id)}
                         className={styles.orderStatus}>
                         <option value="processing">Processing</option>
                         <option value="completed">Completed</option>
