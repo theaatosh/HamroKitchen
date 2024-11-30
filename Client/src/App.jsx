@@ -23,6 +23,9 @@ import { useAuth } from "./Context/AuthContext";
 import { Notification } from "./Pages/Notification";
 import { RiderLayout } from "./RiderComponents/RiderLayout";
 import { RiderDashboard } from "./RiderPages/RiderDashboard";
+import { ForgotPassword } from "./Components/ForgotPassword/ForgotPassword";
+import { VerifyOtp } from "./Components/ForgotPassword/OtpVerify";
+import { PasswordUpdate } from "./Components/ForgotPassword/PasswordUpdate";
 
 
 // import { AuthUser } from "./Context/AuthUser";
@@ -84,8 +87,18 @@ export const App=()=>{
           {
             path:'login',
             element:token ? <Navigate to={"/"}/> : <LoginPage/>
-          
-            
+          },
+          {
+            path:"/forgot/passsword" ,
+            element:<ForgotPassword/>
+          },
+          {
+              path:"/otp/verify", 
+              element:<VerifyOtp/>
+          },
+          {
+              path:"/password/update",
+              element:<PasswordUpdate/>
           },
           {
             path:'kitchen/Signup',  

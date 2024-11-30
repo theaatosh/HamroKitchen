@@ -1,0 +1,103 @@
+import { FaFingerprint } from "react-icons/fa";
+import { Button } from './UI/Button';
+import { BackToLogin } from './UI/BackToLogin';
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+export const VerifyOtp = () => {
+    const navigate = useNavigate();
+    const ref1 = useRef(null);
+    const ref2 = useRef(null);
+    const ref3 = useRef(null);
+    const ref4 = useRef(null);
+    const ref5 = useRef(null);
+    const ref6 = useRef(null);
+    const inputRef = [ref1, ref2, ref3, ref4, ref5, ref6];
+
+    const [otp, setOtp] = useState(['', '', '', '', '', '']); 
+
+    const handleChange = (e, index) => {
+        const updatedOtp = [...otp];
+        updatedOtp[index] = e.target.value;
+        setOtp(updatedOtp);
+
+     
+        if (index < 5 && e.target.value) {
+            inputRef[index + 1].current.focus();
+        }
+    };
+
+    useEffect(() => {
+        if (ref1.current) {
+            ref1.current.focus();
+        }
+    }, []);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        const otpString = otp.join('');
+        console.log("OTP Submitted:", otpString);
+        
+        try {
+            const response = await axios.post("url halne",{otp})
+            
+            if (response.ok) {
+                navigate('/password/update');
+            } else {
+                alert("Invalid OTP. Please try again.");
+            }
+        } catch (error) {
+            console.error("Error submitting OTP:", error);
+            alert("An error occurred. Please try again.");
+        }
+    };
+
+    return (
+        <div className='h-screen w-[100%] flex items-center justify-center bg-[#f5f5f5]'>
+            <form className='w-[30%]' onSubmit={handleSubmit}>
+                <div className='p-10 bg-white w-[100%]'>
+                    <div className='flex flex-col justify-center items-center'>
+                        <FaFingerprint className='text-[25px] font-bold' />
+                        <h1 className='text-3xl font-bold mt-5'>Verify your OTP</h1>
+                        <p className='text-gray-500 mt-1 text-sm'>
+                            Enter 6 digit OTP here we just sent to your email
+                        </p>
+                    </div>
+                    <div className='flex flex-col gap-3 mt-7'>
+                        <div>
+                            <label htmlFor="" className="text-md">OTP *</label>
+                            <div className="flex flex-nowrap gap-2 flex-shrink-0">
+                                {inputRef.map((item, index) => (
+                                    <input
+                                        required
+                                        ref={item}
+                                        key={index}
+                                        type="number"
+                                        value={otp[index]} 
+                                        onChange={(e) => handleChange(e, index)}
+                                        onInput={(e) => {
+                                            if (e.target.value.length > 1) {
+                                                e.target.value = e.target.value.slice(0, 1);
+                                            }
+                                        }}
+                                        className="w-[60px] h-[40px] border-2 rounded-xl outline-none focus:border-blue-500 hover:border-blue-400 text-center text-xl font-bold"
+                                    />
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className='flex items-center justify-center mt-4'>
+                            <Button type="submit">Verify</Button>
+                        </div>
+
+                        <div className='mt-3'>
+                            <BackToLogin />
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    );
+};
