@@ -6,6 +6,8 @@ import { AddItems } from './Pages/AddItems';
 import { ManageKitchen } from './Pages/ManageKitchen';
 import { Settings } from './Pages/Settings';
 import { ManageFoodItems } from './Pages/ManageFoodItems';
+import { UserDetails } from './Pages/UserDetails';
+
  export const App=()=>{
 
   const router=createBrowserRouter([
@@ -27,7 +29,7 @@ import { ManageFoodItems } from './Pages/ManageFoodItems';
         },
         {
             path:'/userDetails',
-            element:<ManageKitchen/>
+            element:<UserDetails/>
         },
         {
             path:'/manageFoodItems',

@@ -7,6 +7,7 @@ import { IoMenu } from "react-icons/io5";
 import { MdDashboard } from "react-icons/md";
 import { IoFastFoodSharp } from "react-icons/io5";
 import { useState } from 'react';
+import { FaUsers } from "react-icons/fa";
 const routeArray=[
     {
         path:'/',
@@ -24,9 +25,9 @@ const routeArray=[
         icon:<FaKitchenSet className={styles.icon}/>
     },
     {
-        path:'/manageKitchen',
-        name:"Manage Kitchen",
-        icon:<FaKitchenSet className={styles.icon}/>
+        path:'/userDetails',
+        name:"Manage Users",
+        icon:<FaUsers className={styles.icon}/>
     },
     {
         path:'/manageFoodItems',

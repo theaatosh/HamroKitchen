@@ -1,0 +1,4 @@
+.user_details_container{
+    height: 84vh;
+    overflow-y: scroll;
+}
