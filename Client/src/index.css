@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 *{
     margin: 0;
     padding: 0;
@@ -9,13 +12,17 @@
 body{
     min-height: 100vh;
 }
-
 a{
     text-decoration: none;
     color: inherit;
 }
 .app{
     width: 100%;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 /* width */
 ::-webkit-scrollbar {

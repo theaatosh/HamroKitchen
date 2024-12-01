@@ -161,7 +161,9 @@ export const LoginPage=()=>{
         {showPassword? (<FaEye className={styles.password_eye} onClick={handleShowPassword}/>): (<FaEyeSlash className={styles.password_eye} onClick={handleShowPassword}/>)}
         </div>
          {error.password && <p className={styles.input_error}>{error.password}</p>}
+      <Link to="/forgot/passsword">
       <p className={styles.forgot_password}>Forgot your password?</p>
+      </Link>
       </div>
 
         <div className={styles.login_btn}>
