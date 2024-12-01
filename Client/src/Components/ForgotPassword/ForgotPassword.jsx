@@ -5,9 +5,12 @@ import { Input } from "./UI/Input"
 import { MdAttachEmail } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
+import {toast } from 'react-toastify';
+import Loading from '../Loading';
 
 export const ForgotPassword = () => {
     const [email,setEmail]=useState('');
+    const[isLoading,setIsLoading]=useState(false);
     const navigate=useNavigate();
     const handleEmailChange=(e)=>{
         setEmail(e.target.value);
@@ -17,15 +20,24 @@ export const ForgotPassword = () => {
         e.preventDefault();
         console.log(email);
         try {
+          setIsLoading(true)
           const res = await axios.post("http://localhost:5010/api/forgotpassword/forgetPassword",{email})
           if (res.status===200) {
-            navigate('/otp/verify',{state:{email}});
+            toast.success(res.data.message,{
+              autoClose:2000
+            });
+           navigate('/otp/verify',{state:{email}});
           }
       } catch (error) {
          console.log(error);
+         toast.error(error.message,{autoClose:1500})
+      }
+      finally{
+        setIsLoading(false);
       }
         
     }
+    
   return (
     <div>
       <div className='h-screen w-[100%] flex items-center justify-center  bg-[#f5f5f5]'>
@@ -45,7 +57,7 @@ export const ForgotPassword = () => {
                 
                     
                     <div className='flex items-center justify-center mt-4'>
-                    <Button type={'submit'}>Send OTP</Button>
+                    <Button type={'submit'}>{isLoading?<Loading/>:"Send OTP"}</Button>
 
                     </div>
 

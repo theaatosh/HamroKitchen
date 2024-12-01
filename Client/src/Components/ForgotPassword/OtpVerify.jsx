@@ -4,10 +4,14 @@ import { BackToLogin } from './UI/BackToLogin';
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import {toast } from 'react-toastify';
+import Loading from '../Loading';
 
 export const VerifyOtp = () => {
     const location=useLocation();
     const email=location.state?.email;
+
+    const[isLoading,setIsLoading]=useState(false);
     const navigate = useNavigate();
     const ref1 = useRef(null);
     const ref2 = useRef(null);
@@ -43,16 +47,19 @@ export const VerifyOtp = () => {
         console.log("OTP Submitted:", otpString);
         
         try {
-            console.log(email);
+            setIsLoading(true);
             const response = await axios.post("http://localhost:5010/api/forgotpassword/verifyOTP",{email,otp})
             if (response.status===200) {
+                console.log(response.data.message);
+                
+                toast.success(response.data.message);
                 navigate('/password/update',{state:{email}});
-            } else {
-                alert("Invalid OTP. Please try again.");
-            }
+            } 
         } catch (error) {
-            console.error("Error submitting OTP:", error);
-            alert("An error occurred. Please try again.");
+                        toast.error(error.response.data.message);
+        }
+        finally{
+            setIsLoading(false);
         }
     };
 
@@ -91,7 +98,7 @@ export const VerifyOtp = () => {
                         </div>
 
                         <div className='flex items-center justify-center mt-4'>
-                            <Button type="submit">Verify</Button>
+                            <Button type="submit">{isLoading?<Loading/>:"Verify"}</Button>
                         </div>
 
                         <div className='mt-3'>
