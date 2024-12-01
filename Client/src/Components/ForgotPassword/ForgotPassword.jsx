@@ -26,7 +26,7 @@ export const ForgotPassword = () => {
             <div className='  p-10 bg-white w-[100%]'>
                 <div className='flex flex-col justify-center items-center '>
                 <MdAttachEmail className='text-[25px] font-bold'/>
-                        <h1 className='text-3xl font-bold mt-5'>Forgot your Password</h1>
+                        <h1 className='text-3xl font-bold mt-5 '>Forgot your Password</h1>
                         <p className='text-gray-500 mt-1'>Enter your registered email we will send a 6-digit OTP</p>
                 </div>
                 <div className='flex flex-col gap-3 mt-7'>
