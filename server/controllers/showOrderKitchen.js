@@ -204,7 +204,6 @@ const processingOrder=async(req,res)=>{
 
 const getKitchenOnline=async(req,res)=>{
 
-    // const status=req.body.newState;
     var status=null;
     if(req.body.newState){
          status="online"
@@ -213,7 +212,6 @@ const getKitchenOnline=async(req,res)=>{
         status="offline"
     }
     const {userId}=req.user;
-    // console.log(userId , status);
     try{
         const kitchen=await user.findByIdAndUpdate(userId,{
             $set:{
@@ -308,10 +306,6 @@ const showCompletedOrder=async(req,res)=>{
             orderStatus:{$in: ["completed", "completedPartially"]},
             "orderCookIDDetails.kitchenId": userId,
         });
-        // if(!orderss || orderss.length===0){
-        //     return res.json({message:"No orders to show"});
-        // }
-
         const result = [];
 
         for(let i=0;i<orderss.length;i++){

@@ -160,4 +160,7 @@ app.use('/api/dashboard', dashboard);
 const recFood=require('./routes/recFoodRoute.js');
 app.use('/api/recFood',recFood)
 
+const password=require("./routes/passwordRoute.js");
+app.use('/api/forgotpassword',password);
+
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

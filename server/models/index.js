@@ -50,6 +50,12 @@ const userSchema=mongoose.Schema({
     recData:{
         type:Object,
         default:{},
+    },
+    otp:{
+        type:String,
+    },
+    otpExpiry:{
+        type:Date,
     }
 });
 
