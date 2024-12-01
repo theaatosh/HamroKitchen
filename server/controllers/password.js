@@ -2,7 +2,7 @@ const user=require("../models/index");
 const nodemailer=require('nodemailer');
 
 function generateOTP(){
-    const otp=Math.floor(Math.random()*1000000)
+    const otp=Math.floor(100000+Math.random()*900000)
     return otp.toString();
     }
 
@@ -33,10 +33,11 @@ async function sendEmailOTP(email, otp){
 
 const forgetPassword=async(req,res)=>{
     const {email}=req.body;
+    console.log(email);
     try{
         const find = await user.findOne({email:email});
         if(find){
-            const otp=generateOTP();
+            const otp=generateOTP().toString();
             const otpExpiry=Date.now()+3*60*1000;
             try{
                 const update=await user.findOneAndUpdate({email:email},{
@@ -48,6 +49,7 @@ const forgetPassword=async(req,res)=>{
                 if(update){
                    const sendmail= await sendEmailOTP(email, otp);
                    if(sendmail){
+                    console.log("here");
                     res.status(200).json({message:"otp send"});
                    }else {
                     res.status(500).json({ message: "Failed to send OTP email" });
@@ -68,6 +70,8 @@ const {hashPassword}=require("../controllers/index");
 
 const verifyOTP=async(req,res)=>{
     const {email, otp}=req.body;
+    console.log(otp);
+    console.log(email);
     try{
         const find= await user.findOne({email:email});
         if(find.otp===otp.toString()){
@@ -86,16 +90,25 @@ const verifyOTP=async(req,res)=>{
 
 const changePassword=async(req,res)=>{
     const {email,password}=req.body;
+    console.log(password);
     try{
+        let hashedPassword= await hashPassword(password);
+
         const find= await user.findOneAndUpdate({email:email},{
             $set:{
-                password: await hashPassword(password),
+                password: hashedPassword,
             }
         });
-        if(find){
+        const update=await user.findOneAndUpdate({email:email},{
+            $unset:{
+                otp:"",
+                otpExpiry:'',
+            }
+        })
+        if(find && update){
             res.status(200).json({message:"password changed succesfully"});
         }else{
-            res,status(400).json({message:"cant update"});
+            res.status(400).json({message:"cant update"});
         }
 
     }catch(err){

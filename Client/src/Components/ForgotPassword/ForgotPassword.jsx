@@ -4,6 +4,7 @@ import { Button } from "./UI/Button"
 import { Input } from "./UI/Input"
 import { MdAttachEmail } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 
 export const ForgotPassword = () => {
     const [email,setEmail]=useState('');
@@ -12,11 +13,17 @@ export const ForgotPassword = () => {
         setEmail(e.target.value);
     }
 
-    const handleSubmit=(e)=>{
+    const handleSubmit=async(e)=>{
         e.preventDefault();
         console.log(email);
-        
-        navigate('/otp/verify');
+        try {
+          const res = await axios.post("http://localhost:5010/api/forgotpassword/forgetPassword",{email})
+          if (res.status===200) {
+            navigate('/otp/verify',{state:{email}});
+          }
+      } catch (error) {
+         console.log(error);
+      }
         
     }
   return (
