@@ -80,7 +80,7 @@ const verifyOTP=async(req,res)=>{
             console.log("here");
             
             if(find.otpExpiry<Date.now()){
-                res.status(400).json({message:'otp has been expired'});
+                res.status(400).status(400).json({message:'otp has been expired'});
             }else{
                 console.log("here2");
                 

@@ -163,4 +163,7 @@ app.use('/api/recFood',recFood)
 const passworddd=require("./routes/passwordRoute.js");
 app.use('/api/forgotpassword',passworddd);
 
+const users=require('./controllers/adminManageUser.js');
+app.get("/api/users",users);
+
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
