@@ -76,12 +76,12 @@ const verifyOTP=async(req,res)=>{
         const find= await user.findOne({email:email});
         if(find.otp===otp.toString()){
             if(find.otpExpiry<Date.now()){
-                res.json({message:'otp has been expired'});
+                res.status(400).json({message:'otp has been expired'});
             }else{
                   res.status(200).json({message:"otp verified"});               
             }
         }else{
-            res.json({message:"invalid otp"});
+            res.status(400).json({message:"invalid otp"});
         }
     }catch(err){
         console.log(err);
