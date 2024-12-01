@@ -226,7 +226,7 @@ const logout=()=>{
                     )
                   }
                   {/* rider ko lagi */}
-                    {userDetails.role==='kitchen'?(
+                    {/* {userDetails.role==='kitchen'?(
                   <>
                   <Link to='/rider/dashboard'><p className={styles.user_menu_p}>Rider Dashboard</p></Link><hr />
                   </>
@@ -237,7 +237,7 @@ const logout=()=>{
                     <Link to='/rider/signUp'><p className={styles.user_menu_p}>Register as Rider</p></Link><hr />
                     </>
                     )
-                  }
+                  } */}
                 <p onClick={logout} className={styles.user_menu_p}>Logout</p>
               </div>
             )}

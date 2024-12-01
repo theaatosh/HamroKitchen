@@ -136,14 +136,14 @@ export const App=()=>{
           }
         ]
       },
-      {
-        path:'/rider',
-        element:<RiderLayout/>,
-        children:[{
-          path:'dashboard',
-          element:<RiderDashboard/>
-        }]
-      }
+      // {
+      //   path:'/rider',
+      //   element:<RiderLayout/>,
+      //   children:[{
+      //     path:'dashboard',
+      //     element:<RiderDashboard/>
+      //   }]
+      // }
       
 
     ]
