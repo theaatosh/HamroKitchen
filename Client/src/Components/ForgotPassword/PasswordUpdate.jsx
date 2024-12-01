@@ -3,12 +3,14 @@ import { BackToLogin } from "./UI/BackToLogin"
 import { Button } from "./UI/Button"
 import { Input } from "./UI/Input"
 import { GrUpdate } from "react-icons/gr";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export const PasswordUpdate = () => {
+  const location=useLocation();
+  const email=location.state?.email;
     const navigate=useNavigate();
-    const[passsword,setPassword]=useState('');
+    const[password,setPassword]=useState('');
     const[confirmPassword,setConfirmPassword]=useState('');
 
     const handlePasswordChange=(e)=>{
@@ -20,18 +22,22 @@ export const PasswordUpdate = () => {
     
     const handleSubmit=async(e)=>{
         e.preventDefault();
-        if(passsword===confirmPassword)
+        if(password===confirmPassword)
             {
                 console.log("done");
-                navigate('/login');
+                // navigate('/login');
             }
             else{
                 console.log("password must be same");
                 
             }
-        console.log(passsword,confirmPassword);
+        console.log(password,confirmPassword);
       try{
-        const response=await axios.post("url halne",{passsword,confirmPassword})
+        
+        const response=await axios.post("http://localhost:5010/api/forgotpassword/changePassword",{email,password})
+        if(response){
+          navigate('/login');
+        }
       }
       catch(error){
         console.log(error);

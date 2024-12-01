@@ -2,10 +2,12 @@ import { FaFingerprint } from "react-icons/fa";
 import { Button } from './UI/Button';
 import { BackToLogin } from './UI/BackToLogin';
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export const VerifyOtp = () => {
+    const location=useLocation();
+    const email=location.state?.email;
     const navigate = useNavigate();
     const ref1 = useRef(null);
     const ref2 = useRef(null);
@@ -41,10 +43,10 @@ export const VerifyOtp = () => {
         console.log("OTP Submitted:", otpString);
         
         try {
-            const response = await axios.post("url halne",{otp})
-            
-            if (response.ok) {
-                navigate('/password/update');
+            console.log(email);
+            const response = await axios.post("http://localhost:5010/api/forgotpassword/verifyOTP",{email,otp})
+            if (response.status===200) {
+                navigate('/password/update',{state:{email}});
             } else {
                 alert("Invalid OTP. Please try again.");
             }
