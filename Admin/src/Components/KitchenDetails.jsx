@@ -1,7 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from '../Styles/KitchenDetails.module.css';
-import { RiDeleteBin5Fill } from "react-icons/ri";
+import { MdDeleteForever } from "react-icons/md";
+import axios from 'axios';
 export const KitchenDetails = ({kitchen}) => {
+  const handleDelete=async(id)=>{
+    try{
+     
+      const res=await axios.post("http://localhost:5010/pathhalne",{id})
+
+    }
+    catch(error){
+      console.log(error);
+      
+    }
+    
+  }
   return (
     <div className={styles.main_container}>
       <h1>Kitchen Details</h1>
@@ -9,6 +22,7 @@ export const KitchenDetails = ({kitchen}) => {
         <p>Name</p>
         <p>Email</p>
         <p>PhoneNumber</p>
+        <p>Status</p>
         <p>Action</p>
       </div>
 
@@ -16,10 +30,11 @@ export const KitchenDetails = ({kitchen}) => {
         {kitchen.map((item,index)=>{
           return(
             <div className={styles.individual_detail} key={index}>
-              <p>{item.name}</p>
+              <p>{item.userName}</p>
               <p>{item.email}</p>
-              <p>{item.phone}</p>
-              <RiDeleteBin5Fill className={styles.delete} />
+              <p>{item.phoneNumber}</p>
+              <p className={item.cookStatus==="offline" ?styles.offline:styles.online}>{item.cookStatus}</p>
+              <MdDeleteForever className={styles.delete} onClick={()=>handleDelete(item._id)}/>
             </div>
           )
         })}

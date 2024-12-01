@@ -23,6 +23,7 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
     padding: 2vh 2vw;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    align-items: center;
 
     &:hover{
         background-color:#d1d0ce5e; ;
@@ -30,7 +31,7 @@
 }
 .delete{
     color: rgb(222, 18, 18);
-    font-size: 23px;
+    font-size: 30px;
     cursor: pointer;
     &:hover{
         color: rgb(255, 0, 0);

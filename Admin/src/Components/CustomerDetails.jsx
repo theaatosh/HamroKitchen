@@ -1,7 +1,20 @@
 import React from 'react'
 import styles from '../Styles/CustomerDetails.module.css';
-import { RiDeleteBin5Fill } from "react-icons/ri";
-export const CustomerDetails = ({details}) => {
+import { MdDeleteForever } from "react-icons/md";
+import axios from 'axios';
+export const CustomerDetails = ({customer}) => {
+
+  const handleDelete=async(id)=>{
+
+    try{
+      const res=await axios.post("http://localhost:5010/pathhalne",{id});
+
+    }
+    catch(error){
+      console.log(error);
+      
+    }
+  }
   return (
     <div className={styles.main_container}>
       <h1>Customer Details</h1>
@@ -13,13 +26,13 @@ export const CustomerDetails = ({details}) => {
       </div>
 
       <div className={styles.details_container}>
-        {details.map((item,index)=>{
+        {customer.map((item,index)=>{
           return(
             <div className={styles.individual_detail} key={index}>
-              <p>{item.name}</p>
+              <p>{item.userName}</p>
               <p>{item.email}</p>
-              <p>{item.phone}</p>
-              <RiDeleteBin5Fill className={styles.delete} />
+              <p>{item.phoneNumber}</p>
+              <MdDeleteForever className={styles.delete} onClick={()=>handleDelete(item._id)} />
             </div>
           )
         })}

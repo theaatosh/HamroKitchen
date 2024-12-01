@@ -8,11 +8,11 @@ try{
         console.log("THis is kitchen:")
         console.log(customer)
 
-        res.status(200).json(customer,kitchen);
+        res.status(200).json({ customers: customer, kitchens: kitchen });
     }else if(!kitchen && !customer){
         res.status(400).json({message:"no user to show"});
     }else if(customer && !kitchen){
-        res.status(201).json(customer, {message:"no kitchen available"});
+        res.status(201).json({ customers: customer, message: "No kitchens available" });
     }
     }catch(err){
     console.log(err);
