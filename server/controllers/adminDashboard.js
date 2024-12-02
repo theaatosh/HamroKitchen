@@ -16,12 +16,12 @@ const dashboard=async(req,res)=>{
         const totalPendingOrders=await order.countDocuments({orderStatus:"processing"})
         const totalAssignedOrders=await order.countDocuments({orderStatus:"assignedToCook"})
         const totalUsers= await user.countDocuments();
-        const totalCustomer= await user.countDocuments({role:"customer"});
+        // const totalCustomer= await user.countDocuments({role:"customer"})+ await user.countDocuments({role:"pending"});
+        const totalCustomer = await user.countDocuments({
+            role: { $in: ["customer", "pending"] }
+          });
         const totalKitchen= await user.countDocuments({role:"kitchen"});
-
         const totalFoodItems= await foodItem.countDocuments();
-
-
         res.status(200).json({
             totalAmount:amount,
             totalOrders:totalOrders,
