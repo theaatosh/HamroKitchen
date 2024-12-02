@@ -1,13 +1,9 @@
 const user=require('../models/index')
 const users=async(req,res)=>{
 try{
-    const customer=await user.find({role:"customer"});
+    const customer=await user.find({role:{ $in: ["customer", "pending"] }});
     const kitchen=await user.find({role:"kitchen"});
     if(customer && kitchen){
-        console.log(kitchen)
-        console.log("THis is kitchen:")
-        console.log(customer)
-
         res.status(200).json({ customers: customer, kitchens: kitchen });
     }else if(!kitchen && !customer){
         res.status(400).json({message:"no user to show"});
