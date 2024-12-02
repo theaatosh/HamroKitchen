@@ -7,6 +7,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import {toast } from 'react-toastify';
 import Loading from '../Loading';
+import styles from '../../Styles/ForgotPassword/PasswordUpdate.module.css';
 
 export const PasswordUpdate = () => {
   const location=useLocation();
