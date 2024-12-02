@@ -42,7 +42,7 @@
 @media (max-width: 768px) {
     .main_con {
         width: 80vw;
-        height: 20vh;
+        height: 10vh;
         padding: 3vh 2vw;
     }
 
@@ -53,6 +53,6 @@
     }
 
     .title {
-        font-size: 3vh;
+        font-size: 2vh;
     }
 }

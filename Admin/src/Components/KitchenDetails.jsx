@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styles from '../Styles/KitchenDetails.module.css';
 import { MdDeleteForever } from "react-icons/md";
 import axios from 'axios';
 export const KitchenDetails = ({kitchen}) => {
+  
+ 
   const handleDelete=async(id)=>{
     try{
      

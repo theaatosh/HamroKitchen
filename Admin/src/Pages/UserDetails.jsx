@@ -36,9 +36,10 @@ export const UserDetails = () => {
       <CustomerDetails  customer={userDetails.customers} />
       <KitchenDetails  kitchen={userDetails.kitchens}/>
       
+      
       </>
       )}
-        
+      
     </div>
   )
 }

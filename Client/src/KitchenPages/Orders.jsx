@@ -42,6 +42,8 @@ export const Orders=()=>{
         try{
           const res=await axios.get('http://localhost:5010/api/kitchen/processingOrder',{headers:{'Authorization':`Bearer ${token}`}});
           setProcessingOrders(res.data);
+          console.log(res.data);
+          
           
 
       }catch(error){
@@ -108,6 +110,32 @@ export const Orders=()=>{
         }
       }
     }, [token]);
+
+
+    const filteredCustomers = customerOrders.reduce((acc, obj) => {
+      const existing = acc.find(item => item._id === obj._id);
+    
+      if (existing) {
+        existing.orderItems.push({
+          foodItem: obj.orderItemName,
+          quantity: obj.quantity,
+        });
+      } else {
+        acc.push({
+         ...obj,
+          orderItems: [
+            {
+              foodItem: obj.orderItemName,
+              quantity: obj.quantity,
+            },
+          ],
+        });
+      }
+    
+      return acc;
+    }, []);
+    
+    
     return(
       <>
         <div className={styles.main_order_container}>
@@ -125,14 +153,18 @@ export const Orders=()=>{
             <div className={styles.inner_container}>
             <div className={styles.order_list}>
               {isLoading?<Loading/>:(
-                
-                customerOrders.length>0 ? (customerOrders.map((order,index)=>(
+                filteredCustomers.length>0 ? (filteredCustomers.map((order,index)=>(
                   <React.Fragment key={order.orderDetails._id}>
                       <div className={styles.order_card} >
                         <h3>#{index+1}</h3>
                         <p>{order.orderDetails.deliveryInfo.firstName}</p>
                         <ul>
-                           {order.orderItemName}-{order.quantity}
+                           {order.orderItems.map((elem,index)=>{
+                            return(
+                              <li key={index}>{elem.foodItem}-{elem.quantity}</li>
+
+                            )
+                           })}
                            
                         </ul>
                         <p>{order.orderDetails.deliveryInfo.phoneNumber}</p>

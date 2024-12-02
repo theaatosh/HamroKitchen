@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import {toast } from 'react-toastify';
 import Loading from '../Loading';
+import styles from '../../Styles/ForgotPassword/OtpVerify.module.css';
 
 export const VerifyOtp = () => {
     const location=useLocation();
@@ -64,20 +65,20 @@ export const VerifyOtp = () => {
     };
 
     return (
-        <div className='h-screen w-[100%] flex items-center justify-center bg-[#f5f5f5]'>
-            <form className='w-[30%]' onSubmit={handleSubmit}>
-                <div className='p-10 bg-white w-[100%]'>
-                    <div className='flex flex-col justify-center items-center'>
-                        <FaFingerprint className='text-[25px] font-bold' />
-                        <h1 className='text-3xl font-bold mt-5'>Verify your OTP</h1>
-                        <p className='text-gray-500 mt-1 text-sm'>
+        <div className={styles.otp_verify_main_con}>
+            <form className={styles.form} onSubmit={handleSubmit}>
+                <div className={styles.form_inner}>
+                    <div className={styles.upper}>
+                        <FaFingerprint className={styles.fingerprint_icon} />
+                        <h1 className={styles.heading}>Verify your OTP</h1>
+                        <p className={styles.sub_heading}>
                             Enter 6 digit OTP here we just sent to your email
                         </p>
                     </div>
-                    <div className='flex flex-col gap-3 mt-7'>
+                    <div className={styles.lower}>
                         <div>
-                            <label htmlFor="" className="text-md">OTP *</label>
-                            <div className="flex flex-nowrap gap-2 flex-shrink-0">
+                            <label htmlFor="" className={styles.otp_label}>OTP *</label>
+                            <div className={styles.otp_input_con}>
                                 {inputRef.map((item, index) => (
                                     <input
                                         required
@@ -91,17 +92,17 @@ export const VerifyOtp = () => {
                                                 e.target.value = e.target.value.slice(0, 1);
                                             }
                                         }}
-                                        className="w-[60px] h-[40px] border-2 rounded-xl outline-none focus:border-blue-500 hover:border-blue-400 text-center text-xl font-bold"
+                                        className={styles.otp_input}
                                     />
                                 ))}
                             </div>
                         </div>
 
-                        <div className='flex items-center justify-center mt-4'>
+                        <div className={styles.verify_btn}>
                             <Button type="submit">{isLoading?<Loading/>:"Verify"}</Button>
                         </div>
 
-                        <div className='mt-3'>
+                        <div className={styles.button}>
                             <BackToLogin />
                         </div>
                     </div>
