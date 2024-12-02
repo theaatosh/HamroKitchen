@@ -3,6 +3,7 @@ import styles from '../Styles/CustomerDetails.module.css';
 import { MdDeleteForever } from "react-icons/md";
 import axios from 'axios';
 export const CustomerDetails = ({customer}) => {
+  
 
   const handleDelete=async(id)=>{
 

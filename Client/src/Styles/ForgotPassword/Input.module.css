@@ -1,0 +1,18 @@
+.input{
+    border: 2px solid grey;
+    padding: 1.5vh 2.5vh;
+    width: 100%;
+    transition: all 0.5s linear;
+  
+
+    &:hover{
+        border:2px solid #60A5FA;
+
+    }
+    &:focus{
+        border:2px solid #60A5FA ;
+        outline: none;
+        border-radius: 2vh;
+    }
+
+}

@@ -80,3 +80,9 @@ flex-direction: column;
     background-color: #fff;
 
 }
+@media (max-width:600px) {
+    .admin_dashboard_container{
+        flex-direction: column;
+    }
+    
+}
