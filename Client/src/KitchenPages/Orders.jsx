@@ -23,6 +23,7 @@ export const Orders=()=>{
         try{
          const res=await axios.get('http://localhost:5010/api/kitchen/showOrder',{headers:{'Authorization':`Bearer ${token}`}});
           setCustomerOrders(res.data);
+          console.log(res.data);
           
           
           
