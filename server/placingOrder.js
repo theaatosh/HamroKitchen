@@ -20,6 +20,8 @@ const assignCookOrder=async (order)=>{
                 const orderItem=orderItems.orderedItem;
                 const orderSperationToKitchen=[];
                 const assignedOrderItemIds = new Set();
+
+                // available cook sabai check gayerw going thrg it
                 for(i=0;i<cook.length;i++){
                     if(cook[i].kitchenDetails.kitchenID.toString()===userId.userId){
                         console.log("skiping");
@@ -28,28 +30,24 @@ const assignCookOrder=async (order)=>{
                 const cookId=cook[i].kitchenDetails.kitchenID.toString();
                 const cookFoodItem= await user.findById(cookId,{_id:0,cookFoodItem:1})
                 const cookFoodItemArray= Object.keys(cookFoodItem.cookFoodItem);
+                //yeta chai order gareko item herni ani checking one by one
                 // console.log(cookFoodItem.cookFoodItem[cookFoodItemArray[0]]);
                 for(k=0;k<orderItem.length;k++){
-                    console.log(assignedOrderItemIds);
+                    // console.log(assignedOrderItemIds);
                     if (assignedOrderItemIds.has(orderItem[k].id)) {
                         console.log("skip item");
                         continue;
                     }
 
-
+                    //aba chai cook le banauna sakni fooditem ra order item check garni
                     for(j=0;j<cookFoodItemArray.length;j++){
-                        // console.log("1")
-                        // console.log(orderItem[k].id)
-                        // console.log(cookFoodItem[cookFoodItemArray[j]]);
-                        // console.log("1")
-                        
+                    
                         if(orderItem[k].id===cookFoodItem.cookFoodItem[cookFoodItemArray[j]]){
                             console.log("here");
                             orderSperationToKitchen.push({
                                 orderItemId: orderItem[k].id,
                                 kitchenId:cookId
                             });
-                            console.log("hi");
                             assignedOrderItemIds.add(orderItem[k].id);
                             break;
                         } 
@@ -61,14 +59,16 @@ const assignCookOrder=async (order)=>{
                     break;
                 }
               }
+
               if(orderItem.length===orderSperationToKitchen.length){
-                try{await orders.findByIdAndUpdate(orderId,{
+                try{
+                    await orders.findByIdAndUpdate(orderId,{
                     $set:{
                             orderCookIDDetails:orderSperationToKitchen,
                             orderStatus:'assignedToCook',
                         }
               });
-              console.log("your order has been placed to "+orderSperationToKitchen.kitchenId)
+            //   console.log("your order has been placed to "+orderSperationToKitchen.kitchenId)
             }  catch(err){
                 console.log(err);
               }
@@ -85,11 +85,10 @@ const assignCookOrder=async (order)=>{
                             orderStatus:'assignedToCookPartially',
                         }
               });
-              console.log("cook id"+orderSperationToKitchen.kitchenId)
+              console.log("cook id"+orderSperationToKitchen)
             }
           }
-        }
-                
+        }   
         }catch(err){
             console.log(err); 
         }
@@ -108,8 +107,8 @@ const fetchOrders=async()=>{
            const currentDate=new Date();
         //    const currentDate = format(new Date(), dateFormat);
            console.log(currentDate)
-           const scheduledTime=await parse(order[i].scheduledTime, dateFormat, new Date());
-        //    const scheduledTime = new Date(order[i].scheduledTime);
+        //    const scheduledTime=await parse(order[i].scheduledTime, dateFormat, new Date());
+           const scheduledTime = new Date(order[i].scheduledTime);
            console.log(scheduledTime);
            if(scheduledTime<=currentDate){
             console.log("here at scheduled");

@@ -112,6 +112,7 @@ export const Orders=()=>{
     }, [token]);
 
 
+    // console.log(customerOrders);
     const filteredCustomers = customerOrders.reduce((acc, obj) => {
       const existing = acc.find(item => item._id === obj._id);
     
