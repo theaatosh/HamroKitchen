@@ -98,34 +98,34 @@ export const PasswordUpdate = () => {
         
     
 
-        <div className='h-screen w-[100%] flex items-center justify-center  bg-[#f5f5f5]'>
-      <form className='w-[30%]' onSubmit={handleSubmit}>
-            <div className='  p-10 mt-[70px] bg-white w-[100%]'>
-                <div className='flex flex-col justify-center items-center '>
-                <GrUpdate className='text-[25px]'/>
-                        <h1 className='text-3xl font-bold mt-5'>New Password</h1>
-                        <p className='text-gray-500 mt-1'>Enter at least 6 digit long password</p>
+        <div className={styles.password_update_main_container}>
+      <form className={styles.form} onSubmit={handleSubmit}>
+            <div className={styles.form_inner}>
+                <div className={styles.upper}>
+                <GrUpdate className={styles.update_icon}/>
+                        <h1 className={styles.heading}>New Password</h1>
+                        <p className={styles.sub_heading}>Enter at least 6 digit long password</p>
                 </div>
-                <div className='flex flex-col gap-3 mt-7'>
+                <div className={styles.lower}>
                 
                 
-                <div className='flex flex-col '>
-                    <label htmlFor="" className='text-gray-500'>Password *</label>
-                   <Input placeholder={'Enter your Password'} name={"password"} onChange={(e)=>handlePasswordChange(e)}type={'password'}required  />
-                   {error.password && <p className="text-red-600">{error.password}</p>}
+                <div className={styles.password_input}>
+                    <label htmlFor="" className={styles.label}>Password *</label>
+                   <Input placeholder={'Enter your Password'} name={"password"} onChange={(e)=>handlePasswordChange(e)}type={'password'}  />
+                   {error.password && <p className={styles.error}>{error.password}</p>}
                 </div>
-                <div className='flex flex-col '>
-                    <label htmlFor="" className='text-gray-500'>Confirm Password *</label>
-                   <Input placeholder={'Re-enter your Password'} name={"confirmPassword"} onChange={(e)=>handleConfirmPasswordChange(e)} type={'password'}required  />
-                   {error.confirmPassword&& <p className="text-red-600">{error.confirmPassword}</p>}
+                <div className={styles.password_input}>
+                    <label htmlFor="" className={styles.label}>Confirm Password *</label>
+                   <Input placeholder={'Re-enter your Password'} name={"confirmPassword"} onChange={(e)=>handleConfirmPasswordChange(e)} type={'password'} />
+                   {error.confirmPassword&& <p className={styles.error}>{error.confirmPassword}</p>}
                 </div>
                     
-                    <div className='flex items-center justify-center mt-4'>
+                    <div className={styles.updatepw_con}>
                     <Button  type={'submit'}>{isLoading?<Loading/>:"Update Password"}</Button>
 
                     </div>
 
-                    <div className='mt-3'>
+                    <div className={styles.button}>
                         <BackToLogin/>
                     </div>
                 </div>
