@@ -126,8 +126,8 @@ const rejectOrder=async(req,res)=>{
     const {orderId}=req.body;
     const {userId}=req.user;
     try{
-        const order= await order.findById(orderId);
-        const kitchenIds = order.orderCookIDDetails.map(item => item.kitchenId);
+        const orders= await order.findById(orderId);
+        const kitchenIds = orders.orderCookIDDetails.map(item => item.kitchenId);
         const allSameKitchen = kitchenIds.every(id => id === kitchenIds[0]);
         if(allSameKitchen){
             const updatedRej=await order.findByIdAndUpdate(orderId,{
@@ -146,7 +146,7 @@ const rejectOrder=async(req,res)=>{
                             }
                     
         }else{
-            const itemToMove = order.orderCookIDDetails.find(item => item.kitchenId.toString() === userId.toString());
+            const itemToMove = orders.orderCookIDDetails.find(item => item.kitchenId.toString() === userId.toString());
             const updatedRej=await order.findByIdAndUpdate(orderId,{
                 $set:{
                     orderStatus:"assignedToCookPartially",
@@ -214,7 +214,8 @@ const processingOrder=async(req,res)=>{
                     }
                 }
             }
-            if (order.orderStatus === "processingPartially") {
+           if(arr.length>0) {
+                if (order.orderStatus === "processingPartially") {
                 result.push({
                     orderDetails: order,
                     partiallyAcceptedOrderID: order.partiallyAcceptedOrderID,
@@ -225,7 +226,7 @@ const processingOrder=async(req,res)=>{
                     orderDetails: order,
                     orderItems: arr
                 });
-            }
+            }}
         } 
         res.json(result);
     
