@@ -67,7 +67,9 @@ const assignCookOrder=async (order)=>{
                             orderCookIDDetails:orderSperationToKitchen,
                             orderStatus:'assignedToCook',
                         }
-              });}  catch(err){
+              });
+              console.log("your order has been placed to "+orderSperationToKitchen.kitchenId)
+            }  catch(err){
                 console.log(err);
               }
             }else{
@@ -83,6 +85,7 @@ const assignCookOrder=async (order)=>{
                             orderStatus:'assignedToCookPartially',
                         }
               });
+              console.log("cook id"+orderSperationToKitchen.kitchenId)
             }
           }
         }
