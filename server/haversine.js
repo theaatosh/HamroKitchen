@@ -73,7 +73,7 @@ const findKitchen=async(customerLocation, orderId)=>{
         //         filteredKitchensDislessthan2000.push(filteredKitchens[df]);
         //     }
         // }
-        const filteredKitchensDislessthan2000 = filteredKitchens.filter(kitchen => kitchen.distance < 5000);
+        const filteredKitchensDislessthan2000 = filteredKitchens.filter(kitchen => kitchen.distance < 50000);
         const filteredKitchensDisGreaterEqual2000 = filteredKitchens.filter(
             kitchen => kitchen.distance >= 2000
         );

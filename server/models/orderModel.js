@@ -35,18 +35,23 @@ const orderSchema=mongoose.Schema({
     },
     orderCookIDDetails:{
         type:Array,
+        default:[],
     },
     remaingOrderItemId:{
         type:Array,
+        default:[],
     },
     rejectedCookId:{
         type:Array,
+        default:[],
     },
     partiallyCompletedOrderID:{
         type:Array,
+        default:[],
     },
     partiallyAcceptedOrderID:{
         type:Array,
+        default:[],
     }
 
 });
