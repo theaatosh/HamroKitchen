@@ -67,7 +67,7 @@ export const Payment=()=>{
               <h3>Order Summary</h3>
               <div className={styles.total_amt}>
               <p>Total Amount</p>
-                <p>Rs:Rs.{getTotalCartAmount() ? getTotalCartAmount() + 50 : "0"}</p>
+                <p>Rs.{getTotalCartAmount() ? getTotalCartAmount() + 50 : "0"}</p>
               </div>
             </div>
 

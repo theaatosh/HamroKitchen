@@ -1,6 +1,6 @@
 .payment_container{
     margin-top: 13vh;
-    height: 70vh;
+    width: 100%;
     background-color: #EEF1F5;
     display: flex; 
     justify-content: space-between;
@@ -59,4 +59,28 @@
     & p{
         font-size: 3vh;
     }
+}
+@media (max-width:650px) {
+    .payment_container{
+        flex-direction: column;
+        width: 100%;
+        padding: 3vh 4vw;
+    }
+    .payment_wrapper{
+        width: 100%;
+    }
+    .option{
+        width: 50vw;
+    }
+    .payment_options{
+            gap:3vh;
+        & img{
+            width: 100%;
+            height: 100px;
+        }
+    }
+    .order_summary{
+        width: 100%;
+    }
+    
 }

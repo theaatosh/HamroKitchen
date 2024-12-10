@@ -22,6 +22,7 @@ export const StoreContextProvider = (props) => {
     lastName:'',
     email:'',
     phoneNumber:'',
+    address:'',
     deliveryLocation:{
       lat:'',
       lng:''

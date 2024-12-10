@@ -24,6 +24,7 @@ border-radius: 5vh;
 
 
     & input{
+      width: 100%;
         font-size: 2.1vh;
         padding: 1vh 1vw;
         border-radius: 1vh;
@@ -31,9 +32,7 @@ border-radius: 5vh;
         border: none;
         border-bottom: 1px solid black;
     }
-    & input:focus{
-      border-bottom:2.5px solid black;
-    }
+  
 }
 .multi_fields{
     display: flex;
@@ -55,13 +54,17 @@ border-radius: 5vh;
   rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
 .cart_total {
-  width: 50%;
+  width: 70%;
 
   & p {
     font-size: 3vh;
 
     }
 
+}
+.cart_total_heading{
+  font-size: 4vh;
+  margin-bottom: 3vh;
 }
 .cart_total_details {
   display: flex;
@@ -90,10 +93,44 @@ border-radius: 5vh;
 .input_error{
   color: red;
 }
-
+.order_schedule{
+  padding: 1vh 2vw;
+color: #fff;
+background-color: #555;
+margin-top: 2vh;
+border-radius: 2vh;
+}
 
 @media (max-width:768px) {
   .place_order_container{
     flex-direction: column;
+  }
+  .place_order_left{
+    width: 95%;
+  }
+  .multi_fields{
+    flex-direction: column;
+    gap: 3vh;
+  }
+  .place_order_form input{
+    width: 100%;
+  }
+
+  .place_order_right{
+  }
+  .cart_bottom {
+    width: 100%;
+  }
+  .cart_total_details{
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+  .cart_total {
+    padding: 0vh 1vh;
+    width: 100%;
+  }
+  .cart_bottom button {
+    width: 50%;
   }
 }

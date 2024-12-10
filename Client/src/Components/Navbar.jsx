@@ -201,10 +201,10 @@ const logout=()=>{
                     <img src="/Images/KitchenUser.png" alt="Profile" className={styles.profile_image} />
                     <h2 className={styles.username}>{profileData.userName || 'User Name'}</h2>
                     <p className={styles.role}>{profileData.email}</p>
-                </div><hr />
+                </div>
                     <div className={styles.edit_profile}>
                      <Link to={`/profile/${profileData.userName}`}>
-                     <p>Edit Profile</p>
+                     <p>View Profile</p>
                      </Link> 
                       </div>          
 

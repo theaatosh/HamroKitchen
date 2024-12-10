@@ -41,7 +41,10 @@ export const PlaceOrder=()=>{
         }
         else if(!/^[0-9]{10}$/.test(deliveryInfo.phoneNumber))
         {
-          formErrors.phoneNumber="Invalid phone Number";
+          formErrors.phoneNumber="Invalid phone Number *";
+        }
+        if(!deliveryInfo.address.trim()){
+          formErrors.address="Address is required *";
         }
        
         
@@ -159,6 +162,11 @@ export const PlaceOrder=()=>{
                         {error.phoneNumber && <p className={styles.input_error}>{error.phoneNumber}</p>}
 
                     </div>
+                    <div className={styles.manual_address}>
+                    <input type="text"  name='address' onChange={(e)=>handleDeliveryInfo(e)}  placeholder='Delivery Address'/>
+                        {error.address && <p className={styles.input_error}>{error.address}</p>}
+
+                    </div>
                     <label htmlFor="location">Choose your Location on Map :</label>
                   <MapContainer
                     center={[27.7172, 85.3240]}
@@ -177,8 +185,8 @@ export const PlaceOrder=()=>{
             <div className={styles.place_order_right}>
             <div className={styles.cart_bottom}>
           <div className={styles.cart_total}>
-            {selectedDateTime && <p>Order scheduled for: <br /> {selectedDateTime.toLocaleString()}</p>} <br />
-            <h2>Cart Totals</h2>
+            {selectedDateTime && <p className={styles.order_schedule}>Order scheduled for: <br /> {selectedDateTime.toLocaleString()}</p>} <br />
+            <h2 className={styles.cart_total_heading}>Cart Totals</h2>
             <div className={styles.cart_total_details}>
               <p>Sub Total</p>
               <p>Rs.{getTotalCartAmount()}</p>

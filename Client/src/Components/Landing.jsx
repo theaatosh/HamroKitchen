@@ -71,7 +71,7 @@ export const Landing = () => {
 
         {/* center search bar */}
         <div className={styles.search_bar}>
-          <input type="text" placeholder="Search here" value={searchItem } onChange={(e)=>handleSearchItem(e)} 
+          <input type="text" placeholder="Search here..." value={searchItem } onChange={(e)=>handleSearchItem(e)} 
             onKeyDown={(e)=>handleSearchItem(e)}/>
             <button className={styles.search_icon_container} onClick={()=>handleSearchAction()}>
             <FaSearch className={styles.search_icon}/>

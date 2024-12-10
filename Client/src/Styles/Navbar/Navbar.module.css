@@ -169,16 +169,17 @@
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 .profile_inner{
+    height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 1vh;
 }
 .profile_header{
-    height: 200px;
+    height: 80%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border-bottom: 1px solid grey;
 }
 .profile_image {
     width: 80px;
@@ -191,6 +192,7 @@
 }
 
 .edit_profile{
+    height: 20%;
     text-align: center;
     cursor: pointer;
     color: tomato;

@@ -67,7 +67,7 @@ export const MyOrders=()=>{
           </div>  
           <hr />
           <div>
-           {data.map((order,index)=>{
+           {data.length>0?data.map((order,index)=>{
           
             return(
               <React.Fragment key={order._id}>
@@ -83,7 +83,8 @@ export const MyOrders=()=>{
             </React.Fragment>
             )
 
-           })}
+           }):<div className={styles.no_orders}><h2 >No Orders Yet</h2>
+          <p>Looks like you haven’t placed any orders yet.</p></div>}
            {showModal && (
           <OrderHistoryModal
             setShowModal={setShowModal}

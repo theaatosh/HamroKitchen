@@ -133,6 +133,9 @@
        
     }
     }
+    .search_bar input::placeholder{
+        content:"hello";
+    }
     .search_icon_container{
         width: 13vw;
 
