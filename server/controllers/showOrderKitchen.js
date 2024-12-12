@@ -48,11 +48,11 @@ const showOrder=async(req,res)=>{
 }
 const acceptOrder=async(req,res)=>{
     const {orderId}=req.body;
-    // console.log(orderId);
     const {userId}=req.user;
    try{
      const orders= await order.findById(orderId);
      const kitchenIds = orders.orderCookIDDetails.map(item => item.kitchenId);
+     console.log(kitchenIds);
      const allSameKitchen = kitchenIds.every(id => id === kitchenIds[0]);
         if(allSameKitchen){
             const updated=await order.findByIdAndUpdate(orderId,{
@@ -69,30 +69,18 @@ const acceptOrder=async(req,res)=>{
                         res.json({message:"Done"});
                     }
         }else{
-            // const arr=orders.orderCookIDDetails.reduce((acc,obj)=>{
-            //     const h=orders.orderCookIDDetails.find(item => item.kitchenId.toString() === userId.toString());
-            //     if(h){
-            //         acc.push(obj);
-            //     }
-            //     return acc;
-            // },[])
             const arr = orders.orderCookIDDetails.filter(obj => 
                 obj.kitchenId.toString() === userId.toString()
             );            
-            console.log(arr);
-            // const itemToMove = orders.orderCookIDDetails.find(item => item.kitchenId.toString() === userId.toString());
-            // console.log(itemToMove);
             const updated=await order.findByIdAndUpdate(orderId,{
                 $set:{
-                    orderStatus:"processingPartially",
-                    partiallyAcceptedOrderID:arr,   
+                    orderStatus:"processingPartially", 
                 },
-                // $push:{
-                //     partiallyAcceptedOrderID:itemToMove,
-                // }
-                // $set:{
-                //     partiallyAcceptedOrderID:arr,
-                // }
+                $push: {
+                    partiallyAcceptedOrderID: {
+                        $each: arr,
+                    },
+                },
             })
             const increaseActiveOrders= await user.findByIdAndUpdate(userId,{
                 $inc: {
@@ -109,7 +97,7 @@ const acceptOrder=async(req,res)=>{
             if (allItemsAccepted) {
                 await order.findByIdAndUpdate(orderId, {
                     $set: { orderStatus: "processing" },
-                    $unset: { partiallyAcceptedOrderID: "" } // Optional: remove partiallyAcceptedOrderID
+                    $unset: { partiallyAcceptedOrderID: "" } 
                 });
             }
         
@@ -127,7 +115,7 @@ const rejectOrder=async(req,res)=>{
     const {userId}=req.user;
     try{
         const orders= await order.findById(orderId);
-        const kitchenIds = orders.orderCookIDDetails.map(item => item.kitchenId);
+        const kitchenIds = orders.orderCookIDDetailsOriginal.map(item => item.kitchenId);
         const allSameKitchen = kitchenIds.every(id => id === kitchenIds[0]);
         if(allSameKitchen){
             const updatedRej=await order.findByIdAndUpdate(orderId,{
@@ -146,21 +134,42 @@ const rejectOrder=async(req,res)=>{
                             }
                     
         }else{
-            const itemToMove = orders.orderCookIDDetails.find(item => item.kitchenId.toString() === userId.toString());
+            const itemToMove = orders.orderCookIDDetails.filter(item => item.kitchenId.toString() === userId.toString());
+            
             const updatedRej=await order.findByIdAndUpdate(orderId,{
                 $set:{
                     orderStatus:"assignedToCookPartially",
                 },
                 $push:{
+                    partiallyRejectedOrder: {
+                        $each: itemToReject,
+                    },
                     rejectedCookId:userId,
                 },
                 $pull: {
                     orderCookIDDetails: { kitchenId: userId }
                   },
-                  $push:{
-                    remaingOrderItemId:itemToMove
-                  }
+                $push: {
+                    remaingOrderItemId: {
+                        $each: itemToMove
+                    }
+                }
             })
+            const updatedOrder = await order.findById(orderId);
+
+            const allItemsRejected = updatedOrder.orderedItem.every(item =>
+                updatedOrder.partiallyRejectedOrder.some(
+                    partial => partial.orderItemId.toString() === item.id.toString()
+                )
+            );
+
+            if (allItemsRejected) {
+                await order.findByIdAndUpdate(orderId, {
+                    $set: { orderStatus: "processedWithPayment" },
+                    $unset: { partiallyRejectedOrder: "" },
+                });
+            }
+
             if(updatedRej){
                 res.json({message:"Done"});
             }

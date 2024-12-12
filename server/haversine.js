@@ -46,6 +46,7 @@ const findKitchen=async(customerLocation, orderId)=>{
     try{
         // const orderId=orderId;
         const rejectedCook= await order.findById(orderId,{_id:0,rejectedCookId:1});
+        console.log("Rejected Cook:"+rejectedCook);
         // console.log(typeof(rejectedCook));
         // if(rejectedCook.rejectedCookId ){
         //      filteredKitchens = nearestKitchenArray.filter(
@@ -57,9 +58,9 @@ const findKitchen=async(customerLocation, orderId)=>{
         //     // console.log("filteredKitchens"+filteredKitchens[0].kitchenID);
         //     return  filteredKitchens;
         // }
-        if (rejectedCook && rejectedCook.length > 0) {
-            for (let rj = 0; rj < rejectedCook.length; rj++) {
-                const rejectedCookId = rejectedCook[rj].rejectedCookId;
+        if (rejectedCook) {
+            for (let rj = 0; rj < rejectedCook.rejectedCookId.length; rj++) {
+                const rejectedCookId = rejectedCook.rejectedCookId[rj];
                 if (rejectedCookId) {
                     filteredKitchens = filteredKitchens.filter(kitchenInfo => 
                         !rejectedCookId.includes(kitchenInfo.kitchens._id.toString())

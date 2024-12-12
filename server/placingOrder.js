@@ -64,8 +64,10 @@ const assignCookOrder=async (order)=>{
                     await orders.findByIdAndUpdate(orderId,{
                     $set:{
                             orderCookIDDetails:orderSperationToKitchen,
+                            orderCookIDDetailsOriginal:orderSperationToKitchen,
                             orderStatus:'assignedToCook',
-                        }
+                            partiallyRejectedOrder:[]
+                        },
               });
             //   console.log("your order has been placed to "+orderSperationToKitchen.kitchenId)
             }  catch(err){
@@ -154,9 +156,11 @@ const processRejectedOrder=async(order)=>{
                 await orders.findByIdAndUpdate(orderId,{
                 $set:{
                         orderCookIDDetails: [...(order.orderCookIDDetails || []), ...orderSperationToKitchen],
+                        orderCookIDDetailsOriginal:[...(order.orderCookIDDetails || []), ...orderSperationToKitchen],
                         // orderCookIDDetails:orderSperationToKitchen,
                         orderStatus:'assignedToCook',
-                        remaingOrderItemId: []
+                        remaingOrderItemId: [],
+                        partiallyRejectedOrder:[]
                     }
           });
           console.log("Rejected order reassigned completely.");

@@ -14,13 +14,6 @@ const orderSchema=mongoose.Schema({
     orderStatus:{type:String,
         default:"Onprocess"
     },
-    // deliveryAddress:{
-    //     type:Object,
-    //     default:{
-    //         lat:"",
-    //         lon:"",
-    //     }
-    // },
     deliveryInfo:{
         type:Object,
     },
@@ -34,6 +27,10 @@ const orderSchema=mongoose.Schema({
         type:Object,
     },
     orderCookIDDetails:{
+        type:Array,
+        default:[],
+    },
+    orderCookIDDetailsOriginal:{
         type:Array,
         default:[],
     },
@@ -52,7 +49,12 @@ const orderSchema=mongoose.Schema({
     partiallyAcceptedOrderID:{
         type:Array,
         default:[],
+    },
+    partiallyRejectedOrder:{
+        type:Array,
+        default:[],
     }
+
 
 });
 const order=mongoose.model("Orders", orderSchema );
