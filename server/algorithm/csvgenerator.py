@@ -30,7 +30,7 @@ try:
             name = document['_id']
             type = document['foodType']
             spice = document['spice']
-            diet= document['diet']
+            diet= document['dietType']
 
             writer.writerow([name, type, spice, diet])
 

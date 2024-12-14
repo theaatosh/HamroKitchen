@@ -72,7 +72,13 @@ app.post('/login', async (req, res) =>{
     if(matched){
       // console.log(userFound);
       const role=await user.findById(userFound._id).select('role');
-      const token= jwt.sign({userId:userFound.id, userName:userName, role:role.role}, secretKey, {expiresIn: '1h'});
+      const recData=await user.findById(userFound._id).select('recData');
+      let a=false;
+      if(recData && recData.recData==null){
+         a=true;
+      }
+      console.log(recData);
+      const token= jwt.sign({userId:userFound.id, userName:userName, role:role.role, viewed:a}, secretKey, {expiresIn: '24h'});
       res.status(200).json({message:"login sucessfully",
         token:token,
       });
@@ -154,7 +160,7 @@ app.use('/api/editItem',editItem);
 const fetchOrders=require('./placingOrder.js');
 // setInterval(fetchOrders, 3*1000);
 
-const csvGen=require('./csvGen.js');
+const {csvGen}=require('./csvGen.js');
 csvGen();
 
 const dashboard=require('./routes/adminDashRoute.js');
@@ -168,5 +174,8 @@ app.use('/api/forgotpassword',passworddd);
 
 const users=require('./controllers/adminManageUser.js');
 app.get("/api/users",users);
+
+const foodRec=require('./routes/foodRecpyRoute.js');
+app.use("/api/recFood",foodRec);
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

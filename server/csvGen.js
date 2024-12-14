@@ -8,7 +8,7 @@ const csvGen = async (foodtype, spice, diet) => {
             const __filename = module.filename; // Fallback for __filename
             const __dirname = dirname(__filename);
 
-            const pythonScriptPath = join(__dirname, '..', '..', 'algorithm', 'csvgenerator.py');
+            const pythonScriptPath = join(__dirname, '..', '..','HamroKitchen','server', 'algorithm', 'csvgenerator.py');
             const pythonProcess = spawn('python', [pythonScriptPath]);
             let output = '';
 

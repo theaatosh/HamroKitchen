@@ -16,7 +16,7 @@ const upload =multer({storage:storage});
 
 
 const addItemsPage=async (req, res)=>{
-        const {name, description, price, category}=req.body;
+        const {name, description, price, category, foodType, diet, spice}=req.body;
         const imagePath=req.file.path;
         if (!name || !description || !price || !category) {
             return res.status(400).send("Missing required fields" );
@@ -30,6 +30,9 @@ const addItemsPage=async (req, res)=>{
                 productDescription:description,
                 productCategory:category,
                 productPrice:price,
+                foodType:foodType,
+                dietType:diet,
+                spice:spice,
             });
             await newItem.save();
             res.status(201).send("Food item added successfully");
