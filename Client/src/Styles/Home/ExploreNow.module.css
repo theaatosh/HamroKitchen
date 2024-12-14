@@ -23,14 +23,11 @@
   gap: 3vw;
   text-align: center;
   overflow:hidden;
+  overflow-x: scroll;
 }
-.menu_container:hover{
- overflow-x: scroll;
- border-radius: 5vh 5vh 0vh 0vh;
-}
+
 .menu_container::-webkit-scrollbar {
-  height: 8px; 
-  background-color: transparent; 
+  display:none;
 }
 .menu_container::-webkit-scrollbar-thumb {
   background-color: rgba(0, 0, 0, 0.5); 

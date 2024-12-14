@@ -1,11 +1,13 @@
-
 .addItems_main_container{
     /* color: #6d6d6d; */
     color: #36454F;
-    border-radius: 7vh;
+    border-radius: 7vh 0vh 0vh 7vh;
     width: 90%;
     margin: auto;
+    margin-top: 2vh;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    height: 85vh;
+    overflow-y: scroll;
 
     p {
         font-size: 2.5vh;
@@ -45,7 +47,9 @@
 }
 .add_category_price select,.add_category_price input{
     width: 10vw;
-    padding: 0.8vh 0.8vw;
+    padding: 1vh 1vw;
+    border-radius: 1vh;
+
 }
 
 
@@ -65,4 +69,22 @@ cursor: pointer;
         background-color: grey;
         color: #e2e2e2;
     }
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.section{
+    display: flex;
+    gap: 3vw;
+    
+}
+.box{
+    padding: 3vh;
+    border-radius: 2vh;
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+    background-color: rgba(128, 128, 128, 0.114);
 }
