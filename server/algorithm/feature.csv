@@ -1,0 +1,16 @@
+Food Name,Food Type,Spice,Diet
+Momo,fastfood,medium,veg
+Veg-Momo,fastfood,medium,nonveg
+chowmein,fastfood,low,veg
+chicken chowmein,fastfood,high,nonveg
+veg khana set,local,medium,veg
+non-veg khana,local,medium,nonveg
+chicken pizza,fastfood,high,nonveg
+cheese pizza,fastfood,medium,veg
+veg pizza,fastfood,low,veg
+Ham burger,fastfood,high,nonveg
+Chicken burger,fastfood,low,nonveg
+Veg Burger,fastfood,medium,veg
+Chicken Sekuwa,fastfood,high,nonveg
+pork sekuwa,fastfood,high,nonveg
+buff sekuwa,fastfood,low,nonveg

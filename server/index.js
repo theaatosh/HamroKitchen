@@ -152,7 +152,10 @@ const editItem=require('./routes/adminEditItemRoute.js');
 app.use('/api/editItem',editItem);
 
 const fetchOrders=require('./placingOrder.js');
-// setInterval(fetchOrders, 4*1000);
+// setInterval(fetchOrders, 3*1000);
+
+const csvGen=require('./csvGen.js');
+csvGen();
 
 const dashboard=require('./routes/adminDashRoute.js');
 app.use('/api/dashboard', dashboard);

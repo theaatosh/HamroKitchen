@@ -142,7 +142,7 @@ const rejectOrder=async(req,res)=>{
                 },
                 $push:{
                     partiallyRejectedOrder: {
-                        $each: itemToReject,
+                        $each: itemToMove,
                     },
                     rejectedCookId:userId,
                 },
@@ -157,15 +157,9 @@ const rejectOrder=async(req,res)=>{
             })
             const updatedOrder = await order.findById(orderId);
 
-            const allItemsRejected = updatedOrder.orderedItem.every(item =>
-                updatedOrder.partiallyRejectedOrder.some(
-                    partial => partial.orderItemId.toString() === item.id.toString()
-                )
-            );
-
-            if (allItemsRejected) {
+            if (updatedOrder.remaingOrderItemId.length===updatedOrder.orderedItem.length) {
                 await order.findByIdAndUpdate(orderId, {
-                    $set: { orderStatus: "processedWithPayment" },
+                    $set: { orderStatus: "processedWithPayment"},
                     $unset: { partiallyRejectedOrder: "" },
                 });
             }
@@ -287,7 +281,7 @@ const completeOrder=async(req,res)=>{
      const allSameKitchen = kitchenIds.every(id => id === kitchenIds[0]);
 
      let updated, decreaseActiveOrders;
-     if(allSameKitchen){
+     if(allSameKitchen && kitchenIds.length===orders.orderedItem.length){
          updated=await order.findByIdAndUpdate(orderId,{
                     $set:{
                         orderStatus:"completed",
@@ -300,7 +294,7 @@ const completeOrder=async(req,res)=>{
                 })
      }else{
         
-        const itemToMove = orders.orderCookIDDetails.find(item => item.kitchenId.toString() === userId.toString());
+        const itemToMove = orders.orderCookIDDetails.filter(item => item.kitchenId.toString() === userId.toString());
         if (!itemToMove) {
             return res.status(400).json({ message: "No item to complete for this kitchen" });
         }
@@ -309,7 +303,7 @@ const completeOrder=async(req,res)=>{
                 orderStatus:"completedPartially",
             },
             $push:{
-                 partiallyCompletedOrderID:itemToMove,
+                 partiallyCompletedOrderID:{$each:itemToMove},
             }
             
         })
@@ -321,12 +315,12 @@ const completeOrder=async(req,res)=>{
      }
      const updatedOrderData = await order.findById(orderId);
 
-     const allItemsCompleted = updatedOrderData.orderCookIDDetails.every(item =>
-         updatedOrderData.partiallyCompletedOrderID.some(
-             completedItem => completedItem.itemId.toString() === item.itemId.toString()
-         )
-     );
-     if(allItemsCompleted){
+    //  const allItemsCompleted = updatedOrderData.orderCookIDDetails.every(item =>
+    //      updatedOrderData.partiallyCompletedOrderID.some(
+    //          completedItem => completedItem.itemId.toString() === item.itemId.toString()
+    //      )
+    //  );
+     if(updatedOrderData.partiallyCompletedOrderID.length === updatedOrderData.orderedItem.length ){
         await order.findByIdAndUpdate(orderId, {
             $set: { orderStatus: "completed" }
         });

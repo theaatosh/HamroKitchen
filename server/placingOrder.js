@@ -12,6 +12,7 @@ const assignCookOrder=async (order)=>{
             const orderId=(order._id).toString();
             const customerLocation = order.deliveryInfo.deliveryLocation;
             const cooks=await availableCook(customerLocation, orderId);
+            // console.log(cooks);
             const cook= await loadBalancer(cooks);
            if(cook) {
                 console.log("cook with least active orders found");
@@ -32,7 +33,7 @@ const assignCookOrder=async (order)=>{
                 const cookFoodItemArray= Object.keys(cookFoodItem.cookFoodItem);
                 //yeta chai order gareko item herni ani checking one by one
                 for(k=0;k<orderItem.length;k++){
-                    // console.log(assignedOrderItemIds);
+                    console.log(assignedOrderItemIds);
                     if (assignedOrderItemIds.has(orderItem[k].id)) {
                         console.log("skip item");
                         continue;
@@ -75,13 +76,16 @@ const assignCookOrder=async (order)=>{
               }
             }else{
                 const orderItemIdMaking = orderSperationToKitchen.map(item => item.orderItemId);
-                const remaingOrderItemId= orderItem.filter(item => !orderItemIdMaking.includes(item))
+                // console.log("here is the:"+orderItemIdMaking)
+                // console.log(orderItem);
+                const remaingOrderItemId= orderItem.filter(item => !orderItemIdMaking.includes(item.id))
                 if(remaingOrderItemId.length==orderItem.length){
                     console.log("No kitchen can fulfill any of the order items.");
                 }else{
                 await orders.findByIdAndUpdate(orderId,{
                     $set:{
                             orderCookIDDetails:orderSperationToKitchen,
+                            orderCookIDDetailsOriginal:orderSperationToKitchen,
                             remaingOrderItemId:remaingOrderItemId,
                             orderStatus:'assignedToCookPartially',
                         }
@@ -171,7 +175,7 @@ const processRejectedOrder=async(order)=>{
           }
         }else{
             const orderItemIdMaking = orderSperationToKitchen.map(item => item.orderItemId);
-            const remaingOrderItemId= orderItem.filter(item => !orderItemIdMaking.includes(item))
+            const remaingOrderItemId= orderItem.filter(item => !orderItemIdMaking.includes(item.id))
             if(remaingOrderItemId.length==orderItem.length){
                 console.log("No kitchen can fulfill any of the order items.");
             }else{
