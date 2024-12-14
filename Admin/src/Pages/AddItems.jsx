@@ -11,7 +11,19 @@ export const AddItems=()=>{
         price:"",
         category:"Momo"
     })
+    const [selectedType,setSelectedType]=useState({
+        foodType:"",
+        spiceLevel:"",
+        dietType:"",
+      })
     
+      const handleOnChangee=(e)=>{
+        const{value,name}=e.target;
+        setSelectedType((preVal)=>({
+          ...preVal,[name]:value,
+        }))}
+        console.log(selectedType);
+        
     //onChange function call
     const handleOnChange=(e)=>{
         const{name,value}=e.target;
@@ -19,6 +31,7 @@ export const AddItems=()=>{
             ...preVal,[name]:value
         }))
     }
+    
     //onSubmit 
     const handleFormSubmit=async(e)=>{
         e.preventDefault();
@@ -30,7 +43,7 @@ export const AddItems=()=>{
         formData.append("image",image)
         console.log(formData);
         try{
-             const result = await axios.post('http://localhost:5010/addItems',formData, {
+             const result = await axios.post('http://localhost:5010/addItems',formData,selectedType, {
                 headers: {
                     'Content-Type': 'multipart/form-data' // Axios will handle this, but this is just for reference
                 }
@@ -104,8 +117,102 @@ export const AddItems=()=>{
                     <p>Food Price</p>
                     <input type="number" name="price" placeholder='Rs.200' value={data.price} required onChange={handleOnChange} />
                 </div>
+                
             </div>
             
+            <div className={styles.section}>
+                    <div className={styles.box}>
+                <h3>Choose Food Type</h3>
+            <label>
+              <input
+                type="radio"
+                name="foodType"
+                value="Fast Food"
+                checked={selectedType.foodType === 'Fast Food'}
+                onChange={ handleOnChangee}
+              /> Fast Food
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="foodType"
+                value="Local Food"
+                checked={selectedType.foodType === 'Local Food'}
+                onChange={handleOnChangee}
+              /> Local Food
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="foodType"
+                value="Both"
+                checked={selectedType.foodType === 'Both'}
+                onChange={handleOnChangee}
+              /> Both
+            </label>
+            </div>
+
+            <div className={styles.box}>
+            <h3>Choose Spice Level</h3>
+            <label>
+              <input
+                type="radio"
+                name="spiceLevel"
+                value="High"
+                checked={selectedType.spiceLevel === 'High'}
+                onChange={handleOnChangee}
+              /> High
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="spiceLevel"
+                value="Medium"
+                checked={selectedType.spiceLevel === 'Medium'}
+                onChange={handleOnChangee}
+              /> Medium
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="spiceLevel"
+                value="Low"
+                checked={selectedType.spiceLevel === 'Low'}
+                onChange={handleOnChangee}
+              /> Low
+            </label>
+            </div>
+            <div className={styles.box}>
+            <h3>Choose Diet Type</h3>
+            <label>
+              <input
+                type="radio"
+                name="dietType"
+                value="Veg"
+                checked={selectedType.dietType === 'Veg'}
+                onChange={handleOnChangee}
+              /> Veg
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="dietType"
+                value="Non-Veg"
+                checked={selectedType.dietType === 'Non-Veg'}
+                onChange={handleOnChangee}
+              /> Non-Veg
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="dietType"
+                value="Both"
+                checked={selectedType.dietType === 'Both'}
+                onChange={handleOnChangee}
+              /> Both
+            </label>
+            </div>
+          </div>
                 <button type='submit' className={styles.add_btn} >Add</button>
 
             </form>

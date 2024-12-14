@@ -1,7 +1,11 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styles from '../Styles/Home/RecomendedFood.module.css';
 import { FoodItemDisplay } from './FoodItemDisplay';
+import axios from 'axios';
+import { StoreContext } from '../Context/StoreContext';
 export const RecomendedFood = () => {
+  const{token}=useContext(StoreContext);
+  
     const [food,setFood]=useState([
         {
           key: "1",
@@ -45,6 +49,19 @@ export const RecomendedFood = () => {
         },
         
       ])
+
+      const fetchRecomended=async()=>{
+        try{
+          await axios.get('http://localhost:5010/api/recFood',{headers: {'Authorization': `Bearer ${token}`}})
+
+        }catch(error){
+          console.log(error);
+          
+        }
+      }
+      useEffect(()=>{
+       fetchRecomended();
+      },[])
   return (
     <div className={styles.recomended_food_main_con}>
         <h1>Recomended for you</h1>

@@ -35,7 +35,7 @@ setSelectedType((preVal)=>({
       try{
         console.log(token);
         
-        const response=await axios.post('http://localhost:5010/api/recFood',selectedType,{headers: {'Authorization': `Bearer ${token}`}});
+        await axios.post('http://localhost:5010/api/recFood',selectedType,{headers: {'Authorization': `Bearer ${token}`}});
       }catch(error){
         console.log(error);
         
