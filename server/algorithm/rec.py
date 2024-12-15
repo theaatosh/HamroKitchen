@@ -3,10 +3,14 @@ import pandas as pd
 import sys
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-def main():
-    df1=pd.read_csv('feature.csv')
+def main(foodtype,spice,diet):
+    df1=pd.read_csv(r'C:\Users\Acer\Desktop\projectHK\HamroKitchen\server\algorithm\feature.csv')
     # print(df1.to_string)
-    df2=pd.read_csv('user_preference.csv')
+    df2 = pd.DataFrame({
+        'Food Type': [foodtype],
+        'Spice': [spice],
+        'Diet': [diet]
+    })
     # print(pd.DataFrame(df2))
     
     df1['feature_overview']=df1['Food Type']+" "+df1['Spice']+" "+df1['Diet']
@@ -72,6 +76,6 @@ if __name__ == '__main__':
     spice=sys.argv[2]
     diet=sys.argv[3]
     # print(foodtype,spice,diet)
-    result = main()
+    result = main(foodtype,spice,diet)
     # print("The Dishes:")
     print(result)

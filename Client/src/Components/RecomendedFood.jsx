@@ -52,8 +52,9 @@ export const RecomendedFood = () => {
 
       const fetchRecomended=async()=>{
         try{
-          await axios.get('http://localhost:5010/api/recFood',{headers: {'Authorization': `Bearer ${token}`}})
-
+          console.log(token)
+          const res=await axios.get('http://localhost:5010/api/recFood',{headers: {'Authorization': `Bearer ${token}`}})
+          console.log(res);
         }catch(error){
           console.log(error);
           
@@ -61,7 +62,7 @@ export const RecomendedFood = () => {
       }
       useEffect(()=>{
        fetchRecomended();
-      },[])
+      },[token])
   return (
     <div className={styles.recomended_food_main_con}>
         <h1>Recomended for you</h1>

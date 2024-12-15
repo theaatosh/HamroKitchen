@@ -6,6 +6,10 @@ const foodItemSchema=mongoose.Schema({
     productDescription:{type:String},
     productCategory:{type:String},
     productPrice:{type:Number},
+    foodType:{type:String},
+    dietType:{type:String},
+    spice:{type:String},
+
 });
 
 const foodItemDetails=mongoose.model("foodItemDetails", foodItemSchema );

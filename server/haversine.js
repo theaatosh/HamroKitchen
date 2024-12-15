@@ -1,7 +1,5 @@
 const user= require("./models/index");
 const order=require("./models/orderModel");
-const mongoose=require('mongoose');
-const { connectToMongoDB } = require("./connections/index");
 require('dotenv').config();
 
 
@@ -24,60 +22,37 @@ const findKitchen=async(customerLocation, orderId)=>{
     try{
         const kitchens= await user.find({role:"kitchen" , cookStatus:"online"});
         const nearestKitchenArray=[];
-        // console.log(kitchens.length +"kitchens");
-
         for (let i = 0; i < kitchens.length; i++) {
-            // customerLocation=await customerLocation
-            // console.log("here");
-            // console.log(i);
+           
             const distance = haversine(customerLocation.lat,customerLocation.lng, kitchens[i].cookLocation.lat, kitchens[i].cookLocation.lng);
             const kitchenInfo ={
-                // kitchens:kitchens[i],
                 kitchenID:kitchens[i]._id,
                 distance:distance
              };
             nearestKitchenArray.push(kitchenInfo);
         }
         nearestKitchenArray.sort((a, b) => a.distance - b.distance);
-        // console.log("here"+nearestKitchenArray[0].kitchenID);
         let filteredKitchens=[];
          filteredKitchens=nearestKitchenArray;
-        // console.log(filteredKitchens.length + "filteredKitchens")
     try{
-        // const orderId=orderId;
-        const rejectedCook= await order.findById(orderId,{_id:0,rejectedCookId:1});
-        console.log("Rejected Cook:"+rejectedCook);
-        // console.log(typeof(rejectedCook));
-        // if(rejectedCook.rejectedCookId ){
-        //      filteredKitchens = nearestKitchenArray.filter(
-        //         (kitchenInfo) => !rejectedCook.rejectedCookId.includes(kitchenInfo.kitchens._id.toString())
-        //       );
-        //     //   console.log("here"+filteredKitchens[0].kitchenID);
-        //     return  filteredKitchens;
-        // }else{
-        //     // console.log("filteredKitchens"+filteredKitchens[0].kitchenID);
-        //     return  filteredKitchens;
-        // }
+        const rejectedCook= await order.findById(orderId,{_id:0,rejectedCookId:1});       
         if (rejectedCook) {
             for (let rj = 0; rj < rejectedCook.rejectedCookId.length; rj++) {
-                const rejectedCookId = rejectedCook.rejectedCookId[rj];
+                const rejectedCookId = rejectedCook.rejectedCookId;
                 if (rejectedCookId) {
+                    console.log(rejectedCookId)
+                    console.log(filteredKitchens);
                     filteredKitchens = filteredKitchens.filter(kitchenInfo => 
-                        !rejectedCookId.includes(kitchenInfo.kitchens._id.toString())
+                        !rejectedCookId.includes(kitchenInfo.kitchenID.toString())
                     );
                 }
             }
         }
-        // const filteredKitchensDislessthan2000=[];
-        // for(let df=0;df<filteredKitchens.length;df++){
-        //     if(filteredKitchens[df].distance<2000){
-        //         filteredKitchensDislessthan2000.push(filteredKitchens[df]);
-        //     }
-        // }
-        const filteredKitchensDislessthan2000 = filteredKitchens.filter(kitchen => kitchen.distance < 50000);
+        const filteredKitchensDislessthan2000 = filteredKitchens.filter(kitchen => kitchen.distance < 500000);
         const filteredKitchensDisGreaterEqual2000 = filteredKitchens.filter(
             kitchen => kitchen.distance >= 2000
         );
+        console.log(filteredKitchensDislessthan2000)
         return filteredKitchensDislessthan2000;
 
     }catch(err){
@@ -88,9 +63,5 @@ const findKitchen=async(customerLocation, orderId)=>{
 catch(err){
     console.log(err);
 }}
-
-// findKitchen()
-//     .then(kitchen => console.log( kitchen))
-//     .catch(err => console.error("Error finding kitchen:", err));
 
 module.exports=findKitchen;

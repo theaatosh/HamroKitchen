@@ -41,9 +41,13 @@ export const AddItems=()=>{
         formData.append("price",data.price)
         formData.append("category",data.category)
         formData.append("image",image)
+        formData.append("foodType",selectedType.foodType)
+        formData.append("diet",selectedType.dietType)
+        formData.append("spice",selectedType.spiceLevel)
+
         console.log(formData);
         try{
-             const result = await axios.post('http://localhost:5010/addItems',formData,selectedType, {
+             const result = await axios.post('http://localhost:5010/addItems',formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data' // Axios will handle this, but this is just for reference
                 }
