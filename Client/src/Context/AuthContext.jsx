@@ -12,7 +12,7 @@ export const AuthContextProvider=({children})=>{
 
   const[showModal,setShowModal]=useState(false);//for  food preferences modal 
   const [isLoggedIn,setIsLoggedIn]=useState(false);
-  const[userDetails,setUserDetails]=useState({userName:'',role:''});
+  const[userDetails,setUserDetails]=useState({userName:'',role:'',viewed:false});
   const {token,setToken}=useContext(StoreContext);
 
 
@@ -79,8 +79,9 @@ export const AuthContextProvider=({children})=>{
   const userCredentials=(token)=>{
     try{
       const decodedToken=jwtDecode(token);
-      const{userName,role}=decodedToken;
-      setUserDetails({userName,role})
+      
+      const{userName,role,viewed}=decodedToken;
+      setUserDetails({userName,role,viewed})
       
     }
     catch(error){
@@ -91,7 +92,10 @@ export const AuthContextProvider=({children})=>{
   //on every refresh token is fetched from localstorage and then passed to userCredentials
   useEffect(()=>{
     const token=localStorage.getItem('token');
-    userCredentials(token);
+    if(token){
+      userCredentials(token);
+    }
+
 
 },[])
 
