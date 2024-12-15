@@ -13,7 +13,7 @@ import Loading from '../Components/Loading';
 export const LoginPage=()=>{
 
   const navigate=useNavigate();
-  const{login,userCredentials,setShowModal}=useAuth();
+  const{login,userCredentials,setShowModal,userDetails}=useAuth();
   const{setToken}=useContext(StoreContext);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -39,6 +39,8 @@ export const LoginPage=()=>{
 
     return formErrors;
     }
+  
+    
     const handleSubmit= async (e)=>{
       e.preventDefault();
       const validationError=validate();
@@ -62,7 +64,13 @@ export const LoginPage=()=>{
                 const token = result.data.token;
              localStorage.setItem('token', token); 
               setToken(token);
-              setShowModal(true);
+              if(!userDetails.viewed){
+                setShowModal(true);
+              }else{
+                setShowModal(false);
+              }
+                
+
               //token bata decode gareko user details
               userCredentials(token);
               

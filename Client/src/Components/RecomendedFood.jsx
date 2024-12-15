@@ -3,8 +3,10 @@ import styles from '../Styles/Home/RecomendedFood.module.css';
 import { FoodItemDisplay } from './FoodItemDisplay';
 import axios from 'axios';
 import { StoreContext } from '../Context/StoreContext';
+import { useAuth } from '../Context/AuthContext';
 export const RecomendedFood = () => {
   const{token}=useContext(StoreContext);
+  const{userDetails}=useAuth();
   
     const [food,setFood]=useState([
         {
@@ -52,16 +54,20 @@ export const RecomendedFood = () => {
 
       const fetchRecomended=async()=>{
         try{
-          console.log(token)
+         
           const res=await axios.get('http://localhost:5010/api/recFood',{headers: {'Authorization': `Bearer ${token}`}})
-          console.log(res);
+          console.log(res.data);
         }catch(error){
           console.log(error);
           
         }
       }
       useEffect(()=>{
-       fetchRecomended();
+        console.log(userDetails.viewed,token);
+        
+        if(token && userDetails.viewed){
+          fetchRecomended();
+        }
       },[token])
   return (
     <div className={styles.recomended_food_main_con}>
