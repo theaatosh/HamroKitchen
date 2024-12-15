@@ -78,4 +78,4 @@ if __name__ == '__main__':
     # print(foodtype,spice,diet)
     result = main(foodtype,spice,diet)
     # print("The Dishes:")
-    print(result)
+    # print(result)

@@ -10,7 +10,6 @@ const foodRec=async (req,res)=>{
         const recData=Object.keys(rec);
         // const recData=['fastfood', 'medium', 'veg']
         const data=await runPythonFunction(recData);
-        console.log(data);
         res.json(data);
     }catch(err){
         console.log(err);
