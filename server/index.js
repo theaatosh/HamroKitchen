@@ -72,9 +72,9 @@ app.post('/login', async (req, res) =>{
     if(matched){
       // console.log(userFound);
       const role=await user.findById(userFound._id).select('role');
-      const recData=await user.findById(userFound._id).select('recData');
+      const recData=await user.findById(userFound._id,{_id:0,recData:1});
       let a=false;
-      if(recData.recData && recData.recData!=null){
+      if(recData && Object.keys(recData.recData).length > 0){
          a=true;
       }
       const token= jwt.sign({userId:userFound.id, userName:userName, role:role.role, viewed:a}, secretKey, {expiresIn: '24h'});
