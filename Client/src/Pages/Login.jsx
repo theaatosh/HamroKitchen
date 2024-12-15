@@ -64,6 +64,9 @@ export const LoginPage=()=>{
                 const token = result.data.token;
              localStorage.setItem('token', token); 
               setToken(token);
+              //token bata decode gareko user details
+              userCredentials(token);
+              
               if(!userDetails.viewed){
                 setShowModal(true);
               }else{
@@ -71,8 +74,6 @@ export const LoginPage=()=>{
               }
                 
 
-              //token bata decode gareko user details
-              userCredentials(token);
               
               login();
             

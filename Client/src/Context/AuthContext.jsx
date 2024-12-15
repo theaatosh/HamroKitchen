@@ -82,6 +82,7 @@ export const AuthContextProvider=({children})=>{
       
       const{userName,role,viewed}=decodedToken;
       setUserDetails({userName,role,viewed})
+      console.log(viewed);
       
     }
     catch(error){
