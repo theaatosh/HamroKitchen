@@ -24,3 +24,10 @@
 
     }
 }
+@media (max-width:600px) {
+    .revenue_con{
+        width: 100%;
+            gap: 4vh;
+    }
+    
+}

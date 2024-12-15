@@ -1,13 +1,16 @@
 import styles from '../Styles/Kitchen/KitchenNavbar.module.css'
 import { useAuth } from '../Context/AuthContext';
+import { GiCrossMark } from "react-icons/gi";
+import { IoMenu } from "react-icons/io5";
 
-export const KitchenNavbar=()=>{
+export const KitchenNavbar=({handleMenuToggle,isOpen})=>{
     const{isKitchenOnline,handleToggle}=useAuth();
     const { profileData} = useAuth();
     
     return (
         <>
             <div className={styles.navbar}>
+                <div className={styles.menu_icon}>{isOpen?(<GiCrossMark className={styles.cross} onClick={handleMenuToggle}/>):(<IoMenu className={styles.normal_icon} onClick={handleMenuToggle}/>)}</div>
                 <div className={styles.nav_logo}>
                 <img src="/Images/NavbarLogo.png" alt="logo" />
                 </div>

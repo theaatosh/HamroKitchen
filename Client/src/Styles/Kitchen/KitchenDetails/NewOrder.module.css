@@ -27,3 +27,10 @@
         font-weight: 700;
     }
 }
+@media (max-width:600px) {
+    .newOrder_con{
+        width: 100%;
+            gap: 4vh;
+    }
+    
+}

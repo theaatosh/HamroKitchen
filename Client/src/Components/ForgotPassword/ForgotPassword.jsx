@@ -30,8 +30,8 @@ export const ForgotPassword = () => {
            navigate('/otp/verify',{state:{email}});
           }
       } catch (error) {
-         console.log(error);
-         toast.error(error.message,{autoClose:1500})
+         console.log(error.response.data.message);
+         toast.error(error.response.data.message,{autoClose:1500})
       }
       finally{
         setIsLoading(false);

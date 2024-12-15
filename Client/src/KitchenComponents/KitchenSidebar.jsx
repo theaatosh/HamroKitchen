@@ -1,7 +1,6 @@
 import { IoSettings } from "react-icons/io5";
 import { IoFastFood } from "react-icons/io5";
-import { GiCrossMark } from "react-icons/gi";
-import { IoMenu } from "react-icons/io5";
+
 import { MdSpaceDashboard } from "react-icons/md";
 import { PiUserSwitchBold } from "react-icons/pi";
 import styles from '../Styles/Kitchen/KitchenSidebar.module.css';
@@ -32,15 +31,10 @@ const routeArray=[
     }
 
 ]
-export const KitchenSidebar=()=>{
-    const[isOpen,setIsOpen]=useState(false);
+export const KitchenSidebar=({isOpen})=>{
 
     const {setIsKitchenOnline,updateKitchenStatus}=useAuth();
-    const handleMenuToggle=()=>{
-
-        setIsOpen(!isOpen);
-    }
-    
+  
     const handleSwitchCustomer=()=>{
        const status= localStorage.getItem('OnlineStatus');
        if(status||!status){
@@ -57,7 +51,7 @@ export const KitchenSidebar=()=>{
     return (
         <>
         <div className={isOpen? styles.sidebar:styles.mini_sidebar}>
-            <div className={styles.menu_icon}>{isOpen?(<GiCrossMark className={styles.cross} onClick={handleMenuToggle}/>):(<IoMenu className={styles.normal_icon} onClick={handleMenuToggle}/>)}</div>
+            
             <div className={styles.sidebar_options}>
                     {routeArray.map((curRoute,index)=>{ 
                         return(

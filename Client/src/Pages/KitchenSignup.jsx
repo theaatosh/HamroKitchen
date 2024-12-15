@@ -5,19 +5,20 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { StoreContext } from '../Context/StoreContext';
+import { useAuth } from '../Context/AuthContext';
 
 
 export const KitchenSignup = () => {
   
   const {foodItems}=useContext(StoreContext);
+  const {profileData}=useAuth();
   const token= localStorage.getItem('token');
-// console.log(token);
   const [formData, setFormData] = useState({
     selectedItems: {},
     location: { lat: null, lng: null }, // stores latitude and longitude
   });
-  
-  
+
+
   //data lai category ko basis ma combine garera store gareko
   const groupedData=foodItems.reduce((acc,item)=>{
     const category=item.productCategory;
@@ -34,8 +35,6 @@ export const KitchenSignup = () => {
     category:category,
     foodItems:groupedData[category].foodItems
   }))
-
-console.log(formData);
 
 
 //harek check ra uncheck ma call hunxa
@@ -177,7 +176,21 @@ console.log(formData);
               <ToastContainer/>
             </div>
 
-
+          <div className={styles.userInfo}>
+            
+            <div className={styles.details}>
+            <label htmlFor="userName" className={styles.label}>UserName:</label>
+            <input type="text" id='userName' value={profileData?.userName||"username"} disabled/>
+            </div>
+            <div className={styles.details}>
+            <label htmlFor="email" className={styles.label}>Email:</label>
+            <input type="text" id='email' value={profileData?.email||"xyz@gmail.com"} disabled/>
+            </div>
+            <div className={styles.details}>
+            <label htmlFor="phoneNumber" className={styles.label}>PhoneNumber:</label>
+            <input type="text" id='phoneNumber' value={profileData?.phoneNumber||"98********"} disabled/>
+            </div>
+          </div>
             {/* Input Details */}
             <div className={styles.input_details}>
               <form onSubmit={handleSubmit}>

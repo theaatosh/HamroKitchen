@@ -49,6 +49,7 @@ export const StoreContextProvider = (props) => {
     foodDisplayRef.current.scrollIntoView({behavior:"smooth"});
   }
   const [searchItem,setSearchItem]=useState('');//for landing page search bar
+  
   const handleSearchItem=(e)=>{
     setSearchItem(e.target.value.toLowerCase());  
   if(e.key==='Enter')

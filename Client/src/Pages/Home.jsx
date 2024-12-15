@@ -3,8 +3,6 @@ import { Landing } from '../Components/Landing';
 import { FoodDisplay } from '../Components/FoodDisplay';
 import { AboutUs } from '../Components/AboutUs';
 import { FoodOptionModal } from '../Components/FoodOptionModal';
-import { useContext, useEffect, useState } from 'react';
-import { StoreContext } from '../Context/StoreContext';
 import { useAuth } from '../Context/AuthContext';
 import { RecomendedFood } from '../Components/RecomendedFood';
 

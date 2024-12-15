@@ -82,7 +82,6 @@ export const AuthContextProvider=({children})=>{
       
       const{userName,role,viewed}=decodedToken;
       setUserDetails({userName,role,viewed})
-      console.log(viewed);
       
     }
     catch(error){
@@ -100,8 +99,17 @@ export const AuthContextProvider=({children})=>{
 
 },[])
 
-   const login=()=>{
+   const login=(token)=>{
     setIsLoggedIn(true);
+    const decodedToken=jwtDecode(token);
+    const{viewed}=decodedToken;
+      if(viewed===false){
+        
+        setShowModal(true);
+      }else{
+        setShowModal(false);
+      }
+    
   }
   useEffect(()=>{
   if(token)
