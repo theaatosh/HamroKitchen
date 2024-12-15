@@ -202,15 +202,7 @@ export const AddItems=()=>{
                 onChange={handleOnChangee}
               /> Non-Veg
             </label>
-            <label>
-              <input
-                type="radio"
-                name="dietType"
-                value="Both"
-                checked={selectedType.dietType === 'Both'}
-                onChange={handleOnChangee}
-              /> Both
-            </label>
+           
             </div>
           </div>
                 <button type='submit' className={styles.add_btn} >Add</button>
