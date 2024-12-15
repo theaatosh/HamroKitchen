@@ -74,10 +74,9 @@ app.post('/login', async (req, res) =>{
       const role=await user.findById(userFound._id).select('role');
       const recData=await user.findById(userFound._id).select('recData');
       let a=false;
-      if(recData && recData.recData==null){
+      if(recData.recData && recData.recData!=null){
          a=true;
       }
-      console.log(recData);
       const token= jwt.sign({userId:userFound.id, userName:userName, role:role.role, viewed:a}, secretKey, {expiresIn: '24h'});
       res.status(200).json({message:"login sucessfully",
         token:token,
