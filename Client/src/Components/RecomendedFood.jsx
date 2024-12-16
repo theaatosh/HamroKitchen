@@ -49,7 +49,6 @@ const handleRecFood=()=>{
         setLoading(true);
         try{         
           const res=await axios.get('http://localhost:5010/api/recFood',{headers: {'Authorization': `Bearer ${token}`}});
-          const arr = res.data.replace(/[\[\]']+/g, "").split(',');
             setFood(res.data);
         }catch(error){
           console.log(error);
@@ -80,7 +79,7 @@ const handleRecFood=()=>{
         <h1>Recomended for you</h1>
         <div className={styles.recomended_food_inner}>
             {loading?<div className={styles.loading}><Loading/></div>:recFilteredItems.length>0 && 
-             recFilteredItems.slice(0,4).map((curItem,index)=>{
+             recFilteredItems.slice(0,4).map((curItem)=>{
                 return(
                 <FoodItemDisplay
                 key={curItem._id}
