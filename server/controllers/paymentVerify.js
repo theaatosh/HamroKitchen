@@ -14,7 +14,6 @@ const paymentVerify=async(req,res)=>{
           { pidx },
           { headers }
         );
-        console.log(response.data);
         if(response.data.status==="Completed"){
           const{userId}=req.user;
           const orderStatus='Onprocess'
@@ -43,10 +42,11 @@ const paymentVerify=async(req,res)=>{
                 }, 
                 { new: true }  
               );
-              // console.log(h);
             }catch(err){
               console.log("error while removing item from cart"+err)
             }
+          }else{
+            
           }
         }
         res.send(response.data); 
