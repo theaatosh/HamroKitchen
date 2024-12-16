@@ -21,8 +21,10 @@ export const Navbar = () => {
   const[lastScrollY,setLastScrollY]=useState(0);
   const navigate=useNavigate();
 
-//logout garne function
-const logout=()=>{
+
+  
+  //logout garne function
+  const logout=()=>{
   setIsLoggedIn(false);
   localStorage.removeItem('token');
   localStorage.removeItem('OnlineStatus');
@@ -43,13 +45,16 @@ const logout=()=>{
   const toggleNotificationMenu=()=>{
       setIsNotificationOpen((preState)=>!preState)
   }
-  const handleScroll=()=>{    
+  const handleScroll=()=>{  
+    if(window.scrollY<600){
+      setIsVisible(true);
+    }  else{
     let currentScrollY=window.scrollY;
   
     
     if(currentScrollY>lastScrollY)
     {
-      setIsVisible(false)
+      setIsVisible(false);
       
     }
     else{
@@ -57,7 +62,7 @@ const logout=()=>{
       
     }
     setLastScrollY(currentScrollY);
-  }
+  }}
   useEffect(()=>{
     window.addEventListener('scroll',handleScroll)
     return()=>window.removeEventListener('scroll',handleScroll)
