@@ -1,10 +1,16 @@
 import React from 'react'
 import styles from '../Styles/KitchenDetails.module.css';
-import { MdDeleteForever } from "react-icons/md";
 import axios from 'axios';
+import { PiUserSwitchLight } from "react-icons/pi";
 export const KitchenDetails = ({kitchen}) => {
   
- 
+ let str="['aatosh','sharma']";
+ str = str.replace(/^\[|\]$/g, ""); // Removes [ and ] at the start and end of the string
+
+// Step 2: Split into array and clean up quotes
+let array = str.split(",").map(item => item.trim().replace(/^"|"$/g, ""));
+let cleanArray = array.map(item => item.replace(/^'|'$/g, ''));
+console.log(cleanArray); 
   const handleDelete=async(id)=>{
     try{
      
@@ -36,7 +42,7 @@ export const KitchenDetails = ({kitchen}) => {
               <p>{item.email}</p>
               <p>{item.phoneNumber}</p>
               <p className={item.cookStatus==="offline" ?styles.offline:styles.online}>{item.cookStatus}</p>
-              <MdDeleteForever className={styles.delete} onClick={()=>handleDelete(item._id)}/>
+              <PiUserSwitchLight className={styles.delete} onClick={()=>handleDelete(item._id)}/>
             </div>
           )
         })}
