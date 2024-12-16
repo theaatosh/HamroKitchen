@@ -31,9 +31,9 @@ const assignCookOrder=async (order)=>{
                 const cookId=cook[i].kitchenDetails.kitchenID.toString();
                 const cookFoodItem= await user.findById(cookId,{_id:0,cookFoodItem:1})
                 const cookFoodItemArray= Object.keys(cookFoodItem.cookFoodItem);
+
                 //yeta chai order gareko item herni ani checking one by one
                 for(k=0;k<orderItem.length;k++){
-                    console.log(assignedOrderItemIds);
                     if (assignedOrderItemIds.has(orderItem[k].id)) {
                         console.log("skip item");
                         continue;

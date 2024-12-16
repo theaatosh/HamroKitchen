@@ -32,7 +32,7 @@ const runPythonFunction = async (foodtype, spice, diet) => {
             });
         });
 
-        // console.log('Result:', result); // Log the result
+        console.log('Result:', result); // Log the result
         return result;
     } catch (error) {
         console.error('Error running Python script:', error);

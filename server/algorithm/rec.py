@@ -68,7 +68,7 @@ def main(foodtype,spice,diet):
         # print(f"{row['Food Name']}")
         dishes.append(row['Food Name'])
 
-    # print(dishes)
+    print(dishes)
     return dishes
 
 if __name__ == '__main__':
