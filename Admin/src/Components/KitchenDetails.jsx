@@ -4,13 +4,6 @@ import axios from 'axios';
 import { PiUserSwitchLight } from "react-icons/pi";
 export const KitchenDetails = ({kitchen}) => {
   
- let str="['aatosh','sharma']";
- str = str.replace(/^\[|\]$/g, ""); // Removes [ and ] at the start and end of the string
-
-// Step 2: Split into array and clean up quotes
-let array = str.split(",").map(item => item.trim().replace(/^"|"$/g, ""));
-let cleanArray = array.map(item => item.replace(/^'|'$/g, ''));
-console.log(cleanArray); 
   const handleDelete=async(id)=>{
     try{
      
