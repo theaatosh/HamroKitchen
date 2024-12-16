@@ -7,7 +7,7 @@ import Loading from "./Loading";
 
 export const FoodDisplay = () => {
   //from store context
-  const { foodItems,  category, searchItem,isLoading,aboutUsRef } = useContext(StoreContext);
+  const { foodItems,  category, searchItem,isLoading,aboutUsRef ,foodDisplayRef} = useContext(StoreContext);
 
   const [filteredItem, setFilteredItem] = useState([]);
   useEffect(() => {
@@ -37,7 +37,7 @@ export const FoodDisplay = () => {
   , [category, searchItem,foodItems,isLoading]);
   return (
     <>
-      <div  className={styles.food_display_container}>
+      <div  className={styles.food_display_container} ref={foodDisplayRef}>
         <h1>Available Dishes</h1>
         <div  className={styles.food_display_list}>
           

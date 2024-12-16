@@ -1,12 +1,16 @@
 import styles from '../Styles/Navbar.module.css';
 import { FaUserCircle } from "react-icons/fa";
+import { IoMenu } from "react-icons/io5";
 
-export const Navbar=()=>{
+
+export const Navbar=({handleMenuToggle})=>{
 
 
     return(
         <>
             <div className={styles.navbar}>
+                                <div className={styles.menu_icon}><IoMenu onClick={handleMenuToggle}/></div>
+                
                 <div className={styles.nav_logo}>
                 <img src="./Images/NavbarLogo.png" alt="logo" />
                 </div>

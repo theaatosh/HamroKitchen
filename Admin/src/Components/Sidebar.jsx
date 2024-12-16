@@ -1,12 +1,9 @@
 import { NavLink } from 'react-router-dom';
 import styles from '../Styles/Sidebar.module.css';
-import { IoSettings } from "react-icons/io5";
 import { IoIosAddCircle } from "react-icons/io";
 import { FaKitchenSet } from "react-icons/fa6";
-import { IoMenu } from "react-icons/io5";
 import { MdDashboard } from "react-icons/md";
 import { IoFastFoodSharp } from "react-icons/io5";
-import { useState } from 'react';
 import { FaUsers } from "react-icons/fa";
 const routeArray=[
     {
@@ -34,25 +31,15 @@ const routeArray=[
         name:"Manage Food Items ",
         icon:<IoFastFoodSharp  className={styles.icon}/>
     },
-    {
-        path:'/settings',
-        name:"Settings",
-        icon:<IoSettings className={styles.icon}/>
-    }
+
 ]
-export const Sidebar=()=>{
+export const Sidebar=({isOpen})=>{
 
-    const[isOpen,setIsOpen]=useState(false);
-    const handleMenuToggle=()=>{
-
-        setIsOpen(!isOpen);
-    }
-    
+  
     
     return(
         <>
             <div className={isOpen? styles.sidebar:styles.mini_sidebar}>
-                <div className={styles.menu_icon}><IoMenu onClick={handleMenuToggle}/></div>
                 <div className={styles.sidebar_options}>
                         {routeArray.map((curRoute)=>{ 
                             return(

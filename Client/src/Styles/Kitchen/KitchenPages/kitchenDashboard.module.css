@@ -1,5 +1,6 @@
 .dashboard_container{
     width: 95%;
+    height: 100vh;
     margin: auto;
     margin-top: 3vh;
     
@@ -8,4 +9,16 @@
 .upper_div{
     display: flex;
     justify-content: space-between;
+}
+
+@media (max-width:600px) {
+    .dashboard_container{
+        height: 90vh;
+    }
+    .upper_div{
+        height: 80%;
+        flex-wrap: wrap;
+      
+    }
+    
 }

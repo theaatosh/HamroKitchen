@@ -64,17 +64,9 @@ export const LoginPage=()=>{
                 const token = result.data.token;
              localStorage.setItem('token', token); 
               setToken(token);
-              if(!userDetails.viewed){
-                setShowModal(true);
-              }else{
-                setShowModal(false);
-              }
-                
-
               //token bata decode gareko user details
               userCredentials(token);
-              
-              login();
+                login(token);
             
             }else if(result.data.message==="incorrect password"){
               toast.error(result.data.message,{autoClose:1500});

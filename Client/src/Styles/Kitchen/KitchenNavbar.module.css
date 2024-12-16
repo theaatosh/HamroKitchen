@@ -7,7 +7,7 @@
     background-color: #26282A;
     color: #ffffff;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-
+    position: relative;
     }
 
 .nav_logo img{
@@ -70,8 +70,28 @@
     font-style: italic;
     }
 }
+.menu_icon {
+    position: absolute;
+    left: 1vh;
+    top: 3vh;
+    color: #ffffff;
+    font-size: 2rem;
+    text-align: end;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+.cross:hover{
+    color:red;
+
+}
+.icon {
+    font-size: 1.8rem;
+}
 
 @media (max-width:600px) {
+    .navbar{
+        padding: 1vh;
+    }
     .nav_logo{
         display: none;
     }
@@ -80,14 +100,28 @@
         justify-content: center;
     }
 
+    .greeting_con{
+        display: none;
+    }
+
     .online_offline_con{
-        display: flex;
-        align-items: center;
-        width: 30vw;
         height: 9vh;
-        padding: 3px 5px;
-        border-radius: 5vh;
-        cursor: pointer;
-        border: 2px solid grey;
+        width: 40vw;
+    }
+    .toggle_btn {
+        height: 8vh;
+       width: 16vw;
+        
+    }
+    .online {
+        background-color: green;
+        color: white;
+        transform: translateX(130%);
+    }
+    
+    .offline {
+        background-color: rgb(186, 54, 54);
+        color: white;
+        transform: translateX(0);
     }
 }

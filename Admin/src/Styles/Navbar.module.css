@@ -1,4 +1,5 @@
 .navbar{
+    position: relative;
     width: 100%;
     padding: 0vw 4vw;
     display: flex;
@@ -6,7 +7,6 @@
     align-items: center;
     color: #fff;
     background-color: #040D2F;
-
     }
 
 .nav_logo img{
@@ -15,4 +15,29 @@
 }
 .user_logo{
     font-size: 5vw;
+}
+.menu_icon{
+    position: absolute;
+    left: 0;
+    color: #fff;
+    font-size: 2.5vw;
+    text-align: end;
+    padding: 1vh 1vw;
+    cursor: pointer;
+}
+
+@media (max-width:600px) {
+    .nav_logo img{
+        display: none;
+    }
+    .user_logo{
+        display: none;
+
+    }
+    .menu_icon{
+        font-size: 5vh;
+    }
+    .navbar{
+        height: 10vh;   
+    }
 }

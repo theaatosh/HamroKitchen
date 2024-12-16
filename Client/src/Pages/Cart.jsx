@@ -13,7 +13,6 @@ export const Cart = () => {
   const {
     url,
     cartItems,
-    setCartItems,
     foodItems,
     addToCart,
     removeFromCart,
