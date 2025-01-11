@@ -7,11 +7,29 @@ import { useAuth } from '../Context/AuthContext';
 export const RecomendedFood = () => {
   const{token,foodItems}=useContext(StoreContext);
   const{userDetails}=useAuth();
+  const [food,setFood]=useState([]);
 
+  console.log(foodItems);
+console.log(food);
+
+const filteredRec=()=>{
+    console.log("hello");    
+  const filteredRecomended=food.map((recItem,index)=>{
+    const rec=foodItems.find((foodItem,index)=>{
+      return foodItem._id===recItem;
+      
+    })
+  console.log(rec);
   
-    const [food,setFood]=useState([]);
+    
+  })
+  console.log(filteredRecomended);
+  
+  setFood(filteredRecomended);
+}
 
-
+  // console.log(filteredRecomended);
+  
 const handleFoodShuffle=(foodItems)=>{
 const shuffledArray=[...foodItems];
 for(let i=shuffledArray.length-1;i > 0;i--){
@@ -24,11 +42,12 @@ return shuffledArray;
 }
 
    useEffect(()=>{
+
+
     if(foodItems.length>0){
       const shuffledArray=handleFoodShuffle(foodItems);
-      setFood(shuffledArray) ;
-
-    }
+      // setFood(shuffledArray);
+}
    },[foodItems]);
 
 
@@ -36,7 +55,7 @@ return shuffledArray;
       const fetchRecomended=async()=>{
         try{         
           const res=await axios.get('http://localhost:5010/api/recFood',{headers: {'Authorization': `Bearer ${token}`}});
-          console.log(res);
+          setFood(res.data);
         }catch(error){
           console.log(error);
           
@@ -45,13 +64,18 @@ return shuffledArray;
       useEffect(()=>{        
         if(token && userDetails.viewed){          
           fetchRecomended();
+          if(food.length>0&&foodItems.length>0){            
+            filteredRec();
+          }
+          
         }
-      },[token])
+      },[token,food,foodItems])
   return (
     <div className={styles.recomended_food_main_con}>
-        <h1>Recomended for you</h1>
+        {/* <h1>Recomended for you</h1>
         <div className={styles.recomended_food_inner}>
-            {food && 
+            {food.length>0 && 
+           
              food.slice(0,4).map((curItem,index)=>{
                 return(
                 <FoodItemDisplay
@@ -64,7 +88,8 @@ return shuffledArray;
               />
             )})
             }
-        </div>
+        </div> */}
+        <h1>Hello</h1>
     </div>
   )
 }

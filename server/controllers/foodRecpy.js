@@ -9,9 +9,16 @@ const foodRec=async (req,res)=>{
         const rec=await user.findById(userId,{_id:0, recData:1});
         const recData=Object.values(rec.recData);
         // const recData=['fastfood', 'medium', 'veg']
-        console.log(recData)
+        // console.log(recData)
         const data=await runPythonFunction(recData);
-        res.json(data);
+        const finalData = data
+        .replace(/[\[\]']/g, '') 
+        .split(',') 
+        .map(id => id.trim());
+        console.log("this:"+finalData);
+
+        console.log(typeof(finalData))
+        res.json(finalData);
     }catch(err){
         console.log(err);
     }
