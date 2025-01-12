@@ -66,6 +66,5 @@ const khalti= async (req,res)=>{
     const response = await axios.post("https://a.khalti.com/api/v2/epayment/lookup/", payload,{headers});
     console.log(response.data);
     res.send("heelo");
-    console.log("testing")
  }
 module.exports={khalti,khaltiCallback};
