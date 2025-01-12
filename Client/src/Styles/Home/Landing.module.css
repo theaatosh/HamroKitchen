@@ -58,6 +58,7 @@
     left: 30%;
     padding: 2vh 3vw;
     animation: searchBox 0.5s ease-in 0s ;
+  
 
     & input{
         width: 30vw;

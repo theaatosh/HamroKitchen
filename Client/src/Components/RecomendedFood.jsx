@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import  { useContext, useEffect, useState } from 'react'
 import styles from '../Styles/Home/RecomendedFood.module.css';
 import { FoodItemDisplay } from './FoodItemDisplay';
 import axios from 'axios';
@@ -36,7 +36,7 @@ return shuffledArray;
    //esle xai user ko preferences anusar rec bhako food dekhaune
 const handleRecFood=()=>{  
   const arr=food.replace(/^\[|\]|'|'$/g,"").trim().split(",").map((item)=>item.trim());
-  const filteredItems=arr.map((recId,index)=>{
+  const filteredItems=arr.map((recId)=>{
     return foodItems.find((item)=>item._id===recId)
   })
   setRecFilteredItems(filteredItems);
@@ -58,9 +58,7 @@ const handleRecFood=()=>{
           setLoading(false);
         }
       }
-      useEffect(()=>{   
-        console.log(userDetails.viewed);
-             
+      useEffect(()=>{                
         if(token && userDetails.viewed){          
           fetchRecomended();
         }
