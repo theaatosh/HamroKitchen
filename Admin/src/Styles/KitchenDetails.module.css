@@ -27,15 +27,16 @@
     }
 }
 .delete{
-    color: rgb(222, 18, 18);
+    color: rgb(67, 172, 213);
     font-size: 30px;
     cursor: pointer;
     &:hover{
-        color: rgb(255, 0, 0);
+        color: rgb(63, 152, 188);
     }
 }
 .offline{
     color:red;
+    font-weight: 600;
 }
 .online{
     color: green;

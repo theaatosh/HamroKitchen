@@ -1,10 +1,9 @@
 import React from 'react'
 import styles from '../Styles/KitchenDetails.module.css';
-import { MdDeleteForever } from "react-icons/md";
 import axios from 'axios';
+import { PiUserSwitchLight } from "react-icons/pi";
 export const KitchenDetails = ({kitchen}) => {
   
- 
   const handleDelete=async(id)=>{
     try{
      
@@ -36,7 +35,7 @@ export const KitchenDetails = ({kitchen}) => {
               <p>{item.email}</p>
               <p>{item.phoneNumber}</p>
               <p className={item.cookStatus==="offline" ?styles.offline:styles.online}>{item.cookStatus}</p>
-              <MdDeleteForever className={styles.delete} onClick={()=>handleDelete(item._id)}/>
+              <PiUserSwitchLight className={styles.delete} onClick={()=>handleDelete(item._id)}/>
             </div>
           )
         })}

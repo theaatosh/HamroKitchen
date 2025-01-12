@@ -14,7 +14,13 @@
     flex-wrap: wrap;
    gap: 8vh 4vw ;
 }
-
+.loading{
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 @media (max-width:650px) {
     .recomended_food_main_con h1{
         text-align: center;

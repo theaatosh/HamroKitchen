@@ -1,35 +1,19 @@
-import React, { useContext, useEffect, useState } from 'react'
+import  { useContext, useEffect, useState } from 'react'
 import styles from '../Styles/Home/RecomendedFood.module.css';
 import { FoodItemDisplay } from './FoodItemDisplay';
 import axios from 'axios';
 import { StoreContext } from '../Context/StoreContext';
 import { useAuth } from '../Context/AuthContext';
+import Loading from './Loading';
 export const RecomendedFood = () => {
   const{token,foodItems}=useContext(StoreContext);
   const{userDetails}=useAuth();
-  const [food,setFood]=useState([]);
-
-  console.log(foodItems);
-console.log(food);
-
-const filteredRec=()=>{
-    console.log("hello");    
-  const filteredRecomended=food.map((recItem,index)=>{
-    const rec=foodItems.find((foodItem,index)=>{
-      return foodItem._id===recItem;
-      
-    })
-  console.log(rec);
+  const [loading,setLoading]=useState(null);
   
-    
-  })
-  console.log(filteredRecomended);
-  
-  setFood(filteredRecomended);
-}
+    const [food,setFood]=useState([]);
+  const[recFilteredItems,setRecFilteredItems]=useState([]);
 
-  // console.log(filteredRecomended);
-  
+  //yo xai bhako foodites lai shuffle garera dekhaune
 const handleFoodShuffle=(foodItems)=>{
 const shuffledArray=[...foodItems];
 for(let i=shuffledArray.length-1;i > 0;i--){
@@ -42,41 +26,58 @@ return shuffledArray;
 }
 
    useEffect(()=>{
-
-
     if(foodItems.length>0){
       const shuffledArray=handleFoodShuffle(foodItems);
-      // setFood(shuffledArray);
-}
+      setRecFilteredItems(shuffledArray);
+
+    }
    },[foodItems]);
 
+   //esle xai user ko preferences anusar rec bhako food dekhaune
+const handleRecFood=()=>{  
+  const arr=food.replace(/^\[|\]|'|'$/g,"").trim().split(",").map((item)=>item.trim());
+  const filteredItems=arr.map((recId)=>{
+    return foodItems.find((item)=>item._id===recId)
+  })
+  setRecFilteredItems(filteredItems);
+  
+  
+}
 
   
       const fetchRecomended=async()=>{
+        setLoading(true);
         try{         
           const res=await axios.get('http://localhost:5010/api/recFood',{headers: {'Authorization': `Bearer ${token}`}});
-          setFood(res.data);
+            setFood(res.data);
         }catch(error){
           console.log(error);
           
         }
+        finally{
+          setLoading(false);
+        }
       }
-      useEffect(()=>{        
+      useEffect(()=>{                
         if(token && userDetails.viewed){          
           fetchRecomended();
-          if(food.length>0&&foodItems.length>0){            
-            filteredRec();
-          }
-          
         }
-      },[token,food,foodItems])
+      },[token,userDetails])
+
+      useEffect(()=>{
+        if(food.length>0&&foodItems.length>0){
+          handleRecFood();
+        }
+        else{
+          handleFoodShuffle(foodItems);
+        }
+      },[food,foodItems])
   return (
     <div className={styles.recomended_food_main_con}>
-        {/* <h1>Recomended for you</h1>
+        <h1>Recomended for you</h1>
         <div className={styles.recomended_food_inner}>
-            {food.length>0 && 
-           
-             food.slice(0,4).map((curItem,index)=>{
+            {loading?<div className={styles.loading}><Loading/></div>:recFilteredItems.length>0 && 
+             recFilteredItems.slice(0,4).map((curItem)=>{
                 return(
                 <FoodItemDisplay
                 key={curItem._id}
@@ -88,8 +89,8 @@ return shuffledArray;
               />
             )})
             }
-        </div> */}
-        <h1>Hello</h1>
+        </div>
+        
     </div>
   )
 }
