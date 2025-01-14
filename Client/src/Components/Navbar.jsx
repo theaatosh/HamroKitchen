@@ -5,8 +5,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { StoreContext } from "../Context/StoreContext";
 import { useAuth } from "../Context/AuthContext";
 import { FaUser } from "react-icons/fa";
-import { IoMdNotifications } from "react-icons/io";
-import { HiMiniBellAlert } from "react-icons/hi2";
 
 
 
@@ -15,7 +13,7 @@ export const Navbar = () => {
   const{isLoggedIn,userDetails,profileData, setIsLoggedIn}=useAuth();
   const [activeMenu, setActiveMenu] = useState("Home");
   const[isUserMenuOpen,setIsUserMenuOpen]=useState(false);
-  const[isNotificationOpen,setIsNotificationOpen]=useState(false);
+  const[setIsNotificationOpen]=useState(false);
   const [profileOpen,setProfileOpen]=useState(false);
   const[isVisible,setIsVisible]=useState(true);
   const[lastScrollY,setLastScrollY]=useState(0);
@@ -42,9 +40,9 @@ export const Navbar = () => {
     setProfileOpen(false)
   }
 
-  const toggleNotificationMenu=()=>{
-      setIsNotificationOpen((preState)=>!preState)
-  }
+  // const toggleNotificationMenu=()=>{
+  //     setIsNotificationOpen((preState)=>!preState)
+  // }
   const handleScroll=()=>{  
     if(window.scrollY<600){
       setIsVisible(true);
@@ -171,7 +169,7 @@ export const Navbar = () => {
         {/* this part is rendered only if the user is logged in  */}
           {isLoggedIn?(
             <>
-            <div ref={notiMenuRef} className={styles.notification_icon_con} >
+            {/* <div ref={notiMenuRef} className={styles.notification_icon_con} >
               <IoMdNotifications onClick={toggleNotificationMenu} className={styles.notification_icon}/> 
               {isNotificationOpen&& (
                 <div  className={styles.notification_menu}>
@@ -190,7 +188,7 @@ export const Navbar = () => {
                   
                 </div>
               )}
-              </div>
+              </div> */}
             <div className={styles.user_icon_con} ref={userMenuRef}>
             <FaUser  onClick={toggleUserMenu} className={styles.user_icon}/>
 

@@ -1,7 +1,7 @@
 import styles from '../Styles/Payment/Payment.module.css';
 import axios from 'axios';
 import { StoreContext } from '../Context/StoreContext';
-import { useContext, useEffect } from 'react';
+import { useContext} from 'react';
 
 export const Payment=()=>{
     const {cartData,deliveryInfo,setPaymentDetails,getTotalCartAmount}=useContext(StoreContext);
