@@ -6,11 +6,9 @@ import { StoreContextProvider } from "./Context/StoreContext.jsx";
 import { AuthContextProvider } from "./Context/AuthContext.jsx";
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
       <StoreContextProvider>
     <AuthContextProvider>
         <App />
     </AuthContextProvider>
       </StoreContextProvider>
-  </StrictMode>
 );

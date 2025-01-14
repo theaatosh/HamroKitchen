@@ -17,12 +17,13 @@ export const StoreContextProvider = (props) => {
   })
   
   //yo xai placeorder wala page ko
+  const [location,setLocation]=useState("Nepal");
   const[deliveryInfo,setDeliveryInfo]=useState({
     firstName:'',
     lastName:'',
     email:'',
     phoneNumber:'',
-    address:'',
+    address:location,
     deliveryLocation:{
       lat:'',
       lng:''
@@ -188,6 +189,7 @@ export const StoreContextProvider = (props) => {
     setSelectedDateTime,
     cartData,setCartData,
    deliveryInfo,setDeliveryInfo,
+   location,setLocation,
    paymentDetails,setPaymentDetails
      };
 return (

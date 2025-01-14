@@ -5,6 +5,11 @@
   margin: auto;
   margin-top: 20vh;
 }
+.add_btn{
+  border: none;
+  border-radius: 50%;
+  background-color: white;
+}
 .empty_cart{
   display: flex;
   flex-direction: column;
