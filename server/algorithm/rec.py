@@ -4,7 +4,7 @@ import sys
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 def main(foodtype,spice,diet):
-    df1=pd.read_csv(r'C:\Users\Aatosh\Desktop\Hamro-Kitchen\HamroKitchen\server\algorithm\feature.csv')
+    df1=pd.read_csv()
     # print(df1.to_string)
     df2 = pd.DataFrame({
         'Food Type': [foodtype],
