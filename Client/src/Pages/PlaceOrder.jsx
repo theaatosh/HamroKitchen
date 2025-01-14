@@ -193,6 +193,11 @@ export const PlaceOrder=()=>{
     // useEffect(()=>{
     //   latLngFinder();
     // },[deliveryInfo])
+
+
+    const handleAdminJane=()=>{
+      window.location.href="http://localhost:3000/"
+    }
     return(
         <>
         <div className={styles.place_order_container}>
@@ -266,6 +271,7 @@ export const PlaceOrder=()=>{
             >
               Proceed To Payment
             </button>
+            <button onClick={handleAdminJane}>ADmin jane</button>
           </div>
             </div>
         </div>

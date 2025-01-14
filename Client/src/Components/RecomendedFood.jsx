@@ -34,9 +34,9 @@ return shuffledArray;
    },[foodItems]);
 
    //esle xai user ko preferences anusar rec bhako food dekhaune
-const handleRecFood=()=>{  
-  const arr=food.replace(/^\[|\]|'|'$/g,"").trim().split(",").map((item)=>item.trim());
-  const filteredItems=arr.map((recId)=>{
+const handleRecFood=()=>{    
+  // const arr=food.replace(/^\[|\]|'|'$/g,"").trim().split(",").map((item)=>item.trim());
+  const filteredItems=food.map((recId)=>{
     return foodItems.find((item)=>item._id===recId)
   })
   setRecFilteredItems(filteredItems);
