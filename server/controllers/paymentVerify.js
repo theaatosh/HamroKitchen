@@ -1,4 +1,3 @@
-const secretKey= process.env.JWT_SECRET;
 const axios=require('axios');
 const order=require("../models/orderModel");
 const user=require('../models/index');
