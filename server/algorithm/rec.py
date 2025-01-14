@@ -1,10 +1,13 @@
 import numpy as np
 import pandas as pd
+from dotenv import load_dotenv
+import os
 import sys
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 def main(foodtype,spice,diet):
-    df1=pd.read_csv()
+    load_dotenv()
+    df1=pd.read_csv(os.getenv("FILE_PATH"))
     # print(df1.to_string)
     df2 = pd.DataFrame({
         'Food Type': [foodtype],
