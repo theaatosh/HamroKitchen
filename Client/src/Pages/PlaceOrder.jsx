@@ -45,10 +45,7 @@ export const PlaceOrder=()=>{
         if(!deliveryInfo.address.trim()){
           formErrors.address="Address is required *";
         }
-        else if(!/^[a-zA-Z][a-zA-Z0-9]{2,15}$/.test(deliveryInfo.address))
-        {
-          formErrors.address="Invalid Address"
-        }
+       
        
         
       return formErrors;
