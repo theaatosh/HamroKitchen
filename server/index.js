@@ -25,13 +25,11 @@ connectToMongoDB(mongo)
 .catch(err => console.error(err));
 
 //routes 
-
-
 app.post('/signup', async (req, res) => {
   const { userName, email, phoneNumber, password } = req.body;
   console.log("Connected to signUpPage");
  
-  
+
   // Perform server-side validation
   const validationErrors  = await serverSideValidation(userName, email, phoneNumber, password);
   console.log(validationErrors);
@@ -64,7 +62,7 @@ app.post('/signup', async (req, res) => {
 });
  //login authentication
  const secretKey= process.env.JWT_SECRET;
-app.post('/login', async (req, res) =>{
+ app.post('/login', async (req, res) =>{
   let {userName, password}=req.body;
   var userFound= await checkUserName(userName);
   if(userFound){
