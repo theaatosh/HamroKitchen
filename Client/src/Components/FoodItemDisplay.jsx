@@ -30,7 +30,10 @@ return(
                 <div className={styles.item_counter_container}>
                 <CiCircleMinus className={styles.sub1_icon} onClick={()=>removeFromCart(id)}/> 
                     <p>{cartItems[id]}</p>
+                    <button disabled={cartItems[id]===50} className={styles.add_btn}>
                     <IoIosAddCircleOutline className={styles.add1_icon}onClick={()=>addToCart(id)}/>
+                    </button>
+
 
                 </div> )}
 

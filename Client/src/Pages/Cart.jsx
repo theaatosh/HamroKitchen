@@ -80,12 +80,8 @@ export const Cart = () => {
   // for removing item without decrement
   const handleremoveFromCart =async (itemId) => {
     console.log(token);
-    
-    // setCartItems((prevItems) => {
-    //   const updatedCart = { ...prevItems };
-    //   delete updatedCart[id];
-    //   return updatedCart;
-    // });
+   
+    window.location.reload();
     await axios.post("http://localhost:5010/cart/delete",{itemId},{headers: {'Authorization': `Bearer ${token}`}});
     
   };
@@ -116,15 +112,19 @@ export const Cart = () => {
                       <p>{curItem.productName}</p>
                       <p>Rs.{curItem.productPrice}</p>
                       <div className={styles.item_counter_container}>
+                      <button className={styles.add_btn}>
                         <CiCircleMinus
                           className={styles.sub_icon}
-                          onClick={() => removeFromCart(curItem._id)}
-                        />
+                          onClick={() => removeFromCart(curItem._id) }
+                        /></button>
                         <p>{cartItems[curItem._id]}</p>
+
+                        <button disabled={cartItems[curItem._id]===50} className={styles.add_btn}>
                         <IoIosAddCircleOutline
                           className={styles.add1_icon}
                           onClick={() => addToCart(curItem._id)}
-                        />
+                        
+                        /></button>
                       </div>
                       <p>Rs.{curItem.productPrice * cartItems[curItem._id]}</p>
 

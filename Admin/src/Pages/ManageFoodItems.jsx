@@ -62,8 +62,7 @@ export const ManageFoodItems = () => {
                             <hr /><hr />
 
 
-                            
-                            {/* Mapping through curElem */}
+                          {/* Mapping through curElem */}
                             <div className={styles.detail_container}>
                             {foodDetails.length===0? (
                             <Loading/>

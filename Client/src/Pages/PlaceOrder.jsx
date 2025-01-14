@@ -6,9 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 export const PlaceOrder=()=>{
 
-    const {getTotalCartAmount,cartData,selectedDateTime,deliveryInfo,setDeliveryInfo,token}=useContext(StoreContext);
+    const {getTotalCartAmount,cartData,selectedDateTime,deliveryInfo,setDeliveryInfo,token,location,setLocation}=useContext(StoreContext);
     const navigate=useNavigate();
-
 
       const[error,setError]=useState({});
       const validate=()=>{
@@ -16,14 +15,14 @@ export const PlaceOrder=()=>{
         if(!deliveryInfo.firstName.trim()){
           formErrors.firstName="First Name is Required *";
         }
-        else if(!/[A-Za-z]+[A-Za-z]*/.test(deliveryInfo.firstName))
+        else if(!/^[A-Za-z]{3,}$/.test(deliveryInfo.firstName))
         {
           formErrors.firstName="Invalid first Name";
         }
         if(!deliveryInfo.lastName.trim()){
           formErrors.lastName="Last Name is Required *";
         }
-        else if(!/[A-Za-z]+[A-Za-z]*/.test(deliveryInfo.lastName))
+        else if(!/^[A-Za-z]{3,}$/.test(deliveryInfo.lastName))
         {
           formErrors.lastName="Invalid last Name";
         }
@@ -39,12 +38,16 @@ export const PlaceOrder=()=>{
         {
           formErrors.phoneNumber="Phone number is Required *";
         }
-        else if(!/^[0-9]{10}$/.test(deliveryInfo.phoneNumber))
+        else if(!/^(98|97|96)[0-9]{8}$/.test(deliveryInfo.phoneNumber))
         {
           formErrors.phoneNumber="Invalid phone Number *";
         }
         if(!deliveryInfo.address.trim()){
           formErrors.address="Address is required *";
+        }
+        else if(!/^[a-zA-Z][a-zA-Z0-9]{2,15}$/.test(deliveryInfo.address))
+        {
+          formErrors.address="Invalid Address"
         }
        
         
@@ -112,29 +115,84 @@ export const PlaceOrder=()=>{
       const handleDeliveryInfo=(e)=>{
       const{value,name}=e.target;
        setDeliveryInfo((preVal)=>({...preVal,[name]:value}))
+      
+       
+       
        setError((prevErr)=>({...prevErr,[name]:""}))
       }
 
-
+      
       const handleProceedToPayment=()=>{
-        console.log(cartData,deliveryInfo);
         
           const validation=validate();
           if(Object.keys(validation).length>0)
-          {
+            {
               setError(validation);
-          }
-          else{
-            try{
-              axios.post("http://localhost:5010/api/scheduleOrder", {cartData,deliveryInfo},{headers:{'Authorization': `Bearer ${token}`}})
-            }catch(err){
-              console.log(err);
             }
-            // console.log(deliveryInfo);
-            navigate('/payment');
-          }
+            else{
+              try{
+                axios.post("http://localhost:5010/api/scheduleOrder", {cartData,deliveryInfo},{headers:{'Authorization': `Bearer ${token}`}})
+              }catch(err){
+                console.log(err);
+              }
+              navigate('/payment');
+            }
           
       }
+      
+      
+      //yo xai location dinxa lat ra lng halepaxi
+      const getLocation=async()=>{
+        const lat=deliveryInfo.deliveryLocation.lat;
+        const lng=deliveryInfo.deliveryLocation.lng;
+        if(lat&&lng){
+          try{
+            const res=await axios.get(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`);
+            const locationArray=res.data.display_name.split(",")
+            const locations=locationArray[0]+locationArray[1];
+            setLocation(locations);
+            
+            
+          }catch(err){
+            console.log(err.message);
+            
+          }
+
+        }}
+    useEffect(()=>{
+      getLocation();
+    },[deliveryInfo,location])
+
+
+    //new location aauda addres lai update garne
+    useEffect(()=>{
+      if(location){
+        setDeliveryInfo((prev)=>(
+          {
+            ...prev,
+            address:location
+          }
+        ))
+      }
+    },[location,setDeliveryInfo])
+
+    // yo xai naam diyera lat lng nikalne
+    // const latLngFinder=async()=>{
+    //   const writtenLocation=deliveryInfo.address;
+    //   if(writtenLocation){
+    //   try{
+    //    const res= await axios.get(`https://nominatim.openstreetmap.org/search?q=<${writtenLocation}>&format=json`)
+    //       console.log(res);
+          
+    //   }catch(err){
+    //     console.log(err);
+        
+    //   }
+    // }
+    // }
+    // useEffect(()=>{
+    //   latLngFinder();
+    // },[deliveryInfo])
     return(
         <>
         <div className={styles.place_order_container}>
@@ -153,17 +211,17 @@ export const PlaceOrder=()=>{
                       </div>
                     </div>
                     <div className={styles.email}>
-                    <input type="email" name='email' onChange={(e)=>handleDeliveryInfo(e)} placeholder='Email address'/>
+                    <input type="email" name='email' onChange={(e)=>handleDeliveryInfo(e)} value={deliveryInfo.email} placeholder='Email address'/>
                         {error.email && <p className={styles.input_error}>{error.email}</p>}
 
                     </div>
                     <div className={styles.phnNumber}>
-                    <input type="text"  name='phoneNumber' onChange={(e)=>handleDeliveryInfo(e)}  placeholder='Phone Number'/>
+                    <input type="text"  name='phoneNumber' onChange={(e)=>handleDeliveryInfo(e)} value={deliveryInfo.phoneNumber}  placeholder='Phone Number'/>
                         {error.phoneNumber && <p className={styles.input_error}>{error.phoneNumber}</p>}
 
                     </div>
                     <div className={styles.manual_address}>
-                    <input type="text"  name='address' onChange={(e)=>handleDeliveryInfo(e)}  placeholder='Delivery Address'/>
+                    <input type="text"  name='address' onChange={(e)=>handleDeliveryInfo(e)} value={deliveryInfo.address}  placeholder='Delivery Address'/>
                         {error.address && <p className={styles.input_error}>{error.address}</p>}
 
                     </div>
