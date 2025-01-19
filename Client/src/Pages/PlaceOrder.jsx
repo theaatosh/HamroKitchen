@@ -145,6 +145,8 @@ export const PlaceOrder=()=>{
         if(lat&&lng){
           try{
             const res=await axios.get(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`);
+            console.log(res);
+            
             const locationArray=res.data.display_name.split(",")
             const locations=locationArray[0]+locationArray[1];
             setLocation(locations);

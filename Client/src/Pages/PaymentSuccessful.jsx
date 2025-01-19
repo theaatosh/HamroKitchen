@@ -26,16 +26,26 @@ export const PaymentSuccessful = () => {
             const token = localStorage.getItem('token');
             const res= await axios.post('http://localhost:5010/api/khaltiVerify', {pidx},{headers:{'Authorization': `Bearer ${token}`}});
             console.log(res);
-            if(res&&res.status==="completed"){
+            if(res&&res.data.status==="Completed"){
               showPaymentSuccessful();
             }else{
-              console.log("completed bhayena");
+             showPaymentTerminated();
              }
          }
       catch(err){
         console.log(err);
       }}
     const navigate=useNavigate();
+
+    const showPaymentTerminated=()=>{
+      Swal.fire({
+        title: 'Payment Canceled!',
+        text: 'Your order has been terminated.',
+        icon: 'error',
+        confirmButtonText: 'OK',
+    })
+    }
+
     const showPaymentSuccessful=()=>{
 
         Swal.fire({

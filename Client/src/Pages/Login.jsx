@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { FaEye, FaEyeSlash, FaUserCircle } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
 import styles from "../Styles/Login_Signup/Login.module.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../Context/AuthContext";
 import { StoreContext } from "../Context/StoreContext";
@@ -10,8 +10,7 @@ import { toast } from "react-toastify";
 import Loading from "../Components/Loading";
 
 export const LoginPage = () => {
-  const navigate = useNavigate();
-  const { login, userCredentials, setShowModal, userDetails } = useAuth();
+  const { login, userCredentials } = useAuth();
   const { setToken } = useContext(StoreContext);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -21,7 +20,8 @@ export const LoginPage = () => {
     userName: "",
     password: "",
   });
-
+  
+  
   //form validation
   const validate = () => {
     let formErrors = {};
@@ -79,6 +79,10 @@ export const LoginPage = () => {
       } finally {
         setIsLoading(false);
       }
+      setFormData({
+        userName: "",
+    password: "",
+      })
     }
   };
 

@@ -82,7 +82,6 @@ app.post("/login", async (req, res) => {
   if (userFound) {
     const matched = await comparePasswords(password, userFound.password);
     if (matched) {
-      // console.log(userFound);
       const role = await user.findById(userFound._id).select("role");
       const recData = await user.findById(userFound._id, {
         _id: 0,
@@ -103,8 +102,6 @@ app.post("/login", async (req, res) => {
         { expiresIn: "24h" }
       );
       if (role.role == "admin") {
-        console.log("admin");
-        // res.redirect("http://localhost:3000/");
         return res.status(200).json({ redirectTo: "http://localhost:3000/" });
       } else {
         res.status(200).json({ message: "login sucessfully", token: token });
