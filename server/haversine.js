@@ -52,7 +52,7 @@ const findKitchen=async(customerLocation, orderId)=>{
         const filteredKitchensDisGreaterEqual2000 = filteredKitchens.filter(
             kitchen => kitchen.distance >= 2000
         );
-        console.log(filteredKitchensDislessthan2000)
+        // console.log(filteredKitchensDislessthan2000)
         return filteredKitchensDislessthan2000;
 
     }catch(err){

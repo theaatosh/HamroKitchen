@@ -4,7 +4,6 @@ const user = require("../models/index");
 
 
 const kitchenSignUp=async (req,res)=>{
-    // console.log(req.body);
     const {selectedItems,location }=req.body;
     console.log(selectedItems);
     try{
