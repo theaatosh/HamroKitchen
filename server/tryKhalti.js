@@ -21,7 +21,7 @@ const khalti= async (req,res)=>{
      const response= await axios.post(
         "https://a.khalti.com/api/v2/epayment/initiate/",
         formData,
-        {
+        {   
             headers,
         },
     );

@@ -2,8 +2,11 @@ import styles from "../Styles/Payment/Payment.module.css";
 import axios from "axios";
 import { StoreContext } from "../Context/StoreContext";
 import { useContext } from "react";
+import Swal from 'sweetalert2';
+import { useNavigate } from "react-router-dom";
 
 export const Payment = () => {
+  const navigate=useNavigate();
   const { cartData, deliveryInfo, setPaymentDetails, getTotalCartAmount } =
     useContext(StoreContext);
   const handlePayment = async () => {
@@ -34,6 +37,20 @@ export const Payment = () => {
       console.log(err);
     }
   };
+   const showCodSuccessful=(message)=>{
+  
+          Swal.fire({
+              title: 'Order Placed!',
+              text: message,
+              icon: 'success',
+              confirmButtonText: 'OK',
+          }).then((result)=>{
+            if(result.isConfirmed){
+              navigate('/');
+              window.location.reload();
+            }
+          })
+        }
 
   const handleCodPayment = async () => {
     try {
@@ -47,6 +64,7 @@ export const Payment = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       console.log(res.data.message);
+      showCodSuccessful(res.data.message)
     } catch (err) {
       console.log(err);
     }

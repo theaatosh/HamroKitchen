@@ -37,7 +37,7 @@ export const SignUpPage=()=>{
       {
         formErrors.userName="Invalid UserName";
       }
-
+      
       if(!formData.email.trim()){
         formErrors.email="Email is Required *";
       }else if(!/^([A-Za-z0-9]+(?:[.#_][A-Za-z\d]+)*@[A-Za-z]+)(\.[A-Za-z]{2,3})$/.test(formData.email))

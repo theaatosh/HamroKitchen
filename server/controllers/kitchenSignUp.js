@@ -9,12 +9,9 @@ const kitchenSignUp=async (req,res)=>{
     console.log(selectedItems);
     try{
         const userDetails= await user.findById(req.user.userId);
-        // console.log(userDetails);
         if(userDetails){
             const userStatus= userDetails.role;
-            // console.log(userStatus);
              if(userStatus==="customer"){
-                // console.log("we are here");
                 const updatedUser=await user.findByIdAndUpdate(req.user.userId,{ 
                     role:"pending",
                 cookLocation:location,

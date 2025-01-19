@@ -20,6 +20,8 @@ export const Dashboard=()=>{
             try{     
                 setIsLoading(true);           
                 const response=await axios.get('http://localhost:5010/api/dashboard');
+                console.log(response);
+                
                 setUserDetails(response.data);
                 
                 const {  totalCustomer, totalKitchen } = response.data;

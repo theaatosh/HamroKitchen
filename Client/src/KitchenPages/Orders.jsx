@@ -44,7 +44,6 @@ export const Orders=()=>{
         try{
           const res=await axios.get('http://localhost:5010/api/kitchen/processingOrder',{headers:{'Authorization':`Bearer ${token}`}});
           setProcessingOrders(res.data);
-          console.log(res.data);
           
           
 
@@ -156,7 +155,8 @@ export const Orders=()=>{
             <div className={styles.inner_container}>
             <div className={styles.order_list}>
               {isLoading?<Loading/>:(
-                filteredCustomers.length>0 ? (filteredCustomers.map((order,index)=>(
+                filteredCustomers.length>0 ? 
+                (filteredCustomers.map((order,index)=>(
                   <React.Fragment key={order.orderDetails._id}>
                       <div className={styles.order_card} >
                         <h3>#{index+1}</h3>
