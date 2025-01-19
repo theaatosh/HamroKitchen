@@ -20,12 +20,18 @@ export const PaymentSuccessful = () => {
         console.log(paymentDetails);
         
       },[paymentDetails,setPaymentDetails])
+
       const getVerified=async(pidx)=> { 
           try {
             const token = localStorage.getItem('token');
-            const tryK = await axios.post('http://localhost:5010/api/khaltiVerify', {pidx},{headers:{'Authorization': `Bearer ${token}`}});
-            console.log(tryK);
-    }
+            const res= await axios.post('http://localhost:5010/api/khaltiVerify', {pidx},{headers:{'Authorization': `Bearer ${token}`}});
+            console.log(res);
+            if(res&&res.status==="completed"){
+              showPaymentSuccessful();
+            }else{
+              console.log("completed bhayena");
+             }
+         }
       catch(err){
         console.log(err);
       }}
@@ -43,9 +49,7 @@ export const PaymentSuccessful = () => {
         navigate('/');
         window.location.reload(); 
     }
-    useEffect(()=>{
-        showPaymentSuccessful();
-    },[])
+  
   return (
     <div className={styles.main_container}>
         <button  onClick={handleNavigate}className={styles.go_home_btn}>Go back to Home Page</button>

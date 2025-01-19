@@ -105,7 +105,7 @@ export const PlaceOrder=()=>{
         map.setView([deliveryInfo.deliveryLocation.lat,deliveryInfo.deliveryLocation.lng],20);
         // fetchAddress(deliveryInfo.location.lat, deliveryInfo.location.lng);
       }
-    },[])
+    },[map])
   }
 
     //handle deliveryInfo on input Change
@@ -192,9 +192,9 @@ export const PlaceOrder=()=>{
     // },[deliveryInfo])
 
 
-    const handleAdminJane=()=>{
-      window.location.href="http://localhost:3000/"
-    }
+    // const handleAdminJane=()=>{
+    //   window.location.href="http://localhost:3000/"
+    // }
     return(
         <>
         <div className={styles.place_order_container}>
@@ -268,7 +268,6 @@ export const PlaceOrder=()=>{
             >
               Proceed To Payment
             </button>
-            <button onClick={handleAdminJane}>ADmin jane</button>
           </div>
             </div>
         </div>

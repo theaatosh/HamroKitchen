@@ -3,9 +3,11 @@ const order=require("../models/orderModel");
 const user=require('../models/index');
 const paymentVerify=async(req,res)=>{
     try {
-        const {pidx}=req.body;
-        const headers = {
-          Authorization: `Key ${process.env.KHALTI_SECRET_KEY}`,
+      
+      console.log("hello");
+      const {pidx}=req.body;
+      const headers = {
+        Authorization: `Key ${process.env.KHALTI_SECRET_KEY}`,
           "Content-Type": "application/json",
         };
         const response = await axios.post(
@@ -51,7 +53,7 @@ const paymentVerify=async(req,res)=>{
         res.send(response.data); 
       
       } catch (err) {
-        res.status(500).json({ error: err.message || "Failed to lookup payment" });
+        res.status(500).json({ error: err.message + "Failed to lookup payment" });
       }
 }
 module.exports=paymentVerify;
