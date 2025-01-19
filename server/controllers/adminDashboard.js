@@ -11,6 +11,7 @@ const dashboard=async(req,res)=>{
                 amount+=orders[i].totalAmount;
             }
         }
+        let avgAmount=amount/orders.length;
         const totalOrders= await order.countDocuments();
         const totalOrdersCompleted= await order.countDocuments({orderStatus:"completed"})
         const totalPendingOrders=await order.countDocuments({orderStatus:"processing"})
@@ -31,7 +32,8 @@ const dashboard=async(req,res)=>{
             totalOrdersCompleted:totalOrdersCompleted,
             totalPendingOrders:totalPendingOrders,
             totalAssignedOrders:totalAssignedOrders,
-            totalFoodItems:totalFoodItems
+            totalFoodItems:totalFoodItems,
+            averageAmount:avgAmount,
         })
     }catch(err){
         console.log(err);

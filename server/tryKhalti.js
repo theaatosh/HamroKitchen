@@ -25,10 +25,6 @@ const khalti= async (req,res)=>{
             headers,
         },
     );
-    
-    // console.log(response.data);
-    // console.log(response.data.payment_url);
-    // console.log(response.data);
     if(response.data){
         res.json({
             message: "khalti success",
