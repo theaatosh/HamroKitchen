@@ -114,28 +114,29 @@ export const Orders=()=>{
 
 
     // console.log(customerOrders);
-    const filteredCustomers = customerOrders.reduce((acc, obj) => {
-      const existing = acc.find(item => item._id === obj._id);
+    // const filteredCustomers = customerOrders.reduce((acc, obj) => {
+    //   const existing = acc.find(item => item._id === obj._id);
     
-      if (existing) {
-        existing.orderItems.push({
-          foodItem: obj.orderItemName,
-          quantity: obj.quantity,
-        });
-      } else {
-        acc.push({
-         ...obj,
-          orderItems: [
-            {
-              foodItem: obj.orderItemName,
-              quantity: obj.quantity,
-            },
-          ],
-        });
-      }
+    //   if (existing) {
+    //     existing.orderItems.push({
+    //       foodItem: obj.orderItemName,
+    //       quantity: obj.quantity,
+    //     });
+    //   } else {
+    //     acc.push({
+    //      ...obj,
+    //       orderItems: [
+    //         {
+    //           foodItem: obj.orderItemName,
+    //           quantity: obj.quantity,
+    //         },
+    //       ],
+    //     });
+    //   }
     
-      return acc;
-    }, []);
+    //   return acc;
+    // }, []);
+    
     
     
     return(
@@ -155,16 +156,16 @@ export const Orders=()=>{
             <div className={styles.inner_container}>
             <div className={styles.order_list}>
               {isLoading?<Loading/>:(
-                filteredCustomers.length>0 ? 
-                (filteredCustomers.map((order,index)=>(
+                customerOrders.length>0 ? 
+                (customerOrders.map((order,index)=>(
                   <React.Fragment key={order.orderDetails._id}>
                       <div className={styles.order_card} >
                         <h3>#{index+1}</h3>
-                        <p>{order.orderDetails.deliveryInfo.firstName}</p>
+                        <p>{order.orderDetails.deliveryInfo.firstName} {order.orderDetails.deliveryInfo.LastName}</p>
                         <ul>
-                           {order.orderItems.map((elem,index)=>{
+                           {order.items.map((elem,index)=>{
                             return(
-                              <li key={index}>{elem.foodItem}-{elem.quantity}</li>
+                              <li key={index}>{elem.orderItemName}-{elem.quantity}</li>
 
                             )
                            })}
