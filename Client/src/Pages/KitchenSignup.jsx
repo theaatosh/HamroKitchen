@@ -168,12 +168,13 @@ export const KitchenSignup = () => {
 
   return (
     <>
+      <ToastContainer/>
       <div className={styles.main_container}>
+
         <div className={styles.signUp_container}>
           <div className={styles.inner}>
             <div className={styles.heading_signup}>
               <h1>Get Listed as a Kitchen Chef</h1>
-              <ToastContainer/>
             </div>
 
           <div className={styles.userInfo}>

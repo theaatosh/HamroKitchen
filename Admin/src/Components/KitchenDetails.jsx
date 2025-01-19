@@ -1,13 +1,19 @@
-import React from "react";
 import styles from "../Styles/KitchenDetails.module.css";
+import { toast } from 'react-toastify';
 import axios from "axios";
 import { PiUserSwitchLight } from "react-icons/pi";
-export const KitchenDetails = ({ kitchen }) => {
-  const handleDelete = async (id) => {
+export const KitchenDetails = ({ kitchen,fetchUserDetails }) => {
+  const handleSwitchRole = async (id) => {
     try {
       console.log(id);
       const res=await axios.post("http://localhost:5010/api/changeToCustomer", { id });
-      console.log(res.data.message);
+      if(res.status===200){
+        fetchUserDetails();
+        toast.success(res.data.message,{
+          autoClose:2000
+        })
+
+      }
     } catch (error) {
       console.log(error.response.data.message);
     }
@@ -39,7 +45,7 @@ export const KitchenDetails = ({ kitchen }) => {
               </p>
               <PiUserSwitchLight
                 className={styles.delete}
-                onClick={() => handleDelete(item._id)}
+                onClick={() => handleSwitchRole(item._id)}
               />
             </div>
           );

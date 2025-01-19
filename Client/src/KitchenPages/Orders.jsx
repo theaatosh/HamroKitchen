@@ -8,6 +8,7 @@ import { ProcessingOrder } from "../KitchenComponents/kitchenDetails/ProcessingO
 import { StoreContext } from "../Context/StoreContext";
 import Loading from "../Components/Loading";
 import { CompletedFoodOrders } from "../KitchenComponents/CompletedFoodOrders";
+
 export const Orders = () => {
   const { isKitchenOnline } = useAuth();
   const { token, setToken } = useContext(StoreContext);
@@ -17,7 +18,7 @@ export const Orders = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [processingOrdersLoading, setprocessingOrdersLoading] = useState(false);
 
-  //order request fetch garne
+  // Fetch new orders
   const fetchCustomerOrders = async () => {
     setIsLoading(true);
     try {
@@ -26,94 +27,16 @@ export const Orders = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setCustomerOrders(res.data);
-      console.log(res.data);
     } catch (error) {
-      console.log(error);
       toast.error(error.message);
     } finally {
-      console.log("hello");
-
       setIsLoading(false);
     }
   };
-
-  //processing order fetch garne
-  const fetchProcessingOrders = async () => {
-    setprocessingOrdersLoading(true);
-    try {
-      const res = await axios.get(
-        "http://localhost:5010/api/kitchen/processingOrder",
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      setProcessingOrders(res.data);
-      console.log(res.data);
-    } catch (error) {
-      console.log(error);
-      toast.error(error.message);
-    } finally {
-      setprocessingOrdersLoading(false);
-    }
-  };
-
-  // completed orders fetch garne
-  const fetchCompletedFoodOrders = async () => {
-    try {
-      const res = await axios.get(
-        "http://localhost:5010/api/kitchen/showCompletedOrder",
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-
-      setCompletedFoodOrders(res.data);
-    } catch (err) {
-      toast.error(err.message);
-    }
-  };
-
-  const statusHandlerAcc = async (orderId) => {
-    try {
-      await axios.post(
-        "http://localhost:5010/api/kitchen/acceptOrder",
-        { orderId },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-
-      fetchCustomerOrders();
-      fetchProcessingOrders();
-    } catch (error) {
-      toast.error(error.message);
-    }
-  };
-
-  const statusHandlerRej = async (orderId) => {
-    try {
-      await axios.post(
-        "http://localhost:5010/api/kitchen/rejectOrder",
-        { orderId },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      fetchCustomerOrders();
-    } catch (error) {
-      toast.error(error.message);
-    }
-  };
-  useEffect(() => {
-    if (token) {
-      fetchCustomerOrders();
-      fetchProcessingOrders();
-      fetchCompletedFoodOrders();
-    } else {
-      const savedToken = localStorage.getItem("token");
-      if (savedToken) {
-        setToken(savedToken);
-      } else {
-        toast.error("No token found");
-      }
-    }
-  }, [token]);
-
-    // console.log(customerOrders);
+    //  console.log(customerOrders);
     // const filteredCustomers = customerOrders.reduce((acc, obj) => {
-    //   const existing = acc.find(item => item._id === obj._id);
+    //   const existing = acc.find(item => item._id === obj.orderDetails._id);
+    
     
     //   if (existing) {
     //     existing.orderItems.push({
@@ -131,18 +54,96 @@ export const Orders = () => {
     //       ],
     //     });
     //   }
-    
+      
     //   return acc;
     // }, []);
+    // console.log(filteredCustomers);
     
-    
-    
-    return(
-      <>
-        <div className={styles.main_order_container}>
-          <ToastContainer/>
-            {!isKitchenOnline?(<h2 className={styles.offline_order}>You are currently offline.<br/> Please go online to receive orders.</h2>):(
-              <>
+
+  // Fetch processing orders
+  const fetchProcessingOrders = async () => {
+    setprocessingOrdersLoading(true);
+    try {
+      const res = await axios.get(
+        "http://localhost:5010/api/kitchen/processingOrder",
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setProcessingOrders(res.data);
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setprocessingOrdersLoading(false);
+    }
+  };
+
+  // Fetch completed orders
+  const fetchCompletedFoodOrders = async () => {
+    try {
+      const res = await axios.get(
+        "http://localhost:5010/api/kitchen/showCompletedOrder",
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setCompletedFoodOrders(res.data);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  // Accept order
+  const statusHandlerAcc = async (orderId) => {
+    try {
+      await axios.post(
+        "http://localhost:5010/api/kitchen/acceptOrder",
+        { orderId },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      fetchCustomerOrders();
+      fetchProcessingOrders();
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  // Reject order
+  const statusHandlerRej = async (orderId) => {
+    try {
+      await axios.post(
+        "http://localhost:5010/api/kitchen/rejectOrder",
+        { orderId },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      fetchCustomerOrders();
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    if (token) {
+      fetchCustomerOrders();
+      fetchProcessingOrders();
+      fetchCompletedFoodOrders();
+    } else {
+      const savedToken = localStorage.getItem("token");
+      if (savedToken) {
+        setToken(savedToken);
+      } else {
+        toast.error("No token found");
+      }
+    }
+  }, [token]);
+
+  return (
+    <>
+      <div className={styles.main_order_container}>
+        <ToastContainer />
+        {!isKitchenOnline ? (
+          <h2 className={styles.offline_order}>
+            You are currently offline.
+            <br /> Please go online to receive orders.
+          </h2>
+        ) : (
+          <>
             <h2>New Order Request</h2>
             <div className={styles.topic}>
               <p>S.N</p>
@@ -152,22 +153,24 @@ export const Orders = () => {
               <p>Action</p>
             </div>
             <div className={styles.inner_container}>
-            <div className={styles.order_list}>
-              {isLoading?<Loading/>:(
-                customerOrders.length>0 ? 
-                (customerOrders.map((order,index)=>(
-                  <React.Fragment key={order.orderDetails._id}>
-                      <div className={styles.order_card} >
-                        <h3>#{index+1}</h3>
-                        <p>{order.orderDetails.deliveryInfo.firstName} {order.orderDetails.deliveryInfo.LastName}</p>
+              <div className={styles.order_list}>
+                {isLoading ? (
+                  <Loading />
+                ) : customerOrders.length > 0 ? (
+                  customerOrders.map((order, index) => (
+                    <React.Fragment key={order.orderDetails._id}>
+                      <div className={styles.order_card}>
+                        <h3>#{index + 1}</h3>
+                        <p>
+                          {order.orderDetails.deliveryInfo.firstName}{" "}
+                          {order.orderDetails.deliveryInfo.LastName}
+                        </p>
                         <ul>
-                           {order.items.map((elem,index)=>{
-                            return(
-                              <li key={index}>{elem.orderItemName}-{elem.quantity}</li>
-
-                            )
-                           })}
-                           
+                          {order.items.map((elem, idx) => (
+                            <li key={idx}>
+                              {elem.orderItemName} - {elem.quantity}
+                            </li>
+                          ))}
                         </ul>
                         <p>{order.orderDetails.deliveryInfo.phoneNumber}</p>
                         <div className={styles.btns}>
@@ -188,7 +191,6 @@ export const Orders = () => {
                             Reject
                           </button>
                         </div>
-                        {/* <select onChange={(event)=>statusHandler(event,order._id)} */}
                       </div>
                       <hr />
                     </React.Fragment>
@@ -204,7 +206,7 @@ export const Orders = () => {
         )}
       </div>
 
-      {/* processing order ko component  */}
+      {/* Processing orders */}
       <ProcessingOrder
         processingOrders={processingOrders}
         processingOrdersLoading={processingOrdersLoading}
@@ -213,7 +215,7 @@ export const Orders = () => {
         fetchCompletedFoodOrders={fetchCompletedFoodOrders}
       />
 
-      {/* completed order ko component  */}
+      {/* Completed orders */}
       <CompletedFoodOrders completedFoodOrders={completedFoodOrders} />
     </>
   );

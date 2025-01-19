@@ -90,17 +90,14 @@ export const Dashboard=()=>{
                 <h1 className={styles.heading}>Revenue</h1>
                     <div className={styles.amount_inner_con}>
                     <TotalTurnOver quantity={userDetails.totalAmount} topic={"Total TurnOver"}/>
-                    <TotalTurnOver quantity={userDetails.totalAmount} topic={"Average TurnOver"}/>
+                    <TotalTurnOver quantity={userDetails.averageAmount} topic={"Average TurnOver"}/>
 
                     </div>
                 </div>
                 </div>)}
                     
                     
-                
-
-
-        </div>
+     </div>
         </>
     )
 }

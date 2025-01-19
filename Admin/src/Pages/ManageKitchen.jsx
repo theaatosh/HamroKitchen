@@ -5,7 +5,7 @@
     import { useEffect } from 'react';
     import { FaCheckCircle } from "react-icons/fa";
     import { FaTimesCircle } from "react-icons/fa";
-    import { ToastContainer, toast } from 'react-toastify';
+    import { toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
 
     export const ManageKitchen=()=>{
@@ -79,7 +79,7 @@
         return(
             <>
                 <div className={styles.main_container}>
-                <ToastContainer/>
+             
                     <div className={styles.manageKitchen_container}>
                         <h1>Kitchen Request</h1>
                         <div className={styles.manageKitchen_details_container}>
