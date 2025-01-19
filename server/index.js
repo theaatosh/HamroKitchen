@@ -134,28 +134,28 @@ const https = require("https");
 const agent = new https.Agent({
   rejectUnauthorized: false, // Disable SSL certificate verification
 });
-app.get("/api/geoCode", async (req, res) => {
-  try {
-    console.log("here");
-    const { lat, lon } = req.query;
-    const response = await axios.get(
-      `https://nominatim.openstreetmap.org/reverse`,
-      {
-        params: {
-          lat,
-          lon,
-          format: "json",
-        },
-        httpsAgent: agent,
-      }
-    );
-    console.log(response.data);
-    res.json(response.data);
-  } catch (err) {
-    console.error("Error fetching address:", err);
-    res.status(500).send("Error fetching address");
-  }
-});
+// app.get("/api/geoCode", async (req, res) => {
+//   try {
+//     console.log("here");
+//     const { lat, lon } = req.query;
+//     const response = await axios.get(
+//       `https://nominatim.openstreetmap.org/reverse`,
+//       {
+//         params: {
+//           lat,
+//           lon,
+//           format: "json",
+//         },
+//         httpsAgent: agent,
+//       }
+//     );
+//     console.log(response.data);
+//     res.json(response.data);
+//   } catch (err) {
+//     console.error("Error fetching address:", err);
+//     res.status(500).send("Error fetching address");
+//   }
+// });
 
 const cartRoute = require("./routes/cartRoute.js");
 app.use("/cart", cartRoute);
@@ -200,8 +200,10 @@ app.use("/api/recFood", recFood);
 const passworddd = require("./routes/passwordRoute.js");
 app.use("/api/forgotpassword", passworddd);
 
-const users = require("./controllers/adminManageUser.js");
+const { users, changeToCustomer } = require("./controllers/adminManageUser.js");
 app.get("/api/users", users);
+
+app.post("/api/changeToCustomer", changeToCustomer);
 
 const foodRec = require("./routes/foodRecpyRoute.js");
 app.use("/api/recFood", foodRec);
