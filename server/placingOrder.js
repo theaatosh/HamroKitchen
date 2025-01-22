@@ -242,9 +242,13 @@ const fetchOrders = async () => {
       const currentDate = new Date();
       //    const currentDate = format(new Date(), dateFormat);
       console.log("cureent" + currentDate);
-      //    const scheduledTime=await parse(order[i].scheduledTime, dateFormat, new Date());
-      const scheduledTime = new Date(order[i].scheduledTime);
+      //  
+      let scheduledTime = new Date(order[i].scheduledTime);
       console.log("schedule" + scheduledTime);
+      if(!scheduledTime){
+         scheduledTime=await parse(order[i].scheduledTime, dateFormat, new Date());
+         console.log("schedule" + scheduledTime);
+      }
       if (scheduledTime <= currentDate) {
         console.log("here at scheduled");
         if (order[i].orderStatus === "processedWithPayment") {

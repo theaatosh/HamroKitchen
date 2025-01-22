@@ -203,7 +203,7 @@ app.get("/api/users", users);
 app.post("/api/changeToCustomer", changeToCustomer);
 
 const foodRec = require("./routes/foodRecpyRoute.js");
-app.use("/api/recFood", foodRec);
+app.use("/api/recFoods", foodRec);
 
 const codRoute = require("./routes/codRoutes.js");
 app.use("/api/cod", codRoute);
