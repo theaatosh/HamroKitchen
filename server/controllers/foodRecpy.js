@@ -5,7 +5,7 @@ const foodRec = async (req, res) => {
   const { userId } = req.user;
   // console.log("hi")
   try {
-    console.log(userId);
+    // console.log(userId);
     const rec = await user.findById(userId, { _id: 0, recData: 1 });
     const recData = Object.values(rec.recData);
     const data = await runPythonFunction(recData);
