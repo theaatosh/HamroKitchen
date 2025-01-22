@@ -1,4 +1,3 @@
-import React from 'react'
 import { CustomerDetails } from '../Components/CustomerDetails'
 import { KitchenDetails } from '../Components/KitchenDetails'
 import axios from 'axios';
@@ -33,8 +32,8 @@ export const UserDetails = () => {
     <div className={styles.user_details_container}>
       {isLoading? <div className={styles.loading}><Loading/></div>: (userDetails&&
       <>
-      <CustomerDetails  customer={userDetails.customers} />
-      <KitchenDetails  kitchen={userDetails.kitchens}/>
+      <CustomerDetails  customer={userDetails.customers} fetchUserDetails={fetchUserDetails} />
+      <KitchenDetails  kitchen={userDetails.kitchens} fetchUserDetails={fetchUserDetails}/>
       
       
       </>

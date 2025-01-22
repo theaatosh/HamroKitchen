@@ -8,6 +8,7 @@ import { ProcessingOrder } from "../KitchenComponents/kitchenDetails/ProcessingO
 import { StoreContext } from "../Context/StoreContext";
 import Loading from "../Components/Loading";
 import { CompletedFoodOrders } from "../KitchenComponents/CompletedFoodOrders";
+
 export const Orders = () => {
   const { isKitchenOnline } = useAuth();
   const { token, setToken } = useContext(StoreContext);
@@ -17,7 +18,7 @@ export const Orders = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [processingOrdersLoading, setprocessingOrdersLoading] = useState(false);
 
-  //order request fetch garne
+  // Fetch new orders
   const fetchCustomerOrders = async () => {
     setIsLoading(true);
     try {
@@ -26,18 +27,40 @@ export const Orders = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setCustomerOrders(res.data);
-      console.log(res.data);
     } catch (error) {
-      console.log(error);
       toast.error(error.message);
     } finally {
-      console.log("hello");
-
       setIsLoading(false);
     }
   };
+    //  console.log(customerOrders);
+    // const filteredCustomers = customerOrders.reduce((acc, obj) => {
+    //   const existing = acc.find(item => item._id === obj.orderDetails._id);
+    
+    
+    //   if (existing) {
+    //     existing.orderItems.push({
+    //       foodItem: obj.orderItemName,
+    //       quantity: obj.quantity,
+    //     });
+    //   } else {
+    //     acc.push({
+    //      ...obj,
+    //       orderItems: [
+    //         {
+    //           foodItem: obj.orderItemName,
+    //           quantity: obj.quantity,
+    //         },
+    //       ],
+    //     });
+    //   }
+      
+    //   return acc;
+    // }, []);
+    // console.log(filteredCustomers);
+    
 
-  //processing order fetch garne
+  // Fetch processing orders
   const fetchProcessingOrders = async () => {
     setprocessingOrdersLoading(true);
     try {
@@ -46,29 +69,27 @@ export const Orders = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setProcessingOrders(res.data);
-      console.log(res.data);
     } catch (error) {
-      console.log(error);
       toast.error(error.message);
     } finally {
       setprocessingOrdersLoading(false);
     }
   };
 
-  // completed orders fetch garne
+  // Fetch completed orders
   const fetchCompletedFoodOrders = async () => {
     try {
       const res = await axios.get(
         "http://localhost:5010/api/kitchen/showCompletedOrder",
         { headers: { Authorization: `Bearer ${token}` } }
       );
-
       setCompletedFoodOrders(res.data);
-    } catch (err) {
-      toast.error(err.message);
+    } catch (error) {
+      toast.error(error.message);
     }
   };
 
+  // Accept order
   const statusHandlerAcc = async (orderId) => {
     try {
       await axios.post(
@@ -76,7 +97,6 @@ export const Orders = () => {
         { orderId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-
       fetchCustomerOrders();
       fetchProcessingOrders();
     } catch (error) {
@@ -84,6 +104,7 @@ export const Orders = () => {
     }
   };
 
+  // Reject order
   const statusHandlerRej = async (orderId) => {
     try {
       await axios.post(
@@ -96,6 +117,7 @@ export const Orders = () => {
       toast.error(error.message);
     }
   };
+
   useEffect(() => {
     if (token) {
       fetchCustomerOrders();
@@ -110,30 +132,6 @@ export const Orders = () => {
       }
     }
   }, [token]);
-
-  // console.log(customerOrders);
-  const filteredCustomers = customerOrders.reduce((acc, obj) => {
-    const existing = acc.find((item) => item._id === obj._id);
-
-    if (existing) {
-      existing.orderItems.push({
-        foodItem: obj.orderItemName,
-        quantity: obj.quantity,
-      });
-    } else {
-      acc.push({
-        ...obj,
-        orderItems: [
-          {
-            foodItem: obj.orderItemName,
-            quantity: obj.quantity,
-          },
-        ],
-      });
-    }
-
-    return acc;
-  }, []);
 
   return (
     <>
@@ -158,20 +156,21 @@ export const Orders = () => {
               <div className={styles.order_list}>
                 {isLoading ? (
                   <Loading />
-                ) : filteredCustomers.length > 0 ? (
-                  filteredCustomers.map((order, index) => (
+                ) : customerOrders.length > 0 ? (
+                  customerOrders.map((order, index) => (
                     <React.Fragment key={order.orderDetails._id}>
                       <div className={styles.order_card}>
                         <h3>#{index + 1}</h3>
-                        <p>{order.orderDetails.deliveryInfo.firstName}</p>
+                        <p>
+                          {order.orderDetails.deliveryInfo.firstName}{" "}
+                          {order.orderDetails.deliveryInfo.LastName}
+                        </p>
                         <ul>
-                          {order.orderItems.map((elem, index) => {
-                            return (
-                              <li key={index}>
-                                {elem.foodItem}-{elem.quantity}
-                              </li>
-                            );
-                          })}
+                          {order.items.map((elem, idx) => (
+                            <li key={idx}>
+                              {elem.orderItemName} - {elem.quantity}
+                            </li>
+                          ))}
                         </ul>
                         <p>{order.orderDetails.deliveryInfo.phoneNumber}</p>
                         <div className={styles.btns}>
@@ -192,7 +191,6 @@ export const Orders = () => {
                             Reject
                           </button>
                         </div>
-                        {/* <select onChange={(event)=>statusHandler(event,order._id)} */}
                       </div>
                       <hr />
                     </React.Fragment>
@@ -208,7 +206,7 @@ export const Orders = () => {
         )}
       </div>
 
-      {/* processing order ko component  */}
+      {/* Processing orders */}
       <ProcessingOrder
         processingOrders={processingOrders}
         processingOrdersLoading={processingOrdersLoading}
@@ -217,7 +215,7 @@ export const Orders = () => {
         fetchCompletedFoodOrders={fetchCompletedFoodOrders}
       />
 
-      {/* completed order ko component  */}
+      {/* Completed orders */}
       <CompletedFoodOrders completedFoodOrders={completedFoodOrders} />
     </>
   );
