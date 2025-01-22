@@ -62,7 +62,7 @@ export const App=()=>{
             
           },
           {
-              path:'/notification',
+              path:'notification',
               element:<Notification/>
           },
           {
