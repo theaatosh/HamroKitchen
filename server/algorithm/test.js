@@ -31,7 +31,7 @@ const runPythonFunction = async (foodtype, spice, diet) => {
                 }
             });
         });
-
+        console.log("here")
         console.log('Result:', result); // Log the result
         return result;
     } catch (error) {
